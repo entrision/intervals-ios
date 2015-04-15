@@ -12,6 +12,6 @@
     </entity>
     <elements>
         <element name="Interval" positionX="-54" positionY="0" width="128" height="103"/>
-        <element name="Sequence" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="Sequence" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>

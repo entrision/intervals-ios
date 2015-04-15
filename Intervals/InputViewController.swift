@@ -14,7 +14,10 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     let cellID = "CellID"
     
     var addBarButton = UIBarButtonItem()
+    var cancelBarButton = UIBarButtonItem()
     var intervalArray = NSMutableArray()
+    
+    var nameTextField = UITextField()
     
     @IBOutlet weak var theTableView: UITableView!
     
@@ -25,17 +28,31 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.addBarButton = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Done, target: self, action: Selector("addButtonTapped"))
         self.navigationItem.rightBarButtonItem = self.addBarButton
         
-//        let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 70))
-//        
-//        let nameTextField = UITextField(frame: CGRectMake(15, 15, headerView.frame.size.width - 30, 50))
-//        nameTextField.borderStyle = UITextBorderStyle.None
-//        nameTextField.placeholder = "Interval Name..."
-//        nameTextField.font = UIFont.systemFontOfSize(21.0)
-//        headerView.addSubview(nameTextField)
-//        
-//        self.theTableView.tableHeaderView = headerView
+        self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: Selector("cancelButtonTapped"))
+        self.navigationItem.leftBarButtonItem = self.cancelBarButton
         
+        let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 70))
+        headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
+        headerView.layer.borderWidth = 0.5
+        
+        self.nameTextField = UITextField(frame: CGRectMake(15, 10, headerView.frame.size.width - 30, 50))
+        self.nameTextField.borderStyle = UITextBorderStyle.None
+        self.nameTextField.placeholder = "Sequence Name..."
+        self.nameTextField.font = UIFont.systemFontOfSize(21.0)
+        headerView.addSubview(self.nameTextField)
+        
+        self.theTableView.tableHeaderView = headerView
         self.theTableView.registerNib(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: cellID)
+        
+        var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
+        var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
+        interval.title = ""
+        interval2.title = ""
+        interval.duration = 0
+        interval2.duration = 0
+        self.intervalArray.addObject(interval)
+        self.intervalArray.addObject(interval2)
+        self.theTableView.reloadData()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -100,7 +117,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
-//            self.numOfRows--
+            self.intervalArray.removeObjectAtIndex(indexPath.row)
             
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
@@ -113,6 +130,12 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     func addButtonTapped() {
         
         var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as Sequence
+        if self.nameTextField.text == nil || self.nameTextField.text == "" {
+            sequence.name = "My sequence"
+        }
+        else {
+            sequence.name = self.nameTextField.text
+        }
         
         for var i=0; i<self.intervalArray.count; i++ {
             
@@ -120,13 +143,24 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as InputCell
             
             interval.title = cell.nameTextField.text
-            interval.duration = cell.durationTextField.text.toInt()!
+            interval.duration = cell.duration
+            
+            if interval.title == "" || interval.duration == 0 {
+                return
+            }
+            
             sequence.addIntervalObject(interval)
         }
         
         var error: NSError?
         self.managedObjectContext.save(&error)
         
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func cancelButtonTapped () {
+        
+        self.managedObjectContext.rollback()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

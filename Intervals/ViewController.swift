@@ -63,8 +63,11 @@ class ViewController: BaseViewController, UIViewControllerTransitioningDelegate 
         
         let sequence = self.sequenceArray[indexPath.row] as Sequence
         
-//        cell.textLabel?.text = sequence.name
-//        cell.detailTextLabel?.text = "\(sequence.intervals.count)"
+        cell.textLabel?.text = sequence.name
+        
+        var detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
+        cell.detailTextLabel?.text = "\(sequence.intervals.count) \(detailText)"
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell
     }
