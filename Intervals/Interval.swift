@@ -12,6 +12,8 @@ class Interval: NSManagedObject {
    
     @NSManaged var title: NSString
     @NSManaged var duration: NSNumber
+    @NSManaged var minutes: NSNumber
+    @NSManaged var seconds: NSNumber
     @NSManaged var position: NSNumber
     @NSManaged var sequence: Sequence
 }

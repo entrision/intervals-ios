@@ -43,24 +43,6 @@
             </objects>
             <point key="canvasLocation" x="2213" y="391"/>
         </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="e1L-Ig-oET">
-            <objects>
-                <viewController id="ghz-jq-mZu" customClass="DetailViewController" customModule="Intervals" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yMl-Uw-rtc"/>
-                        <viewControllerLayoutGuide type="bottom" id="6ul-97-apZ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="I7U-nT-WyX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gNA-AZ-g5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2213" y="1090"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -94,7 +76,7 @@
                     <connections>
                         <outlet property="theTableView" destination="FTH-bD-bIF" id="xtN-oy-zjQ"/>
                         <segue destination="9ct-yo-5qR" kind="presentation" identifier="inputSegue" id="AoO-cV-mrH"/>
-                        <segue destination="ghz-jq-mZu" kind="show" identifier="sequenceDetailSegue" id="k19-G0-r3m"/>
+                        <segue destination="Pr5-zE-Oxv" kind="show" identifier="sequenceDetailSegue" id="g8R-FY-Kq6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -138,4 +120,7 @@
             <point key="canvasLocation" x="1401" y="391"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="g8R-FY-Kq6"/>
+    </inferredMetricsTieBreakers>
 </document>

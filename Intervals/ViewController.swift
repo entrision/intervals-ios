@@ -9,12 +9,13 @@
 import UIKit
 import CoreData
 
-class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate {
+class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate {
 
     let kInputSegue = "inputSegue"
     let kDetailSegue = "sequenceDetailSegue"
     
     var sequenceArray = NSArray()
+    var selectedSequenceID = NSManagedObjectID()
     
     @IBOutlet weak var theTableView: UITableView!
     
@@ -41,6 +42,12 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             
             let controller: UINavigationController = segue.destinationViewController as UINavigationController
             controller.transitioningDelegate = self
+        }
+        else if segue.identifier == kDetailSegue {
+            
+            let detailController: InputViewController = segue.destinationViewController as InputViewController
+            detailController.sequenceID = self.selectedSequenceID
+            detailController.readOnly = true
         }
     }
     
@@ -78,9 +85,15 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch")
+        actionSheet.showInView(self.view)
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        
+        let sequence = self.sequenceArray[indexPath.row] as Sequence
+        self.selectedSequenceID = sequence.objectID
         self.performSegueWithIdentifier(kDetailSegue, sender: self)
     }
     

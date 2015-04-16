@@ -15,7 +15,14 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     var addBarButton = UIBarButtonItem()
     var cancelBarButton = UIBarButtonItem()
+    var editBarButton = UIBarButtonItem()
+    var saveBarButton = UIBarButtonItem()
+    
     var intervalArray = NSMutableArray()
+    
+    var sequenceID: NSManagedObjectID = NSManagedObjectID()
+    var readOnly: Bool = false
+    var isEditing: Bool = false
     
     var nameTextField = UITextField()
     
@@ -24,12 +31,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        self.addBarButton = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Done, target: self, action: Selector("addButtonTapped"))
-        self.navigationItem.rightBarButtonItem = self.addBarButton
-        
-        self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: Selector("cancelButtonTapped"))
-        self.navigationItem.leftBarButtonItem = self.cancelBarButton
         
         let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 70))
         headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
@@ -44,15 +45,36 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.theTableView.tableHeaderView = headerView
         self.theTableView.registerNib(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: cellID)
         
-        var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
-        var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
-        interval.title = ""
-        interval2.title = ""
-        interval.duration = 0
-        interval2.duration = 0
-        self.intervalArray.addObject(interval)
-        self.intervalArray.addObject(interval2)
-        self.theTableView.reloadData()
+        if self.readOnly == true {
+            
+            let sequence = self.getSequence()
+            
+            self.nameTextField.text = sequence.name
+            self.nameTextField.enabled = false
+            
+            self.editBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: Selector("editButtonTapped"))
+            self.navigationItem.rightBarButtonItem = self.editBarButton
+            
+            self.saveBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: Selector("saveButtonTapped"))
+        }
+        else {
+            
+            self.addBarButton = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Done, target: self, action: Selector("addButtonTapped"))
+            self.navigationItem.rightBarButtonItem = self.addBarButton
+            
+            self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: Selector("cancelButtonTapped"))
+            self.navigationItem.leftBarButtonItem = self.cancelBarButton
+            
+            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
+            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as Interval
+            interval.title = ""
+            interval2.title = ""
+            interval.duration = 0
+            interval2.duration = 0
+            self.intervalArray.addObject(interval)
+            self.intervalArray.addObject(interval2)
+            self.theTableView.reloadData()
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -60,12 +82,23 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.intervalArray.count + 1
+        
+        var result = 0
+        
+        if self.readOnly {
+            let sequence = self.getSequence()
+            result = sequence.intervals.count
+        }
+        else {
+            result = self.intervalArray.count + 1
+        }
+        
+        return result
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.row == self.intervalArray.count {
+        if indexPath.row == self.intervalArray.count  && !self.readOnly {
             var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell!
             
             if addCell == nil {
@@ -80,7 +113,23 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
         var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as InputCell
         
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        if self.readOnly {
+            let sequence = self.getSequence()
+            
+            let sort = NSSortDescriptor(key: "position", ascending: true)
+            let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([sort])
+            let interval: Interval = intervalArray[indexPath.row] as Interval
+            cell.nameTextField.text = interval.title
+            
+            let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
+            let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
+            cell.durationTextField.text = "\(minString) \(secString)"
+            
+            cell.userInteractionEnabled = self.isEditing
+        }
+        else {
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+        }
         
         return cell
     }
@@ -108,7 +157,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         var result = true
         
-        if indexPath.row == self.intervalArray.count {
+        if indexPath.row == self.intervalArray.count && !self.readOnly {
             result = false
         }
         
@@ -153,6 +202,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
             interval.title = cell.nameTextField.text
             interval.duration = cell.duration
+            interval.minutes = cell.minutes
+            interval.seconds = cell.seconds
+            interval.position = i
             
             if interval.title == "" || interval.duration == 0 {
                 let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
@@ -173,5 +225,29 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         self.managedObjectContext.rollback()
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func editButtonTapped() {
+        
+        self.nameTextField.enabled = true
+        self.nameTextField.becomeFirstResponder()
+        self.navigationItem.rightBarButtonItem = self.saveBarButton
+        self.isEditing = true
+        self.theTableView.reloadData()
+    }
+    
+    func saveButtonTapped() {
+        
+        self.nameTextField.enabled = false
+        self.view.endEditing(true)
+        self.navigationItem.rightBarButtonItem = self.editBarButton
+        self.isEditing = false
+        self.theTableView.reloadData()
+    }
+    
+    func getSequence() -> Sequence {
+        var error: NSError?
+        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as Sequence
+        return sequence
     }
 }
