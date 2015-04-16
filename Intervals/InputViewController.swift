@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class InputViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class InputViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     let cellID = "CellID"
     
@@ -80,6 +80,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
         var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as InputCell
         
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
         return cell
     }
     
@@ -125,6 +127,13 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    //MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     //MARK: Private methods
     
     func addButtonTapped() {
@@ -146,6 +155,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             interval.duration = cell.duration
             
             if interval.title == "" || interval.duration == 0 {
+                let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
                 return
             }
             

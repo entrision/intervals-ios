@@ -9,9 +9,10 @@
 import UIKit
 import CoreData
 
-class ViewController: BaseViewController, UIViewControllerTransitioningDelegate {
+class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate {
 
     let kInputSegue = "inputSegue"
+    let kDetailSegue = "sequenceDetailSegue"
     
     var sequenceArray = NSArray()
     
@@ -67,7 +68,7 @@ class ViewController: BaseViewController, UIViewControllerTransitioningDelegate 
         
         var detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
         cell.detailTextLabel?.text = "\(sequence.intervals.count) \(detailText)"
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.DetailButton
         
         return cell
     }
@@ -77,6 +78,14 @@ class ViewController: BaseViewController, UIViewControllerTransitioningDelegate 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier(kDetailSegue, sender: self)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 75.0
     }
     
     //MARK: Transitioning Delegate

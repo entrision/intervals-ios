@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046C06041AE006920098654F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C06031AE006920098654F /* DetailViewController.swift */; };
 		04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4531ADD9744001659B3 /* AppDelegate.swift */; };
 		04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */; };
 		04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		046C06031AE006920098654F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		04E0D44E1ADD9744001659B3 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E0D4521ADD9744001659B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E0D4531ADD9744001659B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,10 +99,11 @@
 				04E0D4761ADD9816001659B3 /* BaseViewController.swift */,
 				04E0D4581ADD9744001659B3 /* ViewController.swift */,
 				04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */,
+				046C06031AE006920098654F /* DetailViewController.swift */,
 				04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */,
+				04E0D45A1ADD9744001659B3 /* Main.storyboard */,
 				04E0D4821ADDB835001659B3 /* Model */,
 				04E0D4811ADDB82C001659B3 /* Views */,
-				04E0D45A1ADD9744001659B3 /* Main.storyboard */,
 				04E0D45D1ADD9744001659B3 /* Images.xcassets */,
 				04E0D45F1ADD9744001659B3 /* LaunchScreen.xib */,
 				04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */,
@@ -260,6 +263,7 @@
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
 				04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */,
 				04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */,
+				046C06041AE006920098654F /* DetailViewController.swift in Sources */,
 				04E0D4841ADDB87A001659B3 /* Interval.swift in Sources */,
 				04E0D47D1ADDAF37001659B3 /* InputCell.swift in Sources */,
 			);
@@ -453,6 +457,7 @@
 				04E0D4721ADD9744001659B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		04E0D4731ADD9744001659B3 /* Build configuration list for PBXNativeTarget "IntervalsTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +466,7 @@
 				04E0D4751ADD9744001659B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
