@@ -40,13 +40,14 @@ class ReorderTableView: UITableView {
         let state = longPressGesture.state
         
         let location: CGPoint = longPressGesture.locationInView(self)
-        let indexPath: NSIndexPath = self.indexPathForRowAtPoint(location)!
+        let indexPath: NSIndexPath? = self.indexPathForRowAtPoint(location)
+        
         
         if state == UIGestureRecognizerState.Began {
             
-            self.sourceIndexPath = indexPath
+            self.sourceIndexPath = indexPath!
             
-            let cell = self.cellForRowAtIndexPath(indexPath)
+            let cell = self.cellForRowAtIndexPath(indexPath!)
             self.snapshot = self.snapshotFromView(cell!)
             
             var center = cell?.center
@@ -75,10 +76,13 @@ class ReorderTableView: UITableView {
             center.y = location.y
             self.snapshot.center = center
             
-            if indexPath != self.sourceIndexPath {
-                self.sourceArray.exchangeObjectAtIndex(indexPath.row, withObjectAtIndex: self.sourceIndexPath.row)
-                self.moveRowAtIndexPath(self.sourceIndexPath, toIndexPath: indexPath)
-                sourceIndexPath = indexPath
+            if let index = indexPath {
+                
+                if indexPath != self.sourceIndexPath && indexPath?.row < self.sourceArray.count {
+                    self.sourceArray.exchangeObjectAtIndex(indexPath!.row, withObjectAtIndex: self.sourceIndexPath.row)
+                    self.moveRowAtIndexPath(self.sourceIndexPath, toIndexPath: indexPath!)
+                    self.sourceIndexPath = indexPath!
+                }
             }
         }
         else {

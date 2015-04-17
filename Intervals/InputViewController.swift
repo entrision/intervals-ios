@@ -84,6 +84,16 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             self.intervalArray.addObject(interval2)
             self.theTableView.reloadData()
         }
+        
+        self.theTableView.sourceArray = self.intervalArray
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !self.readOnly {
+            self.nameTextField.becomeFirstResponder()
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -211,6 +221,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             sequence.name = self.nameTextField.text
         }
         
+//        self.addNewIntervalsToCoreData()
+        
         for var i=0; i<self.intervalArray.count; i++ {
             
             let interval = self.intervalArray[i] as! Interval
@@ -251,11 +263,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.theTableView.reorderEnabled = true
         self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.theTableView.reloadData()
-        
-        let sequence = self.getSequence()
-        let sort = NSSortDescriptor(key: "position", ascending: true)
-        let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([sort])
-        self.theTableView.sourceArray = NSMutableArray(array: intervalArray)
     }
     
     func saveButtonTapped() {
@@ -267,17 +274,23 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.theTableView.reorderEnabled = false
         self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
+        self.addNewIntervalsToCoreData()
+        
         if self.theTableView.reordered {
             for var i=0; i<self.theTableView.sourceArray.count; i++ {
 
                 let interval: Interval = self.theTableView.sourceArray[i] as! Interval
                 interval.position = i
-                
-                var error: NSError?
-                self.managedObjectContext.save(&error)
             }
         }
         
+        var error: NSError?
+        self.managedObjectContext.save(&error)
+        
+        let sequence = self.getSequence()
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        let array = sequence.intervals.sortedArrayUsingDescriptors([sort]) as NSArray
+        self.intervalArray = NSMutableArray(array: array)
         self.theTableView.reloadData()
     }
     
@@ -303,5 +316,31 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         var error: NSError?
         let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! Sequence
         return sequence
+    }
+    
+    func addNewIntervalsToCoreData() {
+        
+        for var i=0; i<self.intervalArray.count; i++ {
+            
+            let interval = self.intervalArray[i] as! Interval
+            if interval.objectID.temporaryID {
+                
+                let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
+                
+                interval.title = cell.nameTextField.text
+                interval.duration = cell.duration
+                interval.minutes = cell.minutes
+                interval.seconds = cell.seconds
+                interval.position = i
+                
+                if interval.title == "" || interval.duration == 0 {
+                    let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
+                    alert.show()
+                    return
+                }
+                
+                self.getSequence().addIntervalObject(interval)
+            }
+        }
     }
 }

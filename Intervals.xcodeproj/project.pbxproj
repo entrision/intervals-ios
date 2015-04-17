@@ -100,7 +100,6 @@
 				04E0D4581ADD9744001659B3 /* ViewController.swift */,
 				04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */,
 				04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */,
-				04034E781AE159B800CFDE50 /* ReorderTableView.swift */,
 				04E0D45A1ADD9744001659B3 /* Main.storyboard */,
 				04E0D4821ADDB835001659B3 /* Model */,
 				04E0D4811ADDB82C001659B3 /* Views */,
@@ -140,6 +139,7 @@
 		04E0D4811ADDB82C001659B3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04034E781AE159B800CFDE50 /* ReorderTableView.swift */,
 				04E0D47C1ADDAF37001659B3 /* InputCell.swift */,
 				04E0D47E1ADDAF46001659B3 /* InputCell.xib */,
 			);
