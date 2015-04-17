@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034E781AE159B800CFDE50 /* ReorderTableView.swift */; };
 		04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4531ADD9744001659B3 /* AppDelegate.swift */; };
 		04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */; };
 		04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04034E781AE159B800CFDE50 /* ReorderTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReorderTableView.swift; sourceTree = "<group>"; };
 		04E0D44E1ADD9744001659B3 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E0D4521ADD9744001659B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E0D4531ADD9744001659B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				04E0D4581ADD9744001659B3 /* ViewController.swift */,
 				04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */,
 				04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */,
+				04034E781AE159B800CFDE50 /* ReorderTableView.swift */,
 				04E0D45A1ADD9744001659B3 /* Main.storyboard */,
 				04E0D4821ADDB835001659B3 /* Model */,
 				04E0D4811ADDB82C001659B3 /* Views */,
@@ -255,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E0D4791ADD9BCE001659B3 /* CustomModalTransition.swift in Sources */,
+				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,
 				04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */,
 				04E0D4861ADDBB16001659B3 /* Sequence.swift in Sources */,
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,

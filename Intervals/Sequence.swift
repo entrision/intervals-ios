@@ -12,6 +12,7 @@ class Sequence: NSManagedObject {
     
     @NSManaged var name: String
     @NSManaged var intervals: NSSet
+    @NSManaged var position: NSNumber
 }
 
 extension Sequence {

@@ -188,7 +188,6 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         }
         
         self.duration = Int(self.minutes*60) + self.seconds
-        println(self.duration)
         self.durationTextField.text = "\(self.minString) \(self.secString)"
     }
     

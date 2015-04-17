@@ -20,7 +20,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     var snapshot: UIView = UIView()
     var sourceIndexPath: NSIndexPath = NSIndexPath()
     
-    @IBOutlet weak var theTableView: UITableView!
+    @IBOutlet weak var theTableView: ReorderTableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +30,29 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         let plusBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("plusButtonTapped"))
         self.navigationItem.leftBarButtonItem = plusBarButton
-        
-        let longPress = UILongPressGestureRecognizer(target: self, action: Selector("longPressGesture:"))
-        self.theTableView.addGestureRecognizer(longPress)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         self.fetchSequences()
+        self.theTableView.sourceArray = self.sequenceArray
         self.theTableView.reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.theTableView.reordered {
+            for var i=0; i<self.sequenceArray.count; i++ {
+                
+                let sequence = self.sequenceArray[i] as! Sequence
+                sequence.position = i
+                
+                var error: NSError?
+                self.managedObjectContext.save(&error)
+            }
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -135,94 +148,13 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: self.managedObjectContext)
         let request: NSFetchRequest = NSFetchRequest()
         request.entity = entityDesc
+        
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        request.sortDescriptors = [sort]
 
         var error: NSError?
         let array = self.managedObjectContext.executeFetchRequest(request, error: &error)
         self.sequenceArray = NSMutableArray(array: array!)
-    }
-    
-    func longPressGesture(sender: AnyObject) {
-        
-        let longPressGesture = sender as! UILongPressGestureRecognizer
-        let state = longPressGesture.state
-        
-        let location: CGPoint = longPressGesture.locationInView(self.theTableView)
-        let indexPath: NSIndexPath = self.theTableView.indexPathForRowAtPoint(location)!
-        
-        if state == UIGestureRecognizerState.Began {
-            
-            self.sourceIndexPath = indexPath
-            
-            let cell = self.theTableView.cellForRowAtIndexPath(indexPath)
-            self.snapshot = self.snapshotFromView(cell!)
-            
-            var center = cell?.center
-            self.snapshot.center = center!
-            self.snapshot.alpha = 0.0
-            self.theTableView.addSubview(snapshot)
-            UIView.animateWithDuration(0.25, animations: ({
-                
-                center?.y = location.y
-                self.snapshot.center = center!
-                self.snapshot.transform = CGAffineTransformMakeScale(1.05, 1.05)
-                self.snapshot.alpha = 0.98
-                
-                cell!.alpha = 0.0
-                
-            }), completion: { finished in
-                cell?.hidden = true
-            });
-            
-        }
-        else if state == UIGestureRecognizerState.Changed {
-            
-            var center = snapshot.center
-            center.y = location.y
-            self.snapshot.center = center
-        
-            if indexPath != self.sourceIndexPath {
-                self.sequenceArray.exchangeObjectAtIndex(indexPath.row, withObjectAtIndex: self.sourceIndexPath.row)
-                self.theTableView.moveRowAtIndexPath(self.sourceIndexPath, toIndexPath: indexPath)
-                sourceIndexPath = indexPath
-            }
-        }
-        else {
-            
-            let cell = self.theTableView.cellForRowAtIndexPath(self.sourceIndexPath)
-            cell?.hidden = false
-            cell?.alpha = 0.0
-            UIView.animateWithDuration(0.25, animations: ({
-                
-                self.snapshot.center = cell!.center;
-                self.snapshot.transform = CGAffineTransformIdentity
-                self.snapshot.alpha = 0.0
-                
-                cell!.alpha = 1.0
-                
-            }), completion: { finished in
-                
-                self.sourceIndexPath = NSIndexPath()
-                self.snapshot.removeFromSuperview()
-                self.snapshot = UIView()
-            });
-        }
-    }
-    
-    func snapshotFromView(view: UIView) -> UIView {
-        
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0)
-        view.layer.renderInContext(UIGraphicsGetCurrentContext())
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        let snapshot = UIImageView(image: image)
-        snapshot.layer.masksToBounds = false
-        snapshot.layer.cornerRadius = 0.0
-        snapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0)
-        snapshot.layer.shadowRadius = 5.0
-        snapshot.layer.shadowOpacity = 0.4
-        
-        return snapshot
     }
 }
 

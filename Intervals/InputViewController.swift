@@ -26,7 +26,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     var nameTextField = UITextField()
     
-    @IBOutlet weak var theTableView: UITableView!
+    @IBOutlet weak var theTableView: ReorderTableView!
     
     override func viewDidLoad() {
         
@@ -46,10 +46,17 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         self.theTableView.tableHeaderView = headerView
         self.theTableView.registerNib(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: cellID)
+        self.theTableView.tableFooterView = UIView()
         
         if self.readOnly == true {
             
             let sequence = self.getSequence()
+            let sort = NSSortDescriptor(key: "position", ascending: true)
+            let array = sequence.intervals.sortedArrayUsingDescriptors([sort]) as NSArray
+            self.intervalArray = NSMutableArray(array: array)
+            
+            self.theTableView.reorderEnabled = false
+            self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
             
             self.nameTextField.text = sequence.name
             self.nameTextField.enabled = false
@@ -88,8 +95,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         var result = 0
         
         if self.readOnly {
-            let sequence = self.getSequence()
-            result = sequence.intervals.count
+            result = self.editMode ? self.intervalArray.count + 1 : self.intervalArray.count
         }
         else {
             result = self.intervalArray.count + 1
@@ -100,38 +106,42 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.row == self.intervalArray.count  && !self.readOnly {
-            var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell!
+        if indexPath.row == self.intervalArray.count {
             
-            if addCell == nil {
-                addCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+            if !self.readOnly || self.editMode {
+                var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell!
+                
+                if addCell == nil {
+                    addCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+                }
+                
+                addCell.textLabel?.text = "Add Interval"
+                addCell.textLabel?.textColor = UIColor(red: 0.0, green: 0.75, blue: 0.0, alpha: 1.0)
+                
+                return addCell
             }
-            
-            addCell.textLabel?.text = "Add Interval"
-            addCell.textLabel?.textColor = UIColor(red: 0.0, green: 0.75, blue: 0.0, alpha: 1.0)
-            
-            return addCell
         }
             
         var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! InputCell
         
         if self.readOnly {
-            let sequence = self.getSequence()
             
-            let sort = NSSortDescriptor(key: "position", ascending: true)
-            let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([sort])
-            let interval: Interval = intervalArray[indexPath.row] as! Interval
+            let interval: Interval = self.intervalArray[indexPath.row] as! Interval
             cell.nameTextField.text = interval.title
             
             let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
             let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
-            cell.durationTextField.text = "\(minString) \(secString)"
+            if minString == "" && secString == "" {
+                cell.durationTextField.text = ""
+            }
+            else {
+                cell.durationTextField.text = "\(minString) \(secString)"
+            }
             
             cell.userInteractionEnabled = self.editMode
         }
-        else {
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-        }
+
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }
@@ -143,6 +153,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         if indexPath.row == self.intervalArray.count {
             
             var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! Interval
+            interval.title = ""
             self.intervalArray.addObject(interval)
             
             tableView.beginUpdates()
@@ -188,8 +199,11 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     //MARK: Private methods
     
     func addButtonTapped() {
+    
+        self.repositionExistingSequences()
         
         var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as! Sequence
+        sequence.position = 0
         if self.nameTextField.text == nil || self.nameTextField.text == "" {
             sequence.name = "My sequence"
         }
@@ -232,10 +246,16 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     func editButtonTapped() {
         
         self.nameTextField.enabled = true
-        self.nameTextField.becomeFirstResponder()
         self.navigationItem.rightBarButtonItem = self.saveBarButton
         self.editMode = true
+        self.theTableView.reorderEnabled = true
+        self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.theTableView.reloadData()
+        
+        let sequence = self.getSequence()
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([sort])
+        self.theTableView.sourceArray = NSMutableArray(array: intervalArray)
     }
     
     func saveButtonTapped() {
@@ -244,7 +264,39 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.view.endEditing(true)
         self.navigationItem.rightBarButtonItem = self.editBarButton
         self.editMode = false
+        self.theTableView.reorderEnabled = false
+        self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        if self.theTableView.reordered {
+            for var i=0; i<self.theTableView.sourceArray.count; i++ {
+
+                let interval: Interval = self.theTableView.sourceArray[i] as! Interval
+                interval.position = i
+                
+                var error: NSError?
+                self.managedObjectContext.save(&error)
+            }
+        }
+        
         self.theTableView.reloadData()
+    }
+    
+    func repositionExistingSequences() {
+        
+        let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: self.managedObjectContext)
+        let request: NSFetchRequest = NSFetchRequest()
+        request.entity = entityDesc
+        
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        request.sortDescriptors = [sort]
+        
+        var anError: NSError?
+        let sequenceArray = self.managedObjectContext.executeFetchRequest(request, error: &anError)! as NSArray
+        
+        for var i=0; i<sequenceArray.count; i++ {
+            let storedSequence = sequenceArray[i] as! Sequence
+            storedSequence.position = storedSequence.position.integerValue + 1
+        }
     }
     
     func getSequence() -> Sequence {
