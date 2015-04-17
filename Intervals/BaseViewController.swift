@@ -17,7 +17,7 @@ class BaseViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.managedObjectContext = appDelegate.managedObjectContext!
     }
 }

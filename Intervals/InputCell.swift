@@ -35,7 +35,14 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         self.nameTextField.delegate = self
         self.durationTextField.delegate = self
         
-        self.picker = UIPickerView(frame: CGRectMake(0, 0, 0, 0))
+        let inputView: UIView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 260))
+        let toolBar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, inputView.frame.size.width, 44))
+        let doneBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: Selector("pickerDoneButtonTapped"))
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        toolBar.items = [space, doneBarButton]
+        inputView.addSubview(toolBar)
+        
+        self.picker = UIPickerView(frame: CGRectMake(0, toolBar.frame.size.height, inputView.frame.size.width, 0))
         self.picker.dataSource = self
         self.picker.delegate = self
         self.picker.selectRow(kInitalSelectionIndex, inComponent: kSecComponent, animated: false)
@@ -70,7 +77,8 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         secLabel.text = "sec"
         self.picker.addSubview(secLabel)
         
-        self.durationTextField.inputView = self.picker
+        inputView.addSubview(self.picker)
+        self.durationTextField.inputView = inputView
     }
     
     //MARK: UIPickerViewDataSource
@@ -210,5 +218,11 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    //MARK: Private methods
+    
+    func pickerDoneButtonTapped() {
+        self.endEditing(true)
     }
 }

@@ -10,7 +10,7 @@ import CoreData
 
 class Interval: NSManagedObject {
    
-    @NSManaged var title: NSString
+    @NSManaged var title: String
     @NSManaged var duration: NSNumber
     @NSManaged var minutes: NSNumber
     @NSManaged var seconds: NSNumber
