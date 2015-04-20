@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -23,9 +23,9 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Interval Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jY8-Ow-e8A">
-                        <rect key="frame" x="16" y="12" width="160" height="30"/>
+                        <rect key="frame" x="8" y="12" width="140" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="160" id="Ecp-oC-108"/>
+                            <constraint firstAttribute="width" constant="140" id="Ecp-oC-108"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <textInputTraits key="textInputTraits"/>
@@ -36,7 +36,7 @@
                     <constraint firstItem="jY8-Ow-e8A" firstAttribute="top" secondItem="JLv-l5-hiZ" secondAttribute="topMargin" constant="4" id="H5H-pM-hir"/>
                     <constraint firstAttribute="bottomMargin" secondItem="jY8-Ow-e8A" secondAttribute="bottom" constant="4" id="SEg-D4-55y"/>
                     <constraint firstItem="ngK-YV-eqa" firstAttribute="top" secondItem="JLv-l5-hiZ" secondAttribute="topMargin" constant="4" id="VWc-yb-B50"/>
-                    <constraint firstItem="jY8-Ow-e8A" firstAttribute="leading" secondItem="JLv-l5-hiZ" secondAttribute="leadingMargin" constant="8" id="qgx-hB-0Bg"/>
+                    <constraint firstItem="jY8-Ow-e8A" firstAttribute="leading" secondItem="JLv-l5-hiZ" secondAttribute="leadingMargin" id="qgx-hB-0Bg"/>
                     <constraint firstItem="ngK-YV-eqa" firstAttribute="trailing" secondItem="JLv-l5-hiZ" secondAttribute="trailingMargin" id="xsj-wQ-ZZd"/>
                 </constraints>
             </tableViewCellContentView>

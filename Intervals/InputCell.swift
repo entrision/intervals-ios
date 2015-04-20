@@ -109,43 +109,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
             title = "\(row)"
         }
         else if component == kSecComponent {
-            
-            if row == 0 {
-                title = "0"
-            }
-            else if row == 1 {
-                title = "5"
-            }
-            else if row == 2 {
-                title = "10"
-            }
-            else if row == 3 {
-                title = "15"
-            }
-            else if row == 4 {
-                title = "20"
-            }
-            else if row == 5 {
-                title = "25"
-            }
-            else if row == 6 {
-                title = "30"
-            }
-            else if row == 7 {
-                title = "35"
-            }
-            else if row == 8 {
-                title = "40"
-            }
-            else if row == 9 {
-                title = "45"
-            }
-            else if row == 10 {
-                title = "50"
-            }
-            else if row == 11 {
-                title = "55"
-            }
+            title = "\(row*5)"
         }
         
         return title;
@@ -161,7 +125,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
             }
             else {
                 self.minString = ""
-                if self.secString == "" {
+                if self.seconds == 0 {
                     self.picker.selectRow(row+1, inComponent: component, animated: true)
                     
                     let newString = self.pickerView(pickerView, titleForRow: row+1, forComponent: component)
@@ -177,7 +141,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
             }
             else {
                 self.secString = ""
-                if self.minString == "" {
+                if self.minutes == 0 {
                     self.picker.selectRow(row+1, inComponent: component, animated: true)
                     
                     let newString = self.pickerView(pickerView, titleForRow: row+1, forComponent: component)
@@ -209,8 +173,16 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
-        if textField == self.durationTextField && textField.text == "" {
-            self.pickerView(self.picker, didSelectRow: kInitalSelectionIndex, inComponent: kSecComponent)
+        if textField == self.durationTextField {
+            if textField.text == "" {
+                self.pickerView(self.picker, didSelectRow: kInitalSelectionIndex, inComponent: kSecComponent)
+            }
+            else {
+                self.picker.selectRow(self.minutes, inComponent: kMinComponent, animated: false)
+                self.pickerView(self.picker, didSelectRow: self.minutes, inComponent: kMinComponent)
+                self.picker.selectRow(self.seconds/5, inComponent: kSecComponent, animated: false)
+                self.pickerView(self.picker, didSelectRow: self.seconds/5, inComponent: kSecComponent)
+            }
         }
     }
     

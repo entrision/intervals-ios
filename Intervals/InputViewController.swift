@@ -146,6 +146,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             }
             else {
                 cell.durationTextField.text = "\(minString) \(secString)"
+                cell.duration = interval.duration.integerValue
+                cell.minutes = interval.minutes.integerValue
+                cell.seconds = interval.seconds.integerValue
             }
             
             cell.userInteractionEnabled = self.editMode
@@ -191,6 +194,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
+            let interval = self.intervalArray.objectAtIndex(indexPath.row) as! Interval
+            self.managedObjectContext.deleteObject(interval)
             self.intervalArray.removeObjectAtIndex(indexPath.row)
             
             tableView.beginUpdates()
@@ -221,8 +226,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             sequence.name = self.nameTextField.text
         }
         
-//        self.addNewIntervalsToCoreData()
-        
+        var isValid = true
         for var i=0; i<self.intervalArray.count; i++ {
             
             let interval = self.intervalArray[i] as! Interval
@@ -235,18 +239,21 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             interval.position = i
             
             if interval.title == "" || interval.duration == 0 {
-                let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-                return
+                self.showInvalidEntryAlert()
+                
+                self.managedObjectContext.deleteObject(sequence)
+                isValid = false
+                break
             }
             
             sequence.addIntervalObject(interval)
         }
         
-        var error: NSError?
-        self.managedObjectContext.save(&error)
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if isValid {
+            var error: NSError?
+            self.managedObjectContext.save(&error)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func cancelButtonTapped () {
@@ -267,31 +274,23 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func saveButtonTapped() {
         
-        self.nameTextField.enabled = false
-        self.view.endEditing(true)
-        self.navigationItem.rightBarButtonItem = self.editBarButton
-        self.editMode = false
-        self.theTableView.reorderEnabled = false
-        self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
-        self.addNewIntervalsToCoreData()
-        
-        if self.theTableView.reordered {
-            for var i=0; i<self.theTableView.sourceArray.count; i++ {
-
-                let interval: Interval = self.theTableView.sourceArray[i] as! Interval
-                interval.position = i
-            }
-        }
-        
-        var error: NSError?
-        self.managedObjectContext.save(&error)
-        
-        let sequence = self.getSequence()
-        let sort = NSSortDescriptor(key: "position", ascending: true)
-        let array = sequence.intervals.sortedArrayUsingDescriptors([sort]) as NSArray
-        self.intervalArray = NSMutableArray(array: array)
-        self.theTableView.reloadData()
+        let validEntries: Bool = self.editIntervals()
+        if validEntries {
+            
+            self.nameTextField.enabled = false
+            self.view.endEditing(true)
+            self.navigationItem.rightBarButtonItem = self.editBarButton
+            self.editMode = false
+            self.theTableView.reorderEnabled = false
+            self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            
+            self.getSequence().name = self.nameTextField.text
+            
+            var error: NSError?
+            self.managedObjectContext.save(&error)
+            
+            self.navigationController?.popViewControllerAnimated(true)
+        } 
     }
     
     func repositionExistingSequences() {
@@ -318,29 +317,34 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         return sequence
     }
     
-    func addNewIntervalsToCoreData() {
+    func editIntervals() -> Bool {
         
         for var i=0; i<self.intervalArray.count; i++ {
             
             let interval = self.intervalArray[i] as! Interval
+            let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
+            
+            interval.title = cell.nameTextField.text
+            interval.duration = cell.duration
+            interval.minutes = cell.minutes
+            interval.seconds = cell.seconds
+            interval.position = i
+            
+            if interval.title == "" || interval.duration == 0 {
+                self.showInvalidEntryAlert()
+                return false
+            }
+            
             if interval.objectID.temporaryID {
-                
-                let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
-                
-                interval.title = cell.nameTextField.text
-                interval.duration = cell.duration
-                interval.minutes = cell.minutes
-                interval.seconds = cell.seconds
-                interval.position = i
-                
-                if interval.title == "" || interval.duration == 0 {
-                    let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
-                    alert.show()
-                    return
-                }
-                
                 self.getSequence().addIntervalObject(interval)
             }
         }
+        
+        return true
+    }
+    
+    func showInvalidEntryAlert() {
+        let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
     }
 }

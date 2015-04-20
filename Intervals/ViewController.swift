@@ -120,6 +120,27 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         return 75.0
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            
+            let sequence = self.sequenceArray.objectAtIndex(indexPath.row) as! Sequence
+            self.managedObjectContext.deleteObject(sequence)
+            self.sequenceArray.removeObjectAtIndex(indexPath.row)
+            
+            var error: NSError?
+            self.managedObjectContext.save(&error)
+            
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
+            tableView.endUpdates()
+        }
+    }
+    
     //MARK: Transitioning Delegate
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
