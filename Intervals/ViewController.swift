@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WatchCoreDataProxy
 
 class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate {
 
@@ -46,7 +47,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         if self.theTableView.reordered {
             for var i=0; i<self.sequenceArray.count; i++ {
                 
-                let sequence = self.sequenceArray[i] as! Sequence
+                let sequence = self.sequenceArray[i] as! HWSequence
                 sequence.position = i
                 
                 var error: NSError?
@@ -88,7 +89,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
         }
         
-        let sequence = self.sequenceArray[indexPath.row] as! Sequence
+        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
         
         cell.textLabel?.text = sequence.name
         
@@ -105,13 +106,25 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        for var i=0; i<self.sequenceArray.count; i++ {
+            
+            let aSequence = self.sequenceArray[i] as! HWSequence
+            if aSequence.loadedOnWatch == 1 {
+                aSequence.loadedOnWatch = 0
+                break
+            }
+        }
+        
+        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
+        sequence.loadedOnWatch = 1
+        
         let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch")
         actionSheet.showInView(self.view)
     }
     
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         
-        let sequence = self.sequenceArray[indexPath.row] as! Sequence
+        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
         self.selectedSequenceID = sequence.objectID
         self.performSegueWithIdentifier(kDetailSegue, sender: self)
     }
@@ -128,7 +141,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
-            let sequence = self.sequenceArray.objectAtIndex(indexPath.row) as! Sequence
+            let sequence = self.sequenceArray.objectAtIndex(indexPath.row) as! HWSequence
             self.managedObjectContext.deleteObject(sequence)
             self.sequenceArray.removeObjectAtIndex(indexPath.row)
             
@@ -155,6 +168,27 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         let transition = CustomModalTransition()
         transition.presenting = false
         return transition
+    }
+    
+    //MARK: UIActionSheetDelegate
+    
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        
+        if buttonIndex == 1 {
+            
+            var error: NSError?
+            self.managedObjectContext.save(&error)
+            
+            if error != nil {
+                println(error?.localizedDescription)
+            }
+            else {
+                DarwinHelper.postSequenceLoadNotification()
+            }
+        }
+        else {
+            self.managedObjectContext.rollback()
+        }
     }
     
     //MARK: Private methods

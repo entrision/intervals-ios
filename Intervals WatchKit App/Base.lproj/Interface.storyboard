@@ -11,7 +11,7 @@
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Intervals_WatchKit_App" customModuleProvider="target">
                     <items>
                         <label width="126" alignment="left" text="Burpees" id="eBG-oz-9DM"/>
-                        <label alignment="left" text="1 of 4" id="EYt-Sg-uI0">
+                        <label width="136" alignment="left" text="1 of 4" id="EYt-Sg-uI0">
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </label>
                         <timer width="130" height="52" alignment="left" textAlignment="center" id="0FD-9e-1MC">
@@ -23,6 +23,11 @@
                             <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
                         </button>
                     </items>
+                    <connections>
+                        <outlet property="progressLabel" destination="EYt-Sg-uI0" id="3Oa-S3-8hc"/>
+                        <outlet property="timer" destination="0FD-9e-1MC" id="RA1-OU-76G"/>
+                        <outlet property="titleLabel" destination="eBG-oz-9DM" id="qE1-6E-IvQ"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="220" y="345"/>

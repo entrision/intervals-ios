@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WatchCoreDataProxy
 
 class BaseViewController: UIViewController {
     
@@ -17,7 +18,6 @@ class BaseViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        self.managedObjectContext = appDelegate.managedObjectContext!
+        self.managedObjectContext = WatchCoreDataProxy.sharedInstance.managedObjectContext!
     }
 }

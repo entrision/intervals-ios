@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WatchCoreDataProxy
 
 class InputViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
@@ -74,8 +75,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: Selector("cancelButtonTapped"))
             self.navigationItem.leftBarButtonItem = self.cancelBarButton
             
-            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! Interval
-            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! Interval
+            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
+            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             interval.title = ""
             interval2.title = ""
             interval.duration = 0
@@ -136,7 +137,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         if self.readOnly {
             
-            let interval: Interval = self.intervalArray[indexPath.row] as! Interval
+            let interval: HWInterval = self.intervalArray[indexPath.row] as! HWInterval
             cell.nameTextField.text = interval.title
             
             let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
@@ -165,7 +166,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
         if indexPath.row == self.intervalArray.count {
             
-            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! Interval
+            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             interval.title = ""
             self.intervalArray.addObject(interval)
             
@@ -194,7 +195,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
-            let interval = self.intervalArray.objectAtIndex(indexPath.row) as! Interval
+            let interval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
             self.managedObjectContext.deleteObject(interval)
             self.intervalArray.removeObjectAtIndex(indexPath.row)
             
@@ -217,7 +218,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
         self.repositionExistingSequences()
         
-        var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as! Sequence
+        var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as! HWSequence
         sequence.position = 0
         if self.nameTextField.text == nil || self.nameTextField.text == "" {
             sequence.name = "My sequence"
@@ -229,7 +230,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         var isValid = true
         for var i=0; i<self.intervalArray.count; i++ {
             
-            let interval = self.intervalArray[i] as! Interval
+            let interval = self.intervalArray[i] as! HWInterval
             let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
             
             interval.title = cell.nameTextField.text
@@ -306,14 +307,14 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         let sequenceArray = self.managedObjectContext.executeFetchRequest(request, error: &anError)! as NSArray
         
         for var i=0; i<sequenceArray.count; i++ {
-            let storedSequence = sequenceArray[i] as! Sequence
+            let storedSequence = sequenceArray[i] as! HWSequence
             storedSequence.position = storedSequence.position.integerValue + 1
         }
     }
     
-    func getSequence() -> Sequence {
+    func getSequence() -> HWSequence {
         var error: NSError?
-        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! Sequence
+        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! HWSequence
         return sequence
     }
     
@@ -321,7 +322,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         for var i=0; i<self.intervalArray.count; i++ {
             
-            let interval = self.intervalArray[i] as! Interval
+            let interval = self.intervalArray[i] as! HWInterval
             let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
             
             interval.title = cell.nameTextField.text
