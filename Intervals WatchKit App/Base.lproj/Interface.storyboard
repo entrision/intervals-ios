@@ -15,7 +15,7 @@
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
                         <label width="136" height="19" alignment="left" text="Warm-up" textAlignment="center" id="wOS-qF-GNO">
-                            <color key="textColor" red="0.0" green="0.74180506993006989" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.74117647058823533" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
                         <label width="136" height="15" alignment="left" text="1 of 4" textAlignment="center" id="EYt-Sg-uI0">
@@ -28,12 +28,16 @@
                         </timer>
                         <button width="1" height="56" alignment="left" title="Start" id="uJ9-yf-STG">
                             <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="brS-Ei-vKq"/>
+                            </connections>
                         </button>
                     </items>
                     <connections>
                         <outlet property="intervalTitleLabel" destination="wOS-qF-GNO" id="Yjn-0U-SoB"/>
                         <outlet property="progressLabel" destination="EYt-Sg-uI0" id="3Oa-S3-8hc"/>
                         <outlet property="sequenceTitleLabel" destination="eBG-oz-9DM" id="ioO-io-Xwp"/>
+                        <outlet property="startButton" destination="uJ9-yf-STG" id="a05-GJ-1DP"/>
                         <outlet property="timer" destination="0FD-9e-1MC" id="RA1-OU-76G"/>
                     </connections>
                 </controller>

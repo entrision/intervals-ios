@@ -16,7 +16,13 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet weak var sequenceTitleLabel: WKInterfaceLabel!
     @IBOutlet weak var intervalTitleLabel: WKInterfaceLabel!
     @IBOutlet weak var progressLabel: WKInterfaceLabel!
+    @IBOutlet weak var startButton: WKInterfaceButton!
     @IBOutlet weak var timer: WKInterfaceTimer!
+    
+    var sequenceID: NSManagedObjectID = NSManagedObjectID()
+    var currentIntervalID: NSManagedObjectID = NSManagedObjectID()
+    
+    var ticking = false
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -52,10 +58,13 @@ class InterfaceController: WKInterfaceController {
         let array = WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(request, error: &error)! as NSArray
         
         let sequence: HWSequence = array[0] as! HWSequence
+        self.sequenceID = sequence.objectID
         self.sequenceTitleLabel.setText(sequence.name)
         
         let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
         let firstInterval = intervalArray.objectAtIndex(0) as! HWInterval
+        self.currentIntervalID = firstInterval.objectID
+        
         let title = firstInterval.title
         self.intervalTitleLabel.setText(title)
         
@@ -67,4 +76,25 @@ class InterfaceController: WKInterfaceController {
         self.timer.setDate(date)
     }
 
+    @IBAction func startButtonTapped() {
+        
+        let currentInterval = WatchCoreDataProxy.sharedInstance.managedObjectContext?.objectWithID(self.currentIntervalID) as! HWInterval
+        
+        let duration = NSTimeInterval(currentInterval.duration.integerValue)
+        let date = NSDate(timeIntervalSinceNow: duration)
+        self.timer.setDate(date)
+        
+        if self.ticking {
+            
+            self.timer.stop()
+            self.startButton.setTitle("Start")
+        }
+        else {
+            
+            self.timer.start()
+            self.startButton.setTitle("Pause")
+        }
+        
+        self.ticking = !self.ticking
+    }
 }
