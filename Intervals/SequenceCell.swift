@@ -28,10 +28,19 @@ class SequenceCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        let glareView = GlareView(frame: CGRectMake(1.0, 1.0, self.watchFaceView.frame.size.width, self.watchFaceView.frame.size.height))
+        self.watchFaceView.addSubview(glareView)
+        self.watchFaceView.layer.cornerRadius = 3.0
+        
         self.watchBandView.layer.cornerRadius = 2.0
         self.watchBandView.layer.borderColor = UIColor(white: 0.5, alpha: 1.0).CGColor
         self.watchBandView.layer.borderWidth = 0.5
         self.watchView.hidden = true
+        
+        self.infoButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+        self.infoButton.layer.cornerRadius = self.infoButton.frame.size.width / 2
+        self.infoButton.layer.borderWidth = 0.75
+        self.infoButton.layer.borderColor = UIColor(red: 0.0, green: 0.25, blue: 0.95, alpha: 1.0).CGColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -48,7 +57,7 @@ class SequenceCell: UITableViewCell {
     func loadedOnWatch(loaded: NSNumber) {
         
         if loaded == 1 {
-            self.titleLabelLeftSpaceConstraint.constant = 20
+            self.titleLabelLeftSpaceConstraint.constant = 22
             self.watchView.hidden = false
         }
         else {

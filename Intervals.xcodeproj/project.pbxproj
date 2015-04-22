@@ -12,7 +12,7 @@
 		04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D641AE6C7CB00767C51 /* DarwinHelper.m */; };
 		04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
 		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
-		04AE8F361AE828A700939B26 /* WatchFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* WatchFaceView.swift */; };
+		04AE8F361AE828A700939B26 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
 		04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4531ADD9744001659B3 /* AppDelegate.swift */; };
 		04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */; };
 		04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
@@ -126,7 +126,7 @@
 		04316D641AE6C7CB00767C51 /* DarwinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarwinHelper.m; sourceTree = "<group>"; };
 		04AE8F311AE81A0D00939B26 /* SequenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceCell.swift; sourceTree = "<group>"; };
 		04AE8F321AE81A0D00939B26 /* SequenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequenceCell.xib; sourceTree = "<group>"; };
-		04AE8F351AE828A700939B26 /* WatchFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchFaceView.swift; sourceTree = "<group>"; };
+		04AE8F351AE828A700939B26 /* GlareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlareView.swift; sourceTree = "<group>"; };
 		04E0D44E1ADD9744001659B3 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E0D4521ADD9744001659B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E0D4531ADD9744001659B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				04034E781AE159B800CFDE50 /* ReorderTableView.swift */,
-				04AE8F351AE828A700939B26 /* WatchFaceView.swift */,
+				04AE8F351AE828A700939B26 /* GlareView.swift */,
 				04AE8F311AE81A0D00939B26 /* SequenceCell.swift */,
 				04AE8F321AE81A0D00939B26 /* SequenceCell.xib */,
 				04E0D47C1ADDAF37001659B3 /* InputCell.swift */,
@@ -651,7 +651,7 @@
 				04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */,
 				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,
 				04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */,
-				04AE8F361AE828A700939B26 /* WatchFaceView.swift in Sources */,
+				04AE8F361AE828A700939B26 /* GlareView.swift in Sources */,
 				04E0D4861ADDBB16001659B3 /* Sequence.swift in Sources */,
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
