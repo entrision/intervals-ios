@@ -278,17 +278,14 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         let validEntries: Bool = self.editIntervals()
         if validEntries {
             
-            self.nameTextField.enabled = false
-            self.view.endEditing(true)
-            self.navigationItem.rightBarButtonItem = self.editBarButton
-            self.editMode = false
-            self.theTableView.reorderEnabled = false
-            self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-            
             self.getSequence().name = self.nameTextField.text
             
             var error: NSError?
             self.managedObjectContext.save(&error)
+            
+            if self.getSequence().loadedOnWatch == 1 {
+                DarwinHelper.postSequenceLoadNotification()
+            }
             
             self.navigationController?.popViewControllerAnimated(true)
         } 

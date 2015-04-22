@@ -191,7 +191,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         return true
     }
     
-    //MARK: Private methods
+    //MARK: Misc methods
     
     func pickerDoneButtonTapped() {
         self.endEditing(true)

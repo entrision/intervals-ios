@@ -17,7 +17,7 @@ static void method(CFNotificationCenterRef center, void *observer, CFStringRef n
 
 @implementation Callback
 
-+(void)objectivecObserver:(id)observer {
++(void)addObjectivecObserver:(id)observer {
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), (__bridge const void *)(observer), self.callback, CFSTR("com.intervals.sequenceLoad"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
 }

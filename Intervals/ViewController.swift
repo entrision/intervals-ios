@@ -10,10 +10,11 @@ import UIKit
 import CoreData
 import WatchCoreDataProxy
 
-class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate {
+class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate, SequenceCellDelegate {
 
     let kInputSegue = "inputSegue"
     let kDetailSegue = "sequenceDetailSegue"
+    let cellID = "CellID"
     
     var sequenceArray = NSMutableArray()
     var selectedSequenceID = NSManagedObjectID()
@@ -31,6 +32,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         let plusBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("plusButtonTapped"))
         self.navigationItem.leftBarButtonItem = plusBarButton
+        
+        self.theTableView.registerNib(UINib(nibName: "SequenceCell", bundle: nil), forCellReuseIdentifier: cellID)
+        self.theTableView.tableFooterView = UIView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -83,19 +87,16 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell!
-        
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
-        }
+        var cell: SequenceCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SequenceCell
         
         let sequence = self.sequenceArray[indexPath.row] as! HWSequence
         
-        cell.textLabel?.text = sequence.name
+        cell.titleLabel?.text = sequence.name
         
         var detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
-        cell.detailTextLabel?.text = "\(sequence.intervals.count) \(detailText)"
-        cell.accessoryType = UITableViewCellAccessoryType.DetailButton
+        cell.detailLabel?.text = "\(sequence.intervals.count) \(detailText)"
+        cell.loadedOnWatch(sequence.loadedOnWatch)
+        cell.delegate = self
         
         return cell
     }
@@ -122,13 +123,6 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         actionSheet.showInView(self.view)
     }
     
-    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        
-        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
-        self.selectedSequenceID = sequence.objectID
-        self.performSegueWithIdentifier(kDetailSegue, sender: self)
-    }
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 75.0
     }
@@ -152,6 +146,16 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
             tableView.endUpdates()
         }
+    }
+    
+    //MARK: SequenceCellDelegate
+    
+    func sequenceCellDidTapInfoButton(cell: SequenceCell) {
+        
+        let indexPath = self.theTableView.indexPathForCell(cell)
+        let sequence = self.sequenceArray[indexPath!.row] as! HWSequence
+        self.selectedSequenceID = sequence.objectID
+        self.performSegueWithIdentifier(kDetailSegue, sender: self)
     }
     
     //MARK: Transitioning Delegate
@@ -183,6 +187,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 println(error?.localizedDescription)
             }
             else {
+                self.theTableView.reloadData()
                 DarwinHelper.postSequenceLoadNotification()
             }
         }

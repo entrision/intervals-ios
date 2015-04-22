@@ -13,7 +13,8 @@ import WatchCoreDataProxy
 
 class InterfaceController: WKInterfaceController {
 
-    @IBOutlet weak var titleLabel: WKInterfaceLabel!
+    @IBOutlet weak var sequenceTitleLabel: WKInterfaceLabel!
+    @IBOutlet weak var intervalTitleLabel: WKInterfaceLabel!
     @IBOutlet weak var progressLabel: WKInterfaceLabel!
     @IBOutlet weak var timer: WKInterfaceTimer!
     
@@ -27,7 +28,7 @@ class InterfaceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        Callback.objectivecObserver(self)
+        Callback.addObjectivecObserver(self)
     }
 
     override func didDeactivate() {
@@ -36,6 +37,9 @@ class InterfaceController: WKInterfaceController {
     }
     
     internal func sequenceLoaded() {
+        
+        var anError: NSError?
+        WatchCoreDataProxy.sharedInstance.managedObjectContext?.save(&anError)
         
         let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!)
         let request: NSFetchRequest = NSFetchRequest()
@@ -48,10 +52,12 @@ class InterfaceController: WKInterfaceController {
         let array = WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(request, error: &error)! as NSArray
         
         let sequence: HWSequence = array[0] as! HWSequence
+        self.sequenceTitleLabel.setText(sequence.name)
+        
         let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
         let firstInterval = intervalArray.objectAtIndex(0) as! HWInterval
         let title = firstInterval.title
-        self.titleLabel.setText(title)
+        self.intervalTitleLabel.setText(title)
         
         let text = "\(intervalArray.indexOfObject(firstInterval)+1)"
         self.progressLabel.setText("\(text) of \(intervalArray.count)")

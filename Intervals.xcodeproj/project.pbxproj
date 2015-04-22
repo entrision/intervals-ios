@@ -10,6 +10,9 @@
 		04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034E781AE159B800CFDE50 /* ReorderTableView.swift */; };
 		04316D611AE6C6CF00767C51 /* Callback.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D601AE6C6CF00767C51 /* Callback.m */; };
 		04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D641AE6C7CB00767C51 /* DarwinHelper.m */; };
+		04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
+		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
+		04AE8F361AE828A700939B26 /* WatchFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* WatchFaceView.swift */; };
 		04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4531ADD9744001659B3 /* AppDelegate.swift */; };
 		04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */; };
 		04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
@@ -121,6 +124,9 @@
 		04316D621AE6C7CA00767C51 /* Intervals-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Intervals-Bridging-Header.h"; sourceTree = "<group>"; };
 		04316D631AE6C7CB00767C51 /* DarwinHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarwinHelper.h; sourceTree = "<group>"; };
 		04316D641AE6C7CB00767C51 /* DarwinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarwinHelper.m; sourceTree = "<group>"; };
+		04AE8F311AE81A0D00939B26 /* SequenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceCell.swift; sourceTree = "<group>"; };
+		04AE8F321AE81A0D00939B26 /* SequenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequenceCell.xib; sourceTree = "<group>"; };
+		04AE8F351AE828A700939B26 /* WatchFaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchFaceView.swift; sourceTree = "<group>"; };
 		04E0D44E1ADD9744001659B3 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E0D4521ADD9744001659B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E0D4531ADD9744001659B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -283,6 +289,9 @@
 			isa = PBXGroup;
 			children = (
 				04034E781AE159B800CFDE50 /* ReorderTableView.swift */,
+				04AE8F351AE828A700939B26 /* WatchFaceView.swift */,
+				04AE8F311AE81A0D00939B26 /* SequenceCell.swift */,
+				04AE8F321AE81A0D00939B26 /* SequenceCell.xib */,
 				04E0D47C1ADDAF37001659B3 /* InputCell.swift */,
 				04E0D47E1ADDAF46001659B3 /* InputCell.xib */,
 			);
@@ -551,6 +560,7 @@
 					};
 					04F9C83D1AE59E86006935D4 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = P72W356S6R;
 					};
 				};
 			};
@@ -584,6 +594,7 @@
 			files = (
 				04E0D45C1ADD9744001659B3 /* Main.storyboard in Resources */,
 				04E0D4611ADD9744001659B3 /* LaunchScreen.xib in Resources */,
+				04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */,
 				04E0D47F1ADDAF46001659B3 /* InputCell.xib in Resources */,
 				04E0D45E1ADD9744001659B3 /* Images.xcassets in Resources */,
 			);
@@ -637,8 +648,10 @@
 			files = (
 				04E0D4791ADD9BCE001659B3 /* CustomModalTransition.swift in Sources */,
 				04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */,
+				04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */,
 				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,
 				04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */,
+				04AE8F361AE828A700939B26 /* WatchFaceView.swift in Sources */,
 				04E0D4861ADDBB16001659B3 /* Sequence.swift in Sources */,
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
@@ -898,7 +911,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -915,6 +929,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -927,7 +942,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -940,6 +956,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1032,6 +1049,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1053,6 +1071,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Intervals_WatchKit_Extension;

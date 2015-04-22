@@ -10,7 +10,7 @@
 
 @interface Callback : NSObject
 
-+(void)objectivecObserver:(id)observer;
++(void)addObjectivecObserver:(id)observer;
 
 +(void(*)(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo))callback;
 
