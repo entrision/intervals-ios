@@ -29,8 +29,6 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         // Do any additional setup after loading the view, typically from a nib.
         
         self.title = "Intervals"
-        self.navigationController?.navigationBar.barTintColor = UIColor(white: 0.925, alpha: 1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18.0)!, NSForegroundColorAttributeName : UIColor.blackColor()]
         
         let plusBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("plusButtonTapped"))
         self.navigationItem.leftBarButtonItem = plusBarButton

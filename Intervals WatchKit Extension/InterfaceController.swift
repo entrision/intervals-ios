@@ -19,8 +19,10 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet weak var startButton: WKInterfaceButton!
     @IBOutlet weak var timer: WKInterfaceTimer!
     
+    var intervalArray = NSArray()
+    
     var sequenceID: NSManagedObjectID = NSManagedObjectID()
-    var currentIntervalID: NSManagedObjectID = NSManagedObjectID()
+    var currentIntervalIndex: Int = 0
     
     var ticking = false
     
@@ -61,9 +63,8 @@ class InterfaceController: WKInterfaceController {
         self.sequenceID = sequence.objectID
         self.sequenceTitleLabel.setText(sequence.name)
         
-        let intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
+        self.intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
         let firstInterval = intervalArray.objectAtIndex(0) as! HWInterval
-        self.currentIntervalID = firstInterval.objectID
         
         let title = firstInterval.title
         self.intervalTitleLabel.setText(title)
@@ -77,10 +78,10 @@ class InterfaceController: WKInterfaceController {
     }
 
     @IBAction func startButtonTapped() {
+
+        let interval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
         
-        let currentInterval = WatchCoreDataProxy.sharedInstance.managedObjectContext?.objectWithID(self.currentIntervalID) as! HWInterval
-        
-        let duration = NSTimeInterval(currentInterval.duration.integerValue)
+        let duration = NSTimeInterval(interval.duration.integerValue)
         let date = NSDate(timeIntervalSinceNow: duration)
         self.timer.setDate(date)
         
@@ -92,9 +93,35 @@ class InterfaceController: WKInterfaceController {
         else {
             
             self.timer.start()
-            self.startButton.setTitle("Pause")
+            self.startButton.setTitle("Stop")
+            
+            NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("nextInterval"), userInfo: nil, repeats: false)
         }
         
         self.ticking = !self.ticking
+    }
+    
+    func nextInterval() {
+        
+        if self.currentIntervalIndex < self.intervalArray.count-1 {
+            
+            self.currentIntervalIndex++
+            
+            let nextInterval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
+            
+            self.intervalTitleLabel.setText(nextInterval.title)
+            
+            let text = "\(intervalArray.indexOfObject(nextInterval)+1)"
+            self.progressLabel.setText("\(text) of \(intervalArray.count)")
+            
+            let duration = NSTimeInterval(nextInterval.duration.integerValue)
+            let date = NSDate(timeIntervalSinceNow: duration)
+            self.timer.setDate(date)
+            
+            NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("nextInterval"), userInfo: nil, repeats: false)
+        }
+        else {
+            
+        }
     }
 }

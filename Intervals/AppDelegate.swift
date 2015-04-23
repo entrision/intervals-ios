@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.tintColor = UIColor(red: 0.0, green: 0.25, blue: 0.95, alpha: 1.0)
         
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18.0)!, NSForegroundColorAttributeName : UIColor.blackColor()]
+        UINavigationBar.appearance().barTintColor = UIColor(white: 0.925, alpha: 1.0)
+        
         return true
     }
 
