@@ -54,7 +54,7 @@ class ReorderTableView: UITableView {
             self.snapshot.center = center!
             self.snapshot.alpha = 0.0
             self.addSubview(snapshot)
-            UIView.animateWithDuration(0.25, animations: ({
+            UIView.animateWithDuration(0.2, animations: ({
                 
                 center?.y = location.y
                 self.snapshot.center = center!
@@ -90,7 +90,7 @@ class ReorderTableView: UITableView {
             let cell = self.cellForRowAtIndexPath(self.sourceIndexPath)
             cell?.hidden = false
             cell?.alpha = 0.0
-            UIView.animateWithDuration(0.25, animations: ({
+            UIView.animateWithDuration(0.2, animations: ({
                 
                 self.snapshot.center = cell!.center;
                 self.snapshot.transform = CGAffineTransformIdentity
@@ -103,6 +103,7 @@ class ReorderTableView: UITableView {
                 self.sourceIndexPath = NSIndexPath()
                 self.snapshot.removeFromSuperview()
                 self.snapshot = UIView()
+                cell?.hidden = false
             });
         }
     }

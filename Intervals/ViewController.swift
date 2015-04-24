@@ -22,6 +22,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     var snapshot: UIView = UIView()
     var sourceIndexPath: NSIndexPath = NSIndexPath()
     
+    @IBOutlet weak var noSequencesLabel: UILabel!
     @IBOutlet weak var theTableView: ReorderTableView!
     
     override func viewDidLoad() {
@@ -31,7 +32,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         self.title = "Intervals"
         
         let plusBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("plusButtonTapped"))
-        self.navigationItem.leftBarButtonItem = plusBarButton
+        self.navigationItem.rightBarButtonItem = plusBarButton
         
         self.theTableView.registerNib(UINib(nibName: "SequenceCell", bundle: nil), forCellReuseIdentifier: cellID)
         self.theTableView.tableFooterView = UIView()
@@ -82,6 +83,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.noSequencesLabel.hidden = self.sequenceArray.count > 0
         return self.sequenceArray.count
     }
     
@@ -97,6 +99,8 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         cell.detailLabel?.text = "\(sequence.intervals.count) \(detailText)"
         cell.loadedOnWatch(sequence.loadedOnWatch)
         cell.delegate = self
+        
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }

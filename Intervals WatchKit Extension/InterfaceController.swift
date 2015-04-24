@@ -46,8 +46,8 @@ class InterfaceController: WKInterfaceController {
     
     internal func sequenceLoaded() {
         
-        var anError: NSError?
-        WatchCoreDataProxy.sharedInstance.managedObjectContext?.save(&anError)
+//        var anError: NSError?
+//        WatchCoreDataProxy.sharedInstance.managedObjectContext?.save(&anError)
         
         let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!)
         let request: NSFetchRequest = NSFetchRequest()

@@ -33,15 +33,13 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         super.viewDidLoad()
         
-        self.title = "Detail"
-        
         let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 70))
         headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
         headerView.layer.borderWidth = 0.5
         
         self.nameTextField = UITextField(frame: CGRectMake(15, 10, headerView.frame.size.width - 30, 50))
         self.nameTextField.borderStyle = UITextBorderStyle.None
-        self.nameTextField.placeholder = "Sequence Name..."
+        self.nameTextField.placeholder = "Sequence Name"
         self.nameTextField.font = UIFont(name: "HelveticaNeue-Light", size: 21.0)
         self.nameTextField.returnKeyType = UIReturnKeyType.Done
         self.nameTextField.delegate = self
@@ -52,6 +50,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.theTableView.tableFooterView = UIView()
         
         if self.readOnly == true {
+            
+            self.title = "Detail"
             
             let sequence = self.getSequence()
             let sort = NSSortDescriptor(key: "position", ascending: true)
@@ -70,6 +70,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             self.saveBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: Selector("saveButtonTapped"))
         }
         else {
+            
+            self.title = "New"
             
             self.addBarButton = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.Done, target: self, action: Selector("addButtonTapped"))
             self.navigationItem.rightBarButtonItem = self.addBarButton

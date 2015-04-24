@@ -63,9 +63,21 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="5Om-nG-mnU"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the '+' icon to add a new sequence" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TF2-9j-hiU">
+                                <rect key="frame" x="203" y="105" width="194" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="194" id="ZKy-39-UCc"/>
+                                    <constraint firstAttribute="height" constant="68" id="plv-VB-ZkY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="21"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="TF2-9j-hiU" secondAttribute="centerX" id="M1e-lu-Qiw"/>
+                            <constraint firstItem="TF2-9j-hiU" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="41" id="VfK-HS-vCz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FTH-bD-bIF" secondAttribute="trailing" constant="-16" id="a9W-Xy-SaA"/>
                             <constraint firstItem="FTH-bD-bIF" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="hwC-Sa-04X"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="FTH-bD-bIF" secondAttribute="bottom" id="oyb-9E-5Ex"/>
@@ -74,6 +86,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="OFo-vV-Ahe"/>
                     <connections>
+                        <outlet property="noSequencesLabel" destination="TF2-9j-hiU" id="eKV-iN-j4X"/>
                         <outlet property="theTableView" destination="FTH-bD-bIF" id="xtN-oy-zjQ"/>
                         <segue destination="9ct-yo-5qR" kind="presentation" identifier="inputSegue" id="AoO-cV-mrH"/>
                         <segue destination="Pr5-zE-Oxv" kind="show" identifier="sequenceDetailSegue" id="g8R-FY-Kq6"/>

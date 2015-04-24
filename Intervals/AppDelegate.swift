@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WatchCoreDataProxy
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18.0)!, NSForegroundColorAttributeName : UIColor.blackColor()]
         UINavigationBar.appearance().barTintColor = UIColor(white: 0.925, alpha: 1.0)
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce") == true {
+            
+        }
+        else {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+            var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWSequence
+            sequence.position = 0
+            sequence.name = "Example Sequence"
+            
+            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWInterval
+            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWInterval
+            interval.title = "Interval 1"
+            interval2.title = "Interval 2"
+            interval.minutes = 0
+            interval2.minutes = 0
+            interval.seconds = 30
+            interval2.seconds = 60
+            interval.position = 0
+            interval2.position = 1
+            
+            sequence.addIntervalObject(interval)
+            sequence.addIntervalObject(interval2)
+            
+            var error: NSError?
+            WatchCoreDataProxy.sharedInstance.managedObjectContext!.save(&error)
+        }
         
         return true
     }

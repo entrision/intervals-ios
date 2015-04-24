@@ -49,6 +49,14 @@ class SequenceCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+//        if highlighted {
+//            self.backgroundColor = UIColor.redColor()
+//        }
+    }
+    
     @IBAction func infoButtonTapped(sender: AnyObject) {
         
         self.delegate.sequenceCellDidTapInfoButton(self)
