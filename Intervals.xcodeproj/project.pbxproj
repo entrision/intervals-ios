@@ -14,7 +14,6 @@
 		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
 		04AE8F361AE828A700939B26 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
 		04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4531ADD9744001659B3 /* AppDelegate.swift */; };
-		04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */; };
 		04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
 		04E0D45C1ADD9744001659B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E0D45A1ADD9744001659B3 /* Main.storyboard */; };
 		04E0D45E1ADD9744001659B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E0D45D1ADD9744001659B3 /* Images.xcassets */; };
@@ -25,8 +24,6 @@
 		04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */; };
 		04E0D47D1ADDAF37001659B3 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D47C1ADDAF37001659B3 /* InputCell.swift */; };
 		04E0D47F1ADDAF46001659B3 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E0D47E1ADDAF46001659B3 /* InputCell.xib */; };
-		04E0D4841ADDB87A001659B3 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4831ADDB87A001659B3 /* Interval.swift */; };
-		04E0D4861ADDBB16001659B3 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4851ADDBB16001659B3 /* Sequence.swift */; };
 		04E36ED41AE690C5006ADAD4 /* WatchCoreDataProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E36ED31AE690C5006ADAD4 /* WatchCoreDataProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04E36EDA1AE690C5006ADAD4 /* WatchCoreDataProxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E36ECF1AE690C5006ADAD4 /* WatchCoreDataProxy.framework */; };
 		04E36EE31AE690C5006ADAD4 /* WatchCoreDataProxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EE21AE690C5006ADAD4 /* WatchCoreDataProxyTests.swift */; };
@@ -130,7 +127,6 @@
 		04E0D44E1ADD9744001659B3 /* Intervals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intervals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E0D4521ADD9744001659B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E0D4531ADD9744001659B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		04E0D4561ADD9744001659B3 /* Intervals.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Intervals.xcdatamodel; sourceTree = "<group>"; };
 		04E0D4581ADD9744001659B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04E0D45B1ADD9744001659B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04E0D45D1ADD9744001659B3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -143,8 +139,6 @@
 		04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		04E0D47C1ADDAF37001659B3 /* InputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		04E0D47E1ADDAF46001659B3 /* InputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
-		04E0D4831ADDB87A001659B3 /* Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
-		04E0D4851ADDBB16001659B3 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		04E36ECF1AE690C5006ADAD4 /* WatchCoreDataProxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WatchCoreDataProxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E36ED21AE690C5006ADAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E36ED31AE690C5006ADAD4 /* WatchCoreDataProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WatchCoreDataProxy.h; sourceTree = "<group>"; };
@@ -249,11 +243,9 @@
 				04316D631AE6C7CB00767C51 /* DarwinHelper.h */,
 				04316D641AE6C7CB00767C51 /* DarwinHelper.m */,
 				04E0D45A1ADD9744001659B3 /* Main.storyboard */,
-				04E0D4821ADDB835001659B3 /* Model */,
 				04E0D4811ADDB82C001659B3 /* Views */,
 				04E0D45D1ADD9744001659B3 /* Images.xcassets */,
 				04E0D45F1ADD9744001659B3 /* LaunchScreen.xib */,
-				04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */,
 				04E0D4511ADD9744001659B3 /* Supporting Files */,
 				04316D621AE6C7CA00767C51 /* Intervals-Bridging-Header.h */,
 			);
@@ -296,15 +288,6 @@
 				04E0D47E1ADDAF46001659B3 /* InputCell.xib */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		04E0D4821ADDB835001659B3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				04E0D4831ADDB87A001659B3 /* Interval.swift */,
-				04E0D4851ADDBB16001659B3 /* Sequence.swift */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		04E36ED01AE690C5006ADAD4 /* WatchCoreDataProxy */ = {
@@ -652,12 +635,9 @@
 				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,
 				04E0D4591ADD9744001659B3 /* ViewController.swift in Sources */,
 				04AE8F361AE828A700939B26 /* GlareView.swift in Sources */,
-				04E0D4861ADDBB16001659B3 /* Sequence.swift in Sources */,
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
-				04E0D4571ADD9744001659B3 /* Intervals.xcdatamodeld in Sources */,
 				04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */,
-				04E0D4841ADDB87A001659B3 /* Interval.swift in Sources */,
 				04E0D47D1ADDAF37001659B3 /* InputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1154,16 +1134,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		04E0D4551ADD9744001659B3 /* Intervals.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				04E0D4561ADD9744001659B3 /* Intervals.xcdatamodel */,
-			);
-			currentVersion = 04E0D4561ADD9744001659B3 /* Intervals.xcdatamodel */;
-			path = Intervals.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		04E36EEF1AE690FC006ADAD4 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

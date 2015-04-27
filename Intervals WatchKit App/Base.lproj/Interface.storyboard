@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
     </dependencies>
     <scenes>
@@ -10,7 +10,7 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Intervals_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label width="133" height="15" alignment="left" text="Couch to 5K" textAlignment="center" id="eBG-oz-9DM">
+                        <label width="136" height="15" alignment="left" text="Couch to 5K" textAlignment="center" id="eBG-oz-9DM">
                             <color key="textColor" white="0.80171911421911424" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
@@ -26,7 +26,7 @@
                             <fontDescription key="font" type="system" pointSize="35"/>
                             <calendarUnit key="units" minute="YES" second="YES"/>
                         </timer>
-                        <button width="1" height="56" alignment="left" title="Start" id="uJ9-yf-STG">
+                        <button width="136" height="56" alignment="left" title="Start" id="uJ9-yf-STG">
                             <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="brS-Ei-vKq"/>
