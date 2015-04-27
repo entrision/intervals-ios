@@ -31,28 +31,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
             NSUserDefaults.standardUserDefaults().synchronize()
             
-            var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWSequence
-            sequence.position = 0
-            sequence.name = "Example Sequence"
-            
-            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWInterval
-            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!) as! HWInterval
-            interval.title = "Interval 1"
-            interval2.title = "Interval 2"
-            interval.minutes = 0
-            interval2.minutes = 0
-            interval.seconds = 30
-            interval2.seconds = 60
-            interval.position = 0
-            interval2.position = 1
-            interval.duration = 30
-            interval2.duration = 60
-            
-            sequence.addIntervalObject(interval)
-            sequence.addIntervalObject(interval2)
-            
-            var error: NSError?
-            WatchCoreDataProxy.sharedInstance.managedObjectContext!.save(&error)
+            if let managedObjectContext = WatchCoreDataProxy.sharedInstance.managedObjectContext {
+                
+                var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: managedObjectContext) as! HWSequence
+                sequence.position = 0
+                sequence.name = "Example Sequence"
+                
+                var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
+                var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
+                interval.title = "Interval 1"
+                interval2.title = "Interval 2"
+                interval.minutes = 0
+                interval2.minutes = 0
+                interval.seconds = 30
+                interval2.seconds = 60
+                interval.position = 0
+                interval2.position = 1
+                interval.duration = 30
+                interval2.duration = 60
+                
+                sequence.addIntervalObject(interval)
+                sequence.addIntervalObject(interval2)
+                
+                var error: NSError?
+                managedObjectContext.save(&error)
+            }
         }
         
         return true
