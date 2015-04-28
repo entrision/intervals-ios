@@ -188,8 +188,17 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         var result = true
         
-        if indexPath.row == self.intervalArray.count && !self.readOnly {
-            result = false
+        if indexPath.row == self.intervalArray.count {
+            
+            if !self.readOnly {
+                result = false
+            }
+            else {
+                
+                if self.editMode {
+                    result = false
+                }
+            }
         }
         
         return result

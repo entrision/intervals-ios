@@ -42,6 +42,9 @@ class ReorderTableView: UITableView {
         let location: CGPoint = longPressGesture.locationInView(self)
         let indexPath: NSIndexPath? = self.indexPathForRowAtPoint(location)
         
+        if indexPath!.row == self.sourceArray.count {
+            return
+        }
         
         if state == UIGestureRecognizerState.Began {
             
