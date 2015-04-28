@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>hunterwhittle.Intervals.watchkitapp</string>
+	<string>com.entrision.Intervals.watchkitapp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>hunterwhittle.Intervals</string>
+	<string>com.entrision.Intervals</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>

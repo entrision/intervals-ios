@@ -10,7 +10,7 @@ import CoreData
 
 public class WatchCoreDataProxy: NSObject {
     
-    let sharedAppGroup:String = "group.entrision.intervals"
+    let sharedAppGroup:String = "group.entrision.IntervalsGroup"
     
     public class var sharedInstance : WatchCoreDataProxy {
         struct Static {
@@ -28,7 +28,7 @@ public class WatchCoreDataProxy: NSObject {
         }()
     
     public lazy var managedObjectModel: NSManagedObjectModel = {
-        let proxyBundle = NSBundle(identifier: "hunterwhittle.WatchCoreDataProxy")
+        let proxyBundle = NSBundle(identifier: "com.entrision.WatchCoreDataProxy")
         
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = proxyBundle?.URLForResource("Model", withExtension: "momd")!

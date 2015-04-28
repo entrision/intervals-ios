@@ -46,9 +46,6 @@ class InterfaceController: WKInterfaceController {
     
     internal func sequenceLoaded() {
         
-//        var anError: NSError?
-//        WatchCoreDataProxy.sharedInstance.managedObjectContext?.save(&anError)
-        
         let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: WatchCoreDataProxy.sharedInstance.managedObjectContext!)
         let request: NSFetchRequest = NSFetchRequest()
         request.entity = entityDesc
@@ -64,7 +61,7 @@ class InterfaceController: WKInterfaceController {
         self.sequenceTitleLabel.setText(sequence.name)
         
         self.intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
-        let firstInterval = intervalArray.objectAtIndex(0) as! HWInterval
+        let firstInterval = self.intervalArray.objectAtIndex(0) as! HWInterval
         
         let title = firstInterval.title
         self.intervalTitleLabel.setText(title)
