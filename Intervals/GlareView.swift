@@ -48,7 +48,7 @@ class GlareView: UIView {
         CGContextAddLineToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect)-inset);  // bottom left
         CGContextClosePath(ctx);
         
-        CGContextSetRGBFillColor(ctx, 1, 1, 1, 0.8);
+        CGContextSetRGBFillColor(ctx, 1, 1, 1, 0.7);
         CGContextFillPath(ctx);
     }
 }
