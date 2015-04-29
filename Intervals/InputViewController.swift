@@ -40,7 +40,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.nameTextField = UITextField(frame: CGRectMake(15, 10, headerView.frame.size.width - 30, 50))
         self.nameTextField.borderStyle = UITextBorderStyle.None
         self.nameTextField.placeholder = "Sequence Name"
-        self.nameTextField.font = UIFont(name: "HelveticaNeue-Light", size: 21.0)
+        self.nameTextField.font = UIFont(name: "HelveticaNeue", size: 21.0)
         self.nameTextField.returnKeyType = UIReturnKeyType.Done
         self.nameTextField.delegate = self
         headerView.addSubview(self.nameTextField)
@@ -99,6 +99,18 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         if !self.readOnly {
             self.nameTextField.becomeFirstResponder()
         }
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -357,5 +369,15 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     func showInvalidEntryAlert() {
         let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
+    }
+    
+    //MARK: Notifications
+    
+    func keyboardWillShow(notification: NSNotification) {
+
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
     }
 }

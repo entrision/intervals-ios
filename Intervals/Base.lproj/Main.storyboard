@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TMi-lG-nje">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TMi-lG-nje">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -42,6 +42,112 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jg4-95-CKp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2213" y="391"/>
+        </scene>
+        <!--Timer View Controller-->
+        <scene sceneID="NDN-PJ-LoV">
+            <objects>
+                <viewController id="Q7U-Df-P4H" customClass="TimerViewController" customModule="Intervals" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AzF-af-EFv"/>
+                        <viewControllerLayoutGuide type="bottom" id="d3L-2D-Ibs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="J8Q-hE-CLl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sequence Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lix-mw-bhK">
+                                <rect key="frame" x="150" y="89" width="300" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="4x4-M5-vAk"/>
+                                    <constraint firstAttribute="height" constant="40" id="x8J-3r-7A5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbz-Ka-u0u">
+                                <rect key="frame" x="166" y="166" width="268" height="268"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73M-cN-aSI">
+                                        <rect key="frame" x="14" y="94" width="240" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="JPY-kP-12Y"/>
+                                            <constraint firstAttribute="height" constant="40" id="uOQ-2j-Yg0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="WHU-ll-KoK">
+                                        <rect key="frame" x="24" y="57" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="Y4g-z1-3A6"/>
+                                            <constraint firstAttribute="height" constant="40" id="lee-W6-psf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="28"/>
+                                        <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25:13" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYL-uW-EBB">
+                                        <rect key="frame" x="14" y="123" width="240" height="88"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="88" id="9A9-tO-IID"/>
+                                            <constraint firstAttribute="width" constant="240" id="qZz-4W-5Xz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="72"/>
+                                        <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.95531942016317017" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="WHU-ll-KoK" secondAttribute="centerX" id="26N-Bo-tvi"/>
+                                    <constraint firstAttribute="width" constant="268" id="I4b-wZ-96x"/>
+                                    <constraint firstItem="sYL-uW-EBB" firstAttribute="top" secondItem="WHU-ll-KoK" secondAttribute="bottom" constant="26" id="J9U-iE-hId"/>
+                                    <constraint firstAttribute="centerX" secondItem="73M-cN-aSI" secondAttribute="centerX" id="K4m-vs-9RM"/>
+                                    <constraint firstAttribute="height" constant="268" id="OCX-kx-4rg"/>
+                                    <constraint firstItem="WHU-ll-KoK" firstAttribute="top" secondItem="gbz-Ka-u0u" secondAttribute="top" constant="57" id="PaO-kw-vz2"/>
+                                    <constraint firstItem="73M-cN-aSI" firstAttribute="top" secondItem="gbz-Ka-u0u" secondAttribute="top" constant="94" id="dAI-aX-ID8"/>
+                                    <constraint firstAttribute="centerX" secondItem="sYL-uW-EBB" secondAttribute="centerX" id="ugc-zh-gwV"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHk-x3-XCe">
+                                <rect key="frame" x="249" y="467" width="102" height="102"/>
+                                <color key="backgroundColor" white="0.95531942016317017" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="Htt-kU-Gi8"/>
+                                    <constraint firstAttribute="width" constant="102" id="jj5-5Z-9r3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="NHk-x3-XCe" secondAttribute="centerX" id="6ny-f8-EnK"/>
+                            <constraint firstAttribute="centerY" secondItem="gbz-Ka-u0u" secondAttribute="centerY" id="O3i-pa-uVs"/>
+                            <constraint firstItem="d3L-2D-Ibs" firstAttribute="top" secondItem="NHk-x3-XCe" secondAttribute="bottom" constant="31" id="RWb-gF-fr7"/>
+                            <constraint firstItem="lix-mw-bhK" firstAttribute="top" secondItem="AzF-af-EFv" secondAttribute="bottom" constant="25" id="VDD-fd-bis"/>
+                            <constraint firstAttribute="centerX" secondItem="gbz-Ka-u0u" secondAttribute="centerX" id="aBV-2R-oJN"/>
+                            <constraint firstAttribute="centerX" secondItem="lix-mw-bhK" secondAttribute="centerX" id="tNK-Jp-Qdt"/>
+                            <constraint firstAttribute="centerX" secondItem="gbz-Ka-u0u" secondAttribute="centerX" id="zTk-oy-XFP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="intervalNameLabel" destination="WHU-ll-KoK" id="ySk-Hz-f13"/>
+                        <outlet property="progressLabel" destination="73M-cN-aSI" id="UeJ-ae-C9Y"/>
+                        <outlet property="sequenceNameLabel" destination="lix-mw-bhK" id="aQF-oM-nas"/>
+                        <outlet property="startButton" destination="NHk-x3-XCe" id="1ee-Py-Yub"/>
+                        <outlet property="timerBackgroundView" destination="gbz-Ka-u0u" id="uio-By-kr3"/>
+                        <outlet property="timerLabel" destination="sYL-uW-EBB" id="0oX-G0-McY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I0D-5P-eLq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2213" y="1090"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -90,6 +196,7 @@
                         <outlet property="theTableView" destination="FTH-bD-bIF" id="xtN-oy-zjQ"/>
                         <segue destination="9ct-yo-5qR" kind="presentation" identifier="inputSegue" id="AoO-cV-mrH"/>
                         <segue destination="Pr5-zE-Oxv" kind="show" identifier="sequenceDetailSegue" id="g8R-FY-Kq6"/>
+                        <segue destination="Q7U-Df-P4H" kind="show" identifier="timerSegue" id="hXG-ck-gb4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

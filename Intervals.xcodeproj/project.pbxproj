@@ -34,6 +34,7 @@
 		04E36EF81AE697C0006ADAD4 /* HWInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EF71AE697C0006ADAD4 /* HWInterval.swift */; };
 		04E36EFA1AE697E0006ADAD4 /* HWSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EF91AE697E0006ADAD4 /* HWSequence.swift */; };
 		04E36EFC1AE69B62006ADAD4 /* SequenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EFB1AE69B62006ADAD4 /* SequenceManager.swift */; };
+		04EFE1A51AF161E60053EA48 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFE1A41AF161E60053EA48 /* TimerViewController.swift */; };
 		04F9C8371AE59E86006935D4 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9C8361AE59E86006935D4 /* InterfaceController.swift */; };
 		04F9C8391AE59E86006935D4 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9C8381AE59E86006935D4 /* NotificationController.swift */; };
 		04F9C83B1AE59E86006935D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F9C83A1AE59E86006935D4 /* Images.xcassets */; };
@@ -152,6 +153,7 @@
 		04E36EF71AE697C0006ADAD4 /* HWInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWInterval.swift; sourceTree = "<group>"; };
 		04E36EF91AE697E0006ADAD4 /* HWSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWSequence.swift; sourceTree = "<group>"; };
 		04E36EFB1AE69B62006ADAD4 /* SequenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceManager.swift; sourceTree = "<group>"; };
+		04EFE1A41AF161E60053EA48 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		04F9C8311AE59E86006935D4 /* Intervals WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Intervals WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F9C8341AE59E86006935D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04F9C8351AE59E86006935D4 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				04E0D4761ADD9816001659B3 /* BaseViewController.swift */,
 				04E0D4581ADD9744001659B3 /* ViewController.swift */,
 				04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */,
+				04EFE1A41AF161E60053EA48 /* TimerViewController.swift */,
 				04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */,
 				04316D631AE6C7CB00767C51 /* DarwinHelper.h */,
 				04316D641AE6C7CB00767C51 /* DarwinHelper.m */,
@@ -638,6 +641,7 @@
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
 				04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */,
+				04EFE1A51AF161E60053EA48 /* TimerViewController.swift in Sources */,
 				04E0D47D1ADDAF37001659B3 /* InputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

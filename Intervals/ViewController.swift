@@ -12,8 +12,12 @@ import WatchCoreDataProxy
 
 class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate, SequenceCellDelegate {
 
+    let kLoadOnWatchButtonIndex: NSInteger = 1
+    let kLoadOnPhoneButtonIndex: NSInteger = 2
+    
     let kInputSegue = "inputSegue"
     let kDetailSegue = "sequenceDetailSegue"
+    let kTimerSegue = "timerSegue"
     let cellID = "CellID"
     
     var sequenceArray = NSMutableArray()
@@ -74,6 +78,11 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             detailController.sequenceID = self.selectedSequenceID
             detailController.readOnly = true
         }
+        else if segue.identifier == kTimerSegue {
+            
+            let timerController: TimerViewController = segue.destinationViewController as! TimerViewController
+            timerController.sequenceID = self.selectedSequenceID
+        }
     }
     
     //MARK: UITableViewDataSource
@@ -111,19 +120,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        for var i=0; i<self.sequenceArray.count; i++ {
-            
-            let aSequence = self.sequenceArray[i] as! HWSequence
-            if aSequence.loadedOnWatch == 1 {
-                aSequence.loadedOnWatch = 0
-                break
-            }
-        }
-        
         let sequence = self.sequenceArray[indexPath.row] as! HWSequence
-        sequence.loadedOnWatch = 1
+        self.selectedSequenceID = sequence.objectID
         
-        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch")
+        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
         actionSheet.showInView(self.view)
     }
     
@@ -182,7 +182,19 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         
-        if buttonIndex == 1 {
+        if buttonIndex == kLoadOnWatchButtonIndex {
+            
+            for var i=0; i<self.sequenceArray.count; i++ {
+                
+                let aSequence = self.sequenceArray[i] as! HWSequence
+                if aSequence.loadedOnWatch == 1 {
+                    aSequence.loadedOnWatch = 0
+                    break
+                }
+            }
+            
+            let selectedSequence = self.managedObjectContext.existingObjectWithID(self.selectedSequenceID, error: nil) as! HWSequence
+            selectedSequence.loadedOnWatch = 1
             
             var error: NSError?
             self.managedObjectContext.save(&error)
@@ -194,6 +206,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 self.theTableView.reloadData()
                 DarwinHelper.postSequenceLoadNotification()
             }
+        }
+        else if buttonIndex == kLoadOnPhoneButtonIndex {
+            self.performSegueWithIdentifier(kTimerSegue, sender: self)
         }
         else {
             self.managedObjectContext.rollback()
