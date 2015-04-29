@@ -90,8 +90,10 @@ class InterfaceController: WKInterfaceController {
         self.timer.setDate(date)
         self.timer.setHidden(false)
         
+        self.startButton.setHidden(false)
         self.setStartButtonTitle("Start", color: UIColor.greenColor())
         self.currentIntervalIndex = 0
+        self.finished = false
         
         // Couldn't figure out why the following code won't detect changes to relationship objects. 
         // Keeping for now to hopefully figure out the cause.

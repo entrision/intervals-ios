@@ -10,23 +10,23 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Intervals_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label width="1" height="15" alignment="center" text="Couch to 5K" textAlignment="center" id="eBG-oz-9DM">
+                        <label width="1" height="15" alignment="center" text="No sequence" textAlignment="center" id="eBG-oz-9DM">
                             <color key="textColor" white="0.80171911421911424" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
-                        <label width="1" height="19" alignment="center" text="Warm-up" textAlignment="center" id="wOS-qF-GNO">
+                        <label width="1" height="19" alignment="center" textAlignment="center" id="wOS-qF-GNO">
                             <color key="textColor" red="0.0" green="0.74117647058823533" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
-                        <label width="1" height="15" alignment="center" text="1 of 4" textAlignment="center" id="EYt-Sg-uI0">
+                        <label width="1" height="15" alignment="center" textAlignment="center" id="EYt-Sg-uI0">
                             <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
                         </label>
-                        <timer width="1" height="29" alignment="center" verticalAlignment="center" textAlignment="center" id="0FD-9e-1MC">
+                        <timer width="1" height="29" alignment="center" verticalAlignment="center" hidden="YES" textAlignment="center" id="0FD-9e-1MC">
                             <color key="textColor" red="0.0" green="0.74117647058823533" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="35"/>
                             <calendarUnit key="units" minute="YES" second="YES"/>
                         </timer>
-                        <button width="1" height="55" alignment="center" verticalAlignment="bottom" title="Start" id="uJ9-yf-STG">
+                        <button width="1" height="55" alignment="center" verticalAlignment="bottom" hidden="YES" title="Start" id="uJ9-yf-STG">
                             <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="brS-Ei-vKq"/>
