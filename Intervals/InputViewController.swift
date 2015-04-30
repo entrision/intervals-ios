@@ -33,7 +33,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         super.viewDidLoad()
         
-        let headerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 70))
+        let headerView = UIView(frame: CGRectMake(0, 0, self.theTableView.frame.size.width, 70))
         headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
         headerView.layer.borderWidth = 0.5
         
