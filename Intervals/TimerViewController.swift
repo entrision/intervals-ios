@@ -26,6 +26,9 @@ class TimerViewController: BaseViewController {
     var timer = NSTimer()
     var secondsLeft: Int = 0
     
+    var toBackgroundDate = NSDate()
+    var timeElapsedInBackground: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,8 +57,19 @@ class TimerViewController: BaseViewController {
         self.secondsLeft = firstInterval.duration.integerValue
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: Selector("applicationDidEnterBackground:"), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: Selector("applicationWillEnterForeground:"), name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self)
         
         if self.isMovingFromParentViewController() {
             self.timer.invalidate()
@@ -65,7 +79,7 @@ class TimerViewController: BaseViewController {
 
     @IBAction func startButtonTapped(sender: AnyObject) {
         
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
     }
     
     func updateCountdown() {
@@ -83,6 +97,12 @@ class TimerViewController: BaseViewController {
                     self.scheduleLocalNotification(self.secondsLeft, alertText: upcomingInterval.title)
                 }
             }
+            
+            let currentInterval = intervalArray[self.currentIntervalIndex] as! HWInterval
+            intervalNameLabel.text = currentInterval.title
+            
+            let text = "\(intervalArray.indexOfObject(currentInterval)+1)"
+            progressLabel.text = "\(text) of \(intervalArray.count)"
             
             self.secondsLeft--;
             hours = self.secondsLeft / 3600;
@@ -116,8 +136,50 @@ class TimerViewController: BaseViewController {
         let localNotif = UILocalNotification()
         let date = NSDate(timeIntervalSinceNow: NSTimeInterval(timeUntil))
         localNotif.fireDate = date
-//        localNotif.alertBody = alertText
         localNotif.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(localNotif)
+    }
+    
+    //MARK: Notifications
+    
+    func applicationDidEnterBackground(notification: NSNotification) {
+        
+        timer.invalidate()
+        toBackgroundDate = NSDate()
+    }
+    
+    func applicationWillEnterForeground(notification: NSNotification) {
+        
+        timeElapsedInBackground = Int(NSDate().timeIntervalSinceDate(toBackgroundDate))
+        
+        var duration = 0
+        var totalDuration = 0
+        var newIntervalIndex = currentIntervalIndex
+        var newSecondsLeft = secondsLeft - timeElapsedInBackground
+        for var i=currentIntervalIndex; i<intervalArray.count; i++ {
+            
+            let theInterval = intervalArray[i] as! HWInterval
+            totalDuration += theInterval.duration.integerValue
+            
+            if i == currentIntervalIndex {
+                duration = secondsLeft
+            } else {
+                duration += theInterval.duration.integerValue
+            }
+        
+            if timeElapsedInBackground > duration {
+                newIntervalIndex++
+                if newIntervalIndex < intervalArray.count {
+                    let newInterval = intervalArray[newIntervalIndex] as! HWInterval
+                    newSecondsLeft = newInterval.duration.integerValue - (timeElapsedInBackground - totalDuration)
+                } else {
+                    //Sequence completed
+                }
+            }
+        }
+        
+        currentIntervalIndex = newIntervalIndex
+        secondsLeft = newSecondsLeft
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
     }
 }

@@ -33,34 +33,34 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.title = "Intervals"
+        title = "Intervals"
         
         let plusBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("plusButtonTapped"))
-        self.navigationItem.rightBarButtonItem = plusBarButton
+        navigationItem.rightBarButtonItem = plusBarButton
         
-        self.theTableView.registerNib(UINib(nibName: "SequenceCell", bundle: nil), forCellReuseIdentifier: cellID)
-        self.theTableView.tableFooterView = UIView()
+        theTableView.registerNib(UINib(nibName: "SequenceCell", bundle: nil), forCellReuseIdentifier: cellID)
+        theTableView.tableFooterView = UIView()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.fetchSequences()
-        self.theTableView.sourceArray = self.sequenceArray
-        self.theTableView.reloadData()
+        fetchSequences()
+        theTableView.sourceArray = sequenceArray
+        theTableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if self.theTableView.reordered {
-            for var i=0; i<self.sequenceArray.count; i++ {
+        if theTableView.reordered {
+            for var i=0; i<sequenceArray.count; i++ {
                 
-                let sequence = self.sequenceArray[i] as! HWSequence
+                let sequence = sequenceArray[i] as! HWSequence
                 sequence.position = i
                 
                 var error: NSError?
-                self.managedObjectContext.save(&error)
+                managedObjectContext.save(&error)
             }
         }
     }
@@ -69,19 +69,19 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         if segue.identifier == kInputSegue {
             
-            let controller: UINavigationController = segue.destinationViewController as! UINavigationController
+            let controller = segue.destinationViewController as! UINavigationController
             controller.transitioningDelegate = self
         }
         else if segue.identifier == kDetailSegue {
             
-            let detailController: InputViewController = segue.destinationViewController as! InputViewController
-            detailController.sequenceID = self.selectedSequenceID
+            let detailController = segue.destinationViewController as! InputViewController
+            detailController.sequenceID = selectedSequenceID
             detailController.readOnly = true
         }
         else if segue.identifier == kTimerSegue {
             
-            let timerController: TimerViewController = segue.destinationViewController as! TimerViewController
-            timerController.sequenceID = self.selectedSequenceID
+            let timerController = segue.destinationViewController as! TimerViewController
+            timerController.sequenceID = selectedSequenceID
         }
     }
     
@@ -92,15 +92,15 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.noSequencesLabel.hidden = self.sequenceArray.count > 0
-        return self.sequenceArray.count
+        noSequencesLabel.hidden = self.sequenceArray.count > 0
+        return sequenceArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: SequenceCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SequenceCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SequenceCell
         
-        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
+        let sequence = sequenceArray[indexPath.row] as! HWSequence
         
         cell.titleLabel?.text = sequence.name
         
@@ -120,8 +120,8 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let sequence = self.sequenceArray[indexPath.row] as! HWSequence
-        self.selectedSequenceID = sequence.objectID
+        let sequence = sequenceArray[indexPath.row] as! HWSequence
+        selectedSequenceID = sequence.objectID
         
         let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
         actionSheet.showInView(self.view)
@@ -140,11 +140,11 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         if editingStyle == UITableViewCellEditingStyle.Delete {
             
             let sequence = self.sequenceArray.objectAtIndex(indexPath.row) as! HWSequence
-            self.managedObjectContext.deleteObject(sequence)
-            self.sequenceArray.removeObjectAtIndex(indexPath.row)
+            managedObjectContext.deleteObject(sequence)
+            sequenceArray.removeObjectAtIndex(indexPath.row)
             
             var error: NSError?
-            self.managedObjectContext.save(&error)
+            managedObjectContext.save(&error)
             
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
@@ -156,10 +156,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     func sequenceCellDidTapInfoButton(cell: SequenceCell) {
         
-        let indexPath = self.theTableView.indexPathForCell(cell)
-        let sequence = self.sequenceArray[indexPath!.row] as! HWSequence
-        self.selectedSequenceID = sequence.objectID
-        self.performSegueWithIdentifier(kDetailSegue, sender: self)
+        let indexPath = theTableView.indexPathForCell(cell)
+        let sequence = sequenceArray[indexPath!.row] as! HWSequence
+        selectedSequenceID = sequence.objectID
+        performSegueWithIdentifier(kDetailSegue, sender: self)
     }
     
     //MARK: Transitioning Delegate
@@ -184,34 +184,34 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         if buttonIndex == kLoadOnWatchButtonIndex {
             
-            for var i=0; i<self.sequenceArray.count; i++ {
+            for var i=0; i<sequenceArray.count; i++ {
                 
-                let aSequence = self.sequenceArray[i] as! HWSequence
+                let aSequence = sequenceArray[i] as! HWSequence
                 if aSequence.loadedOnWatch == 1 {
                     aSequence.loadedOnWatch = 0
                     break
                 }
             }
             
-            let selectedSequence = self.managedObjectContext.existingObjectWithID(self.selectedSequenceID, error: nil) as! HWSequence
+            let selectedSequence = managedObjectContext.existingObjectWithID(self.selectedSequenceID, error: nil) as! HWSequence
             selectedSequence.loadedOnWatch = 1
             
             var error: NSError?
-            self.managedObjectContext.save(&error)
+            managedObjectContext.save(&error)
             
             if error != nil {
                 println(error?.localizedDescription)
             }
             else {
-                self.theTableView.reloadData()
+                theTableView.reloadData()
                 DarwinHelper.postSequenceLoadNotification()
             }
         }
         else if buttonIndex == kLoadOnPhoneButtonIndex {
-            self.performSegueWithIdentifier(kTimerSegue, sender: self)
+            performSegueWithIdentifier(kTimerSegue, sender: self)
         }
         else {
-            self.managedObjectContext.rollback()
+            managedObjectContext.rollback()
         }
     }
     
@@ -219,21 +219,21 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     func plusButtonTapped() {
         
-        self.performSegueWithIdentifier(kInputSegue, sender: self)
+        performSegueWithIdentifier(kInputSegue, sender: self)
     }
     
     func fetchSequences() {
 
         let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: self.managedObjectContext)
-        let request: NSFetchRequest = NSFetchRequest()
+        let request = NSFetchRequest()
         request.entity = entityDesc
         
         let sort = NSSortDescriptor(key: "position", ascending: true)
         request.sortDescriptors = [sort]
 
         var error: NSError?
-        let array = self.managedObjectContext.executeFetchRequest(request, error: &error)
-        self.sequenceArray = NSMutableArray(array: array!)
+        let array = managedObjectContext.executeFetchRequest(request, error: &error)
+        sequenceArray = NSMutableArray(array: array!)
     }
 }
 
