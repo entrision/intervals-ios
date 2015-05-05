@@ -190,7 +190,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 }
                 
                 addCell.textLabel?.text = "Add Interval"
-                addCell.textLabel?.textColor = UIColor(red: 0.0, green: 0.75, blue: 0.0, alpha: 1.0)
+                addCell.textLabel?.textColor = Colors.intervalsGreen
                 
                 return addCell
             }

@@ -17,7 +17,7 @@ class TimerViewController: BaseViewController {
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var timerBackgroundView: UIView!
+    @IBOutlet weak var pauseButton: UIButton!
     
     var sequenceID: NSManagedObjectID = NSManagedObjectID()
     
@@ -29,6 +29,7 @@ class TimerViewController: BaseViewController {
     var toBackgroundDate = NSDate()
     var timeElapsedInBackground: Int = 0
     var delayed = false
+    var ticking = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,24 +37,12 @@ class TimerViewController: BaseViewController {
         // Do any additional setup after loading the view.
         
         self.startButton.layer.cornerRadius = 51.0
-        self.timerBackgroundView.layer.cornerRadius = 134.0
+        self.pauseButton.layer.cornerRadius = 51.0
 
         self.sequenceNameLabel.text = getSequence().name
         
         self.intervalArray = getSequence().intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
-        let firstInterval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
-        
-        self.intervalNameLabel.text = firstInterval.title
-        
-        let text = "\(self.intervalArray.indexOfObject(firstInterval)+1)"
-        self.progressLabel.text = "\(text) of \(self.intervalArray.count)"
-        
-        let minutes = firstInterval.minutes.integerValue
-        let seconds = firstInterval.seconds.integerValue
-        let timerString = NSString(format: "%d:%02d", minutes, seconds)
-        self.timerLabel.text = String(timerString)
-        
-        self.secondsLeft = firstInterval.duration.integerValue
+        loadIntervals()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,7 +52,7 @@ class TimerViewController: BaseViewController {
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: Selector("applicationDidEnterBackground:"), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        notificationCenter.addObserver(self, selector: Selector("applicationWillEnterForeground:"), name: UIApplicationWillEnterForegroundNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: Selector("applicationWillEnterForeground:"), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -82,7 +71,26 @@ class TimerViewController: BaseViewController {
 
     @IBAction func startButtonTapped(sender: AnyObject) {
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+        if ticking {
+            startButton.setTitle("Start", forState: UIControlState.Normal)
+            startButton.setTitleColor(Colors.intervalsGreen, forState: UIControlState.Normal)
+            pauseButton.enabled = false
+            timer.invalidate()
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            loadIntervals()
+            ticking = false
+        }
+        else {
+            startButton.setTitle("Stop", forState: UIControlState.Normal)
+            startButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+            pauseButton.enabled = true
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+            ticking = true
+        }
+    }
+    
+    @IBAction func pauseButtonTapped(sender: AnyObject) {
+        pauseTimer()
     }
     
     func updateCountdown() {
@@ -122,6 +130,7 @@ class TimerViewController: BaseViewController {
                 if delayed {
                     let currentInterval = intervalArray[self.currentIntervalIndex] as! HWInterval
                     secondsLeft = currentInterval.duration.integerValue
+                    self.intervalNameLabel.textColor = Colors.intervalsLightBlue
                     delayed = false
                 }
                 else {
@@ -129,6 +138,7 @@ class TimerViewController: BaseViewController {
                     if self.currentIntervalIndex < self.intervalArray.count - 1 {
                         nextInterval()
                         secondsLeft = getSequence().delay.integerValue
+                        self.intervalNameLabel.textColor = Colors.intervalsGreen
                         delayed = true
                     }
                     else {
@@ -157,9 +167,23 @@ class TimerViewController: BaseViewController {
         self.progressLabel.text = "\(text) of \(self.intervalArray.count)"
     }
     
+    func pauseTimer() {
+        startButton.setTitle("Start", forState: UIControlState.Normal)
+        startButton.setTitleColor(Colors.intervalsGreen, forState: UIControlState.Normal)
+        pauseButton.enabled = false
+        timer.invalidate()
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        ticking = false
+    }
+    
     func finished() {
         self.scheduleLocalNotification(0, alertText: "Complete")
         self.timer.invalidate()
+        pauseButton.enabled = false
+        currentIntervalIndex = 0
+        startButton.setTitle("Reset", forState: UIControlState.Normal)
+        startButton.setTitleColor(UIColor.orangeColor(), forState: UIControlState.Normal)
+        self.intervalNameLabel.text = "Complete"
     }
     
     func scheduleLocalNotification(timeUntil: Int, alertText: String) {
@@ -175,43 +199,59 @@ class TimerViewController: BaseViewController {
     
     func applicationDidEnterBackground(notification: NSNotification) {
         
-        timer.invalidate()
-        toBackgroundDate = NSDate()
+        pauseTimer()
     }
     
     func applicationWillEnterForeground(notification: NSNotification) {
         
-        timeElapsedInBackground = Int(NSDate().timeIntervalSinceDate(toBackgroundDate))
+//        timeElapsedInBackground = Int(NSDate().timeIntervalSinceDate(toBackgroundDate))
+//        
+//        var duration = 0
+//        var totalDuration = 0
+//        var newIntervalIndex = currentIntervalIndex
+//        var newSecondsLeft = secondsLeft - timeElapsedInBackground
+//        for var i=currentIntervalIndex; i<intervalArray.count; i++ {
+//            
+//            let theInterval = intervalArray[i] as! HWInterval
+//            totalDuration += theInterval.duration.integerValue
+//            
+//            if i == currentIntervalIndex {
+//                duration = secondsLeft
+//            } else {
+//                duration += theInterval.duration.integerValue
+//            }
+//        
+//            if timeElapsedInBackground > duration {
+//                newIntervalIndex++
+//                if newIntervalIndex < intervalArray.count {
+//                    let newInterval = intervalArray[newIntervalIndex] as! HWInterval
+//                    newSecondsLeft = newInterval.duration.integerValue - (timeElapsedInBackground - totalDuration)
+//                } else {
+//                    //Sequence completed
+//                }
+//            }
+//        }
+//        
+//        currentIntervalIndex = newIntervalIndex
+//        secondsLeft = newSecondsLeft
+//        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+    }
+    
+    func loadIntervals() {
         
-        var duration = 0
-        var totalDuration = 0
-        var newIntervalIndex = currentIntervalIndex
-        var newSecondsLeft = secondsLeft - timeElapsedInBackground
-        for var i=currentIntervalIndex; i<intervalArray.count; i++ {
-            
-            let theInterval = intervalArray[i] as! HWInterval
-            totalDuration += theInterval.duration.integerValue
-            
-            if i == currentIntervalIndex {
-                duration = secondsLeft
-            } else {
-                duration += theInterval.duration.integerValue
-            }
+        let firstInterval = intervalArray[0] as! HWInterval
         
-            if timeElapsedInBackground > duration {
-                newIntervalIndex++
-                if newIntervalIndex < intervalArray.count {
-                    let newInterval = intervalArray[newIntervalIndex] as! HWInterval
-                    newSecondsLeft = newInterval.duration.integerValue - (timeElapsedInBackground - totalDuration)
-                } else {
-                    //Sequence completed
-                }
-            }
-        }
+        intervalNameLabel.text = firstInterval.title
         
-        currentIntervalIndex = newIntervalIndex
-        secondsLeft = newSecondsLeft
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+        let text = "\(intervalArray.indexOfObject(firstInterval)+1)"
+        progressLabel.text = "\(text) of \(intervalArray.count)"
+        
+        let minutes = firstInterval.minutes.integerValue
+        let seconds = firstInterval.seconds.integerValue
+        let timerString = NSString(format: "%d:%02d", minutes, seconds)
+        timerLabel.text = String(timerString)
+        
+        secondsLeft = firstInterval.duration.integerValue
     }
     
     func getSequence() -> HWSequence {

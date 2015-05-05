@@ -40,7 +40,7 @@ class SequenceCell: UITableViewCell {
         self.infoButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
         self.infoButton.layer.cornerRadius = self.infoButton.frame.size.width / 2
         self.infoButton.layer.borderWidth = 0.75
-        self.infoButton.layer.borderColor = UIColor(red: 0.0, green: 0.25, blue: 0.95, alpha: 1.0).CGColor
+        self.infoButton.layer.borderColor = Colors.intervalsBlue.CGColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
