@@ -13,6 +13,7 @@ public class HWSequence: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var intervals: NSSet
     @NSManaged public var position: NSNumber
+    @NSManaged public var delay: NSNumber
     @NSManaged public var loadedOnWatch: NSNumber
 }
 

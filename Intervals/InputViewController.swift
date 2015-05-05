@@ -12,6 +12,11 @@ import WatchCoreDataProxy
 
 class InputViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
+    let kZeroDelayIndex = 0
+    let kThreeDelayIndex = 1
+    let kFiveDelayIndex = 2
+    let kTenDelayIndex = 3
+    
     let cellID = "CellID"
     
     var addBarButton = UIBarButtonItem()
@@ -24,8 +29,10 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     var sequenceID: NSManagedObjectID = NSManagedObjectID()
     var readOnly: Bool = false
     var editMode: Bool = false
+    private var viewsLoaded = false
     
     var nameTextField = UITextField()
+    var delaySegControl = UISegmentedControl()
     
     @IBOutlet weak var theTableView: ReorderTableView!
     
@@ -33,19 +40,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         super.viewDidLoad()
         
-        let headerView = UIView(frame: CGRectMake(0, 0, self.theTableView.frame.size.width, 70))
-        headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
-        headerView.layer.borderWidth = 0.5
-        
-        self.nameTextField = UITextField(frame: CGRectMake(15, 10, headerView.frame.size.width - 30, 50))
-        self.nameTextField.borderStyle = UITextBorderStyle.None
-        self.nameTextField.placeholder = "Sequence Name"
-        self.nameTextField.font = UIFont(name: "HelveticaNeue", size: 21.0)
-        self.nameTextField.returnKeyType = UIReturnKeyType.Done
-        self.nameTextField.delegate = self
-        headerView.addSubview(self.nameTextField)
-        
-        self.theTableView.tableHeaderView = headerView
         self.theTableView.registerNib(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: cellID)
         self.theTableView.tableFooterView = UIView()
         
@@ -60,9 +54,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
             self.theTableView.reorderEnabled = false
             self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-            
-            self.nameTextField.text = sequence.name
-            self.nameTextField.enabled = false
             
             self.editBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: Selector("editButtonTapped"))
             self.navigationItem.rightBarButtonItem = self.editBarButton
@@ -91,6 +82,62 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         }
         
         self.theTableView.sourceArray = self.intervalArray
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !viewsLoaded {
+            
+            let headerView = UIView(frame: CGRectMake(0, 0, self.theTableView.frame.size.width, 155))
+            headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
+            headerView.layer.borderWidth = 0.5
+            
+            nameTextField = UITextField(frame: CGRectMake(15, 10, headerView.frame.size.width - 30, 50))
+            nameTextField.borderStyle = UITextBorderStyle.None
+            nameTextField.placeholder = "Sequence Name"
+            nameTextField.font = UIFont(name: "HelveticaNeue", size: 21.0)
+            nameTextField.returnKeyType = UIReturnKeyType.Done
+            nameTextField.delegate = self
+            headerView.addSubview(self.nameTextField)
+            
+            let labelX = self.nameTextField.frame.origin.x
+            let labelY = self.nameTextField.frame.origin.y + self.nameTextField.frame.size.height + 10
+            let label = UILabel(frame: CGRectMake(labelX, labelY, 200, 30))
+            label.backgroundColor = UIColor.clearColor()
+            label.textColor = UIColor.darkGrayColor()
+            label.font = UIFont.systemFontOfSize(15.0)
+            label.text = "Time between intervals"
+            headerView.addSubview(label)
+            
+            let segY = label.frame.origin.y + label.frame.size.height + 5
+            delaySegControl = UISegmentedControl(items: ["0 sec", "3 sec", "5 sec", "10 sec"])
+            delaySegControl.frame = CGRectMake(self.nameTextField.frame.origin.x, segY, self.nameTextField.frame.size.width, 30)
+            delaySegControl.selectedSegmentIndex = 0
+            headerView.addSubview(delaySegControl)
+            
+            self.theTableView.tableHeaderView = headerView
+            
+            if readOnly {
+                
+                nameTextField.text = getSequence().name
+                nameTextField.enabled = false
+                delaySegControl.enabled = false
+                
+                let delay = getSequence().delay.integerValue
+                if delay == 0 {
+                    delaySegControl.selectedSegmentIndex = 0
+                } else if delay == 3 {
+                    delaySegControl.selectedSegmentIndex = 1
+                } else if delay == 5 {
+                    delaySegControl.selectedSegmentIndex = 2
+                } else if delay == 10 {
+                    delaySegControl.selectedSegmentIndex = 3
+                }
+            }
+            
+            viewsLoaded = true
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -252,6 +299,16 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             sequence.name = self.nameTextField.text
         }
         
+        if delaySegControl.selectedSegmentIndex == kZeroDelayIndex {
+            sequence.delay = 0
+        } else if delaySegControl.selectedSegmentIndex == kThreeDelayIndex {
+            sequence.delay = 3
+        } else if delaySegControl.selectedSegmentIndex == kFiveDelayIndex {
+            sequence.delay = 5
+        } else if delaySegControl.selectedSegmentIndex == kTenDelayIndex {
+            sequence.delay = 10
+        }
+        
         var isValid = true
         for var i=0; i<self.intervalArray.count; i++ {
             
@@ -290,12 +347,13 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func editButtonTapped() {
         
-        self.nameTextField.enabled = true
-        self.navigationItem.rightBarButtonItem = self.saveBarButton
-        self.editMode = true
-        self.theTableView.reorderEnabled = true
-        self.theTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-        self.theTableView.reloadData()
+        nameTextField.enabled = true
+        delaySegControl.enabled = true
+        navigationItem.rightBarButtonItem = self.saveBarButton
+        editMode = true
+        theTableView.reorderEnabled = true
+        theTableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        theTableView.reloadData()
     }
     
     func saveButtonTapped() {
@@ -303,7 +361,17 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         let validEntries: Bool = self.editIntervals()
         if validEntries {
             
-            self.getSequence().name = self.nameTextField.text
+            getSequence().name = self.nameTextField.text
+            
+            if delaySegControl.selectedSegmentIndex == kZeroDelayIndex {
+                getSequence().delay = 0
+            } else if delaySegControl.selectedSegmentIndex == kThreeDelayIndex {
+                getSequence().delay = 3
+            } else if delaySegControl.selectedSegmentIndex == kFiveDelayIndex {
+                getSequence().delay = 5
+            } else if delaySegControl.selectedSegmentIndex == kTenDelayIndex {
+                getSequence().delay = 10
+            }
             
             var error: NSError?
             self.managedObjectContext.save(&error)
@@ -374,7 +442,24 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     //MARK: Notifications
     
     func keyboardWillShow(notification: NSNotification) {
-
+        
+//        let cellArray = self.theTableView.visibleCells() as NSArray
+//        
+//        for var i=0; i<cellArray.count; i++ {
+//            
+//            if let cell = cellArray[i] as? InputCell {
+//                
+//                if cell.durationTextField.isFirstResponder() || cell.nameTextField.isFirstResponder() {
+//                    let indexPath = self.theTableView.indexPathForCell(cell)
+//                    
+//                    if indexPath?.row > 2 {
+//                        self.theTableView.contentInset = UIEdgeInsetsMake(0, 0, 350, 0)
+//                        self.theTableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//                        break
+//                    }
+//                }
+//            }
+//        }
     }
     
     func keyboardWillHide(notification: NSNotification) {

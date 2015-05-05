@@ -28,6 +28,7 @@ class TimerViewController: BaseViewController {
     
     var toBackgroundDate = NSDate()
     var timeElapsedInBackground: Int = 0
+    var delayed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +37,10 @@ class TimerViewController: BaseViewController {
         
         self.startButton.layer.cornerRadius = 51.0
         self.timerBackgroundView.layer.cornerRadius = 134.0
+
+        self.sequenceNameLabel.text = getSequence().name
         
-        var error: NSError?
-        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! HWSequence
-        self.sequenceNameLabel.text = sequence.name
-        
-        self.intervalArray = sequence.intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
+        self.intervalArray = getSequence().intervals.sortedArrayUsingDescriptors([NSSortDescriptor(key: "position", ascending: true)]) as NSArray
         let firstInterval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
         
         self.intervalNameLabel.text = firstInterval.title
@@ -60,6 +59,8 @@ class TimerViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: Selector("applicationDidEnterBackground:"), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: Selector("applicationWillEnterForeground:"), name: UIApplicationWillEnterForegroundNotification, object: nil)
@@ -67,6 +68,8 @@ class TimerViewController: BaseViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().idleTimerDisabled = false
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.removeObserver(self)
@@ -108,27 +111,55 @@ class TimerViewController: BaseViewController {
             hours = self.secondsLeft / 3600;
             minutes = (self.secondsLeft % 3600) / 60;
             seconds = (self.secondsLeft % 3600) % 60;
-            self.timerLabel.text = String(NSString(format: "%01d:%02d", minutes, seconds))
+            
+            let formatString = delayed ? "-%01d:%02d" : "%01d:%02d"
+            self.timerLabel.text = String(NSString(format: formatString, minutes, seconds))
         }
         else {
             
-            if self.currentIntervalIndex < self.intervalArray.count - 1 {
+            if getSequence().delay.integerValue > 0 {
                 
-                self.currentIntervalIndex++
-                let nextInterval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
-                self.secondsLeft = nextInterval.duration.integerValue
-                
-                self.intervalNameLabel.text = nextInterval.title
-                
-                let text = "\(self.intervalArray.indexOfObject(nextInterval)+1)"
-                self.progressLabel.text = "\(text) of \(self.intervalArray.count)"
+                if delayed {
+                    let currentInterval = intervalArray[self.currentIntervalIndex] as! HWInterval
+                    secondsLeft = currentInterval.duration.integerValue
+                    delayed = false
+                }
+                else {
+                    
+                    if self.currentIntervalIndex < self.intervalArray.count - 1 {
+                        nextInterval()
+                        secondsLeft = getSequence().delay.integerValue
+                        delayed = true
+                    }
+                    else {
+                        finished()
+                    }
+                }
             }
             else {
-                //finished
-                self.scheduleLocalNotification(0, alertText: "Complete")
-                self.timer.invalidate()
+                
+                if self.currentIntervalIndex < self.intervalArray.count - 1 {
+                    nextInterval()
+                }
+                else {
+                    finished()
+                }
             }
         }
+    }
+    
+    func nextInterval() {
+        self.currentIntervalIndex++
+        let nextInterval = self.intervalArray[self.currentIntervalIndex] as! HWInterval
+        self.intervalNameLabel.text = nextInterval.title
+        self.secondsLeft = nextInterval.duration.integerValue
+        let text = "\(self.intervalArray.indexOfObject(nextInterval)+1)"
+        self.progressLabel.text = "\(text) of \(self.intervalArray.count)"
+    }
+    
+    func finished() {
+        self.scheduleLocalNotification(0, alertText: "Complete")
+        self.timer.invalidate()
     }
     
     func scheduleLocalNotification(timeUntil: Int, alertText: String) {
@@ -181,5 +212,11 @@ class TimerViewController: BaseViewController {
         currentIntervalIndex = newIntervalIndex
         secondsLeft = newSecondsLeft
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
+    }
+    
+    func getSequence() -> HWSequence {
+        var error: NSError?
+        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! HWSequence
+        return sequence
     }
 }

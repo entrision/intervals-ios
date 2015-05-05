@@ -9,6 +9,7 @@
         <relationship name="sequence" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sequence" inverseName="intervals" inverseEntity="Sequence" syncable="YES"/>
     </entity>
     <entity name="Sequence" representedClassName="WatchCoreDataProxy.HWSequence" syncable="YES">
+        <attribute name="delay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="loadedOnWatch" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="position" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -16,6 +17,6 @@
     </entity>
     <elements>
         <element name="Interval" positionX="-54" positionY="9" width="128" height="135"/>
-        <element name="Sequence" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Sequence" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>
