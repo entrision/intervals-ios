@@ -95,8 +95,8 @@ class TimerViewController: BaseViewController {
             
             if UIApplication.sharedApplication().scheduledLocalNotifications.count < 1 {
                 
-                if self.currentIntervalIndex < self.intervalArray.count - 1 {
-                    let upcomingInterval = self.intervalArray[self.currentIntervalIndex + 1] as! HWInterval
+                if self.currentIntervalIndex < self.intervalArray.count - 1 && !delayed {
+                    let upcomingInterval = intervalArray[self.currentIntervalIndex + 1] as! HWInterval
                     self.scheduleLocalNotification(self.secondsLeft, alertText: upcomingInterval.title)
                 }
             }
