@@ -34,6 +34,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     var nameTextField = UITextField()
     var delaySegControl = UISegmentedControl()
     
+    var initialTableInset = UIEdgeInsetsZero
+    
     @IBOutlet weak var theTableView: ReorderTableView!
     
     override func viewDidLoad() {
@@ -88,6 +90,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         super.viewDidLayoutSubviews()
         
         if !viewsLoaded {
+            
+            initialTableInset = theTableView.contentInset
             
             let headerView = UIView(frame: CGRectMake(0, 0, self.theTableView.frame.size.width, 155))
             headerView.layer.borderColor = UIColor(white: 0.825, alpha: 1.0).CGColor
@@ -160,6 +164,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    //MARK: UITableViewDataSource
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -223,6 +229,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
+    //MARK: UITableViewDelegate
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -263,9 +271,15 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         return result
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         
-        if editingStyle == UITableViewCellEditingStyle.Delete {
+        var duplicateRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Duplicate", handler:{action, indexpath in
+            
+            
+        });
+        duplicateRowAction.backgroundColor = Colors.intervalsGreen
+        
+        var deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
             
             let interval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
             self.managedObjectContext.deleteObject(interval)
@@ -274,7 +288,13 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
             tableView.endUpdates()
-        }
+        });
+        
+        return [deleteRowAction, duplicateRowAction];
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+
     }
     
     //MARK: UITextFieldDelegate
@@ -443,26 +463,23 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func keyboardWillShow(notification: NSNotification) {
         
-//        let cellArray = self.theTableView.visibleCells() as NSArray
-//        
-//        for var i=0; i<cellArray.count; i++ {
-//            
-//            if let cell = cellArray[i] as? InputCell {
-//                
-//                if cell.durationTextField.isFirstResponder() || cell.nameTextField.isFirstResponder() {
-//                    let indexPath = self.theTableView.indexPathForCell(cell)
-//                    
-//                    if indexPath?.row > 2 {
-//                        self.theTableView.contentInset = UIEdgeInsetsMake(0, 0, 350, 0)
-//                        self.theTableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-//                        break
-//                    }
-//                }
-//            }
-//        }
+        let cellArray = self.theTableView.visibleCells() as NSArray
+        
+        for var i=0; i<cellArray.count; i++ {
+            
+            if let cell = cellArray[i] as? InputCell {
+                
+                if cell.durationTextField.isFirstResponder() || cell.nameTextField.isFirstResponder() {
+                    let indexPath = self.theTableView.indexPathForCell(cell)
+                    self.theTableView.contentInset = UIEdgeInsetsMake(0, 0, 275, 0)
+                    self.theTableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                    break
+                }
+            }
+        }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        
+        theTableView.contentInset = initialTableInset
     }
 }

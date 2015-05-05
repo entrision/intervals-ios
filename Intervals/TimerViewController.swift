@@ -199,11 +199,15 @@ class TimerViewController: BaseViewController {
     
     func applicationDidEnterBackground(notification: NSNotification) {
         
-        pauseTimer()
+        if ticking {
+            pauseTimer()
+        }
     }
     
-    func applicationWillEnterForeground(notification: NSNotification) {
-        
+    //The following is code to update timer after returning from the background. Simply pausing the timer for now.
+    
+//    func applicationWillEnterForeground(notification: NSNotification) {
+//    
 //        timeElapsedInBackground = Int(NSDate().timeIntervalSinceDate(toBackgroundDate))
 //        
 //        var duration = 0
@@ -235,7 +239,7 @@ class TimerViewController: BaseViewController {
 //        currentIntervalIndex = newIntervalIndex
 //        secondsLeft = newSecondsLeft
 //        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
-    }
+//    }
     
     func loadIntervals() {
         
