@@ -10,6 +10,7 @@
 		04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034E781AE159B800CFDE50 /* ReorderTableView.swift */; };
 		04316D611AE6C6CF00767C51 /* Callback.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D601AE6C6CF00767C51 /* Callback.m */; };
 		04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D641AE6C7CB00767C51 /* DarwinHelper.m */; };
+		0431CEE01AF94197007A1058 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0431CEDF1AF94197007A1058 /* Colors.swift */; };
 		04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
 		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
 		04AE8F361AE828A700939B26 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
@@ -34,6 +35,7 @@
 		04E36EF81AE697C0006ADAD4 /* HWInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EF71AE697C0006ADAD4 /* HWInterval.swift */; };
 		04E36EFA1AE697E0006ADAD4 /* HWSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EF91AE697E0006ADAD4 /* HWSequence.swift */; };
 		04E36EFC1AE69B62006ADAD4 /* SequenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E36EFB1AE69B62006ADAD4 /* SequenceManager.swift */; };
+		04EFE1A51AF161E60053EA48 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFE1A41AF161E60053EA48 /* TimerViewController.swift */; };
 		04F9C8371AE59E86006935D4 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9C8361AE59E86006935D4 /* InterfaceController.swift */; };
 		04F9C8391AE59E86006935D4 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F9C8381AE59E86006935D4 /* NotificationController.swift */; };
 		04F9C83B1AE59E86006935D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F9C83A1AE59E86006935D4 /* Images.xcassets */; };
@@ -121,6 +123,7 @@
 		04316D621AE6C7CA00767C51 /* Intervals-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Intervals-Bridging-Header.h"; sourceTree = "<group>"; };
 		04316D631AE6C7CB00767C51 /* DarwinHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarwinHelper.h; sourceTree = "<group>"; };
 		04316D641AE6C7CB00767C51 /* DarwinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarwinHelper.m; sourceTree = "<group>"; };
+		0431CEDF1AF94197007A1058 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		04AE8F311AE81A0D00939B26 /* SequenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceCell.swift; sourceTree = "<group>"; };
 		04AE8F321AE81A0D00939B26 /* SequenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequenceCell.xib; sourceTree = "<group>"; };
 		04AE8F351AE828A700939B26 /* GlareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlareView.swift; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 		04E36EF71AE697C0006ADAD4 /* HWInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWInterval.swift; sourceTree = "<group>"; };
 		04E36EF91AE697E0006ADAD4 /* HWSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWSequence.swift; sourceTree = "<group>"; };
 		04E36EFB1AE69B62006ADAD4 /* SequenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceManager.swift; sourceTree = "<group>"; };
+		04EFE1A41AF161E60053EA48 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		04F9C8311AE59E86006935D4 /* Intervals WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Intervals WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F9C8341AE59E86006935D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04F9C8351AE59E86006935D4 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				04E0D4761ADD9816001659B3 /* BaseViewController.swift */,
 				04E0D4581ADD9744001659B3 /* ViewController.swift */,
 				04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */,
+				04EFE1A41AF161E60053EA48 /* TimerViewController.swift */,
 				04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */,
 				04316D631AE6C7CB00767C51 /* DarwinHelper.h */,
 				04316D641AE6C7CB00767C51 /* DarwinHelper.m */,
@@ -256,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				04E0D4521ADD9744001659B3 /* Info.plist */,
+				0431CEDF1AF94197007A1058 /* Colors.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -630,6 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E0D4791ADD9BCE001659B3 /* CustomModalTransition.swift in Sources */,
+				0431CEE01AF94197007A1058 /* Colors.swift in Sources */,
 				04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */,
 				04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */,
 				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,
@@ -638,6 +645,7 @@
 				04E0D4771ADD9816001659B3 /* BaseViewController.swift in Sources */,
 				04E0D47B1ADDA0A0001659B3 /* InputViewController.swift in Sources */,
 				04E0D4541ADD9744001659B3 /* AppDelegate.swift in Sources */,
+				04EFE1A51AF161E60053EA48 /* TimerViewController.swift in Sources */,
 				04E0D47D1ADDAF37001659B3 /* InputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

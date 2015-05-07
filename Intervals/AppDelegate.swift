@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import WatchCoreDataProxy
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.window?.tintColor = UIColor(red: 0.0, green: 0.25, blue: 0.95, alpha: 1.0)
+        if application.respondsToSelector(Selector("registerUserNotificationSettings:")) {
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert|UIUserNotificationType.Sound, categories: nil))
+        }
+        
+        self.window?.tintColor = Colors.intervalsBlue
         
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18.0)!, NSForegroundColorAttributeName : UIColor.blackColor()]
         UINavigationBar.appearance().barTintColor = UIColor(white: 0.925, alpha: 1.0)
@@ -84,5 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WatchCoreDataProxy.sharedInstance.saveContext()
     }
 
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        AudioServicesPlaySystemSound(1054);
+    }
 }
 

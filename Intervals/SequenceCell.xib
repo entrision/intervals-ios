@@ -41,36 +41,36 @@
                             <constraint firstAttribute="height" constant="58" id="d9M-JL-SMS"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhg-pY-US7">
-                        <rect key="frame" x="461" y="28" width="22" height="22"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99 intervals" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5j-8Y-kah">
+                        <rect key="frame" x="348" y="28" width="105" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="22" id="kzo-s5-iDQ"/>
-                            <constraint firstAttribute="height" constant="22" id="v46-Yn-Ion"/>
+                            <constraint firstAttribute="height" constant="22" id="6SK-kF-3uC"/>
+                            <constraint firstAttribute="width" constant="105" id="EWD-Ln-Fw5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhg-pY-US7">
+                        <rect key="frame" x="462" y="26" width="26" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="26" id="3bG-ql-Zpi"/>
+                            <constraint firstAttribute="height" constant="26" id="CCe-iZ-HBC"/>
                         </constraints>
                         <state key="normal" title="i"/>
                         <connections>
                             <action selector="infoButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZlF-Vy-Ld7"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99 intervals" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5j-8Y-kah">
-                        <rect key="frame" x="348" y="28" width="105" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="105" id="GIj-tj-Fru"/>
-                            <constraint firstAttribute="height" constant="22" id="bQL-gd-E3q"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="x5j-8Y-kah" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="0Ae-35-rkb"/>
-                    <constraint firstItem="Qhg-pY-US7" firstAttribute="leading" secondItem="x5j-8Y-kah" secondAttribute="trailing" constant="8" id="4QA-oE-WJ0"/>
                     <constraint firstItem="1Hf-UK-JvP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ABf-Fa-Yhh"/>
+                    <constraint firstItem="Qhg-pY-US7" firstAttribute="leading" secondItem="x5j-8Y-kah" secondAttribute="trailing" constant="9" id="I6O-gJ-b3v"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Qhg-pY-US7" secondAttribute="trailing" constant="-5" id="O6V-cT-GHe"/>
                     <constraint firstItem="1Rz-uc-Ezf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Tel-L1-c8I"/>
-                    <constraint firstItem="Qhg-pY-US7" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="WVd-ZB-Fw8"/>
+                    <constraint firstItem="Qhg-pY-US7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="Uvl-Gt-tJz"/>
+                    <constraint firstItem="x5j-8Y-kah" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="Xzo-xB-BJi"/>
                     <constraint firstItem="1Hf-UK-JvP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14" id="bVW-cS-DaG"/>
-                    <constraint firstItem="Qhg-pY-US7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="h7v-e4-2md"/>
                     <constraint firstItem="1Rz-uc-Ezf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="nnP-c5-3OU"/>
                 </constraints>
             </tableViewCellContentView>

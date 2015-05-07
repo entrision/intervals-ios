@@ -18,6 +18,6 @@ class BaseViewController: UIViewController {
         
         super.viewDidLoad()
         
-        self.managedObjectContext = WatchCoreDataProxy.sharedInstance.managedObjectContext!
+        managedObjectContext = WatchCoreDataProxy.sharedInstance.managedObjectContext!
     }
 }
