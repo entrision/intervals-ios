@@ -251,6 +251,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             tableView.beginUpdates()
             tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.intervalArray.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
             tableView.endUpdates()
+            
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.intervalArray.count-1, inSection: 0)) as! InputCell
+            cell.nameTextField.becomeFirstResponder()
         }
     }
     
