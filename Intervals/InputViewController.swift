@@ -164,6 +164,14 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
+        
+        if parent != self.parentViewController {
+            self.managedObjectContext.rollback()
+        }
+    }
+    
     //MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -204,23 +212,22 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
         var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! InputCell
         
+        let interval: HWInterval = self.intervalArray[indexPath.row] as! HWInterval
+        cell.nameTextField.text = interval.title
+        
+        let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
+        let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
+        if minString == "" && secString == "" {
+            cell.durationTextField.text = ""
+        }
+        else {
+            cell.durationTextField.text = "\(minString) \(secString)"
+            cell.duration = interval.duration.integerValue
+            cell.minutes = interval.minutes.integerValue
+            cell.seconds = interval.seconds.integerValue
+        }
+        
         if self.readOnly {
-            
-            let interval: HWInterval = self.intervalArray[indexPath.row] as! HWInterval
-            cell.nameTextField.text = interval.title
-            
-            let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
-            let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
-            if minString == "" && secString == "" {
-                cell.durationTextField.text = ""
-            }
-            else {
-                cell.durationTextField.text = "\(minString) \(secString)"
-                cell.duration = interval.duration.integerValue
-                cell.minutes = interval.minutes.integerValue
-                cell.seconds = interval.seconds.integerValue
-            }
-            
             cell.userInteractionEnabled = self.editMode
         }
 
@@ -275,7 +282,29 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         var duplicateRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Duplicate", handler:{action, indexpath in
             
+            let existingInterval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
+            var newInterval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             
+            if existingInterval.objectID.temporaryID {
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! InputCell
+                newInterval.title = cell.nameTextField.text
+                newInterval.duration = cell.duration
+                newInterval.minutes = cell.minutes
+                newInterval.seconds = cell.seconds
+            }
+            else {
+                newInterval.title = existingInterval.title
+                newInterval.duration = existingInterval.duration
+                newInterval.minutes = existingInterval.minutes
+                newInterval.seconds = existingInterval.seconds
+            }
+
+            self.intervalArray.insertObject(newInterval, atIndex: indexPath.row+1)
+            
+            tableView.beginUpdates()
+            tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row+1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
+            tableView.endUpdates()
+            tableView.setEditing(false, animated: true)
         });
         duplicateRowAction.backgroundColor = Colors.intervalsGreen
         

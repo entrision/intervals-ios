@@ -110,13 +110,13 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="40" translatesAutoresizingMaskIntoConstraints="NO" id="WHU-ll-KoK">
-                                <rect key="frame" x="113" y="207" width="375" height="70"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="WHU-ll-KoK">
+                                <rect key="frame" x="132" y="207" width="337" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="T9X-ix-orM"/>
+                                    <constraint firstAttribute="width" constant="337" id="T9X-ix-orM"/>
                                     <constraint firstAttribute="height" constant="70" id="rU0-o3-CTA"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="58"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                 <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
