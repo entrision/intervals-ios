@@ -191,13 +191,15 @@ class TimerViewController: BaseViewController {
         let localNotif = UILocalNotification()
         let date = NSDate(timeIntervalSinceNow: NSTimeInterval(timeUntil))
         localNotif.fireDate = date
-        localNotif.soundName = UILocalNotificationDefaultSoundName
+        localNotif.soundName = "interval_effect.m4a"
         UIApplication.sharedApplication().scheduleLocalNotification(localNotif)
     }
     
     //MARK: Notifications
     
     func applicationDidEnterBackground(notification: NSNotification) {
+        
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         if ticking {
             pauseTimer()

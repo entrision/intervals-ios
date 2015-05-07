@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import WatchCoreDataProxy
 import AVFoundation
+import AudioToolbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -90,7 +91,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        AudioServicesPlaySystemSound(1054);
+        let soundPath = NSBundle.mainBundle().pathForResource("interval_effect", ofType: "m4a")
+        var soundID: SystemSoundID = 0
+        AudioServicesCreateSystemSoundID(NSURL.fileURLWithPath(soundPath!), &soundID)
+        AudioServicesPlaySystemSound(soundID)
+        AudioServicesPlaySystemSound(UInt32(kSystemSoundID_Vibrate));
     }
 }
 

@@ -11,6 +11,7 @@
 		04316D611AE6C6CF00767C51 /* Callback.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D601AE6C6CF00767C51 /* Callback.m */; };
 		04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D641AE6C7CB00767C51 /* DarwinHelper.m */; };
 		0431CEE01AF94197007A1058 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0431CEDF1AF94197007A1058 /* Colors.swift */; };
+		047206B51AFC04300067DDC1 /* interval_effect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 047206B41AFC04300067DDC1 /* interval_effect.m4a */; };
 		04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
 		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
 		04AE8F361AE828A700939B26 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
@@ -124,6 +125,7 @@
 		04316D631AE6C7CB00767C51 /* DarwinHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarwinHelper.h; sourceTree = "<group>"; };
 		04316D641AE6C7CB00767C51 /* DarwinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarwinHelper.m; sourceTree = "<group>"; };
 		0431CEDF1AF94197007A1058 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		047206B41AFC04300067DDC1 /* interval_effect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = interval_effect.m4a; sourceTree = "<group>"; };
 		04AE8F311AE81A0D00939B26 /* SequenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceCell.swift; sourceTree = "<group>"; };
 		04AE8F321AE81A0D00939B26 /* SequenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequenceCell.xib; sourceTree = "<group>"; };
 		04AE8F351AE828A700939B26 /* GlareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlareView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				04E0D4521ADD9744001659B3 /* Info.plist */,
 				0431CEDF1AF94197007A1058 /* Colors.swift */,
+				047206B41AFC04300067DDC1 /* interval_effect.m4a */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047206B51AFC04300067DDC1 /* interval_effect.m4a in Resources */,
 				04E0D45C1ADD9744001659B3 /* Main.storyboard in Resources */,
 				04E0D4611ADD9744001659B3 /* LaunchScreen.xib in Resources */,
 				04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */,
