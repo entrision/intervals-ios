@@ -194,9 +194,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.row == self.intervalArray.count {
+        if indexPath.row == intervalArray.count {
             
-            if !self.readOnly || self.editMode {
+            if !readOnly || editMode {
                 var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell!
                 
                 if addCell == nil {
@@ -213,22 +213,25 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! InputCell
         
         let interval: HWInterval = self.intervalArray[indexPath.row] as! HWInterval
-        cell.nameTextField.text = interval.title
-        
-        let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
-        let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
-        if minString == "" && secString == "" {
-            cell.durationTextField.text = ""
+        if !interval.objectID.temporaryID {
+            
+            cell.nameTextField.text = interval.title
+            
+            let minString = interval.minutes.intValue > 0 ? "\(interval.minutes) min" : ""
+            let secString = interval.seconds.intValue > 0 ? "\(interval.seconds) sec" : ""
+            if minString == "" && secString == "" {
+                cell.durationTextField.text = ""
+            }
+            else {
+                cell.durationTextField.text = "\(minString) \(secString)"
+                cell.duration = interval.duration.integerValue
+                cell.minutes = interval.minutes.integerValue
+                cell.seconds = interval.seconds.integerValue
+            }
         }
-        else {
-            cell.durationTextField.text = "\(minString) \(secString)"
-            cell.duration = interval.duration.integerValue
-            cell.minutes = interval.minutes.integerValue
-            cell.seconds = interval.seconds.integerValue
-        }
-        
-        if self.readOnly {
-            cell.userInteractionEnabled = self.editMode
+
+        if readOnly {
+            cell.userInteractionEnabled = editMode
         }
 
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -301,6 +304,11 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 newInterval.minutes = existingInterval.minutes
                 newInterval.seconds = existingInterval.seconds
             }
+            
+            self.getSequence().addIntervalObject(newInterval)
+            
+            var error: NSError?
+            self.managedObjectContext.save(&error)
 
             self.intervalArray.insertObject(newInterval, atIndex: indexPath.row+1)
             
@@ -315,6 +323,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
             let interval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
             self.managedObjectContext.deleteObject(interval)
+            var error: NSError?
+            self.managedObjectContext.save(&error)
+            
             self.intervalArray.removeObjectAtIndex(indexPath.row)
             
             tableView.beginUpdates()
@@ -464,8 +475,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         for var i=0; i<self.intervalArray.count; i++ {
             
-            let interval = self.intervalArray[i] as! HWInterval
-            let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
+            let interval = intervalArray[i] as! HWInterval
+            let cell: InputCell = theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
             
             interval.title = cell.nameTextField.text
             interval.duration = cell.duration
@@ -474,12 +485,12 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             interval.position = i
             
             if interval.title == "" || interval.duration == 0 {
-                self.showInvalidEntryAlert()
+                showInvalidEntryAlert()
                 return false
             }
             
             if interval.objectID.temporaryID {
-                self.getSequence().addIntervalObject(interval)
+                getSequence().addIntervalObject(interval)
             }
         }
         
@@ -504,7 +515,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 if cell.durationTextField.isFirstResponder() || cell.nameTextField.isFirstResponder() {
                     let indexPath = self.theTableView.indexPathForCell(cell)
                     self.theTableView.contentInset = UIEdgeInsetsMake(0, 0, 275, 0)
-                    self.theTableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                    self.theTableView.scrollToRowAtIndexPath(indexPath!, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
                     break
                 }
             }

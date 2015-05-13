@@ -173,15 +173,15 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
-        if textField == self.durationTextField {
+        if textField == durationTextField {
             if textField.text == "" {
-                self.pickerView(self.picker, didSelectRow: kInitalSelectionIndex, inComponent: kSecComponent)
+                pickerView(picker, didSelectRow: kInitalSelectionIndex, inComponent: kSecComponent)
             }
             else {
-                self.picker.selectRow(self.minutes, inComponent: kMinComponent, animated: false)
-                self.pickerView(self.picker, didSelectRow: self.minutes, inComponent: kMinComponent)
-                self.picker.selectRow(self.seconds/5, inComponent: kSecComponent, animated: false)
-                self.pickerView(self.picker, didSelectRow: self.seconds/5, inComponent: kSecComponent)
+                picker.selectRow(minutes, inComponent: kMinComponent, animated: false)
+                pickerView(picker, didSelectRow: minutes, inComponent: kMinComponent)
+                picker.selectRow(seconds/5, inComponent: kSecComponent, animated: false)
+                pickerView(picker, didSelectRow: seconds/5, inComponent: kSecComponent)
             }
         }
     }

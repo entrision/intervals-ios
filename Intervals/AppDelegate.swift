@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var soundID: SystemSoundID = 0
         AudioServicesCreateSystemSoundID(NSURL.fileURLWithPath(soundPath!), &soundID)
         AudioServicesPlaySystemSound(soundID)
-        AudioServicesPlaySystemSound(UInt32(kSystemSoundID_Vibrate));
+        AudioServicesPlaySystemSound(UInt32(kSystemSoundID_Vibrate))
     }
 }
 
