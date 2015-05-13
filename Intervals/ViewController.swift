@@ -106,7 +106,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         var detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
         cell.detailLabel?.text = "\(sequence.intervals.count) \(detailText)"
+        cell.loadedOnWatch(sequence.loadedOnWatch)
         cell.delegate = self
+        
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }
@@ -119,7 +122,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         let sequence = sequenceArray[indexPath.row] as! HWSequence
         selectedSequenceID = sequence.objectID
-        performSegueWithIdentifier(kTimerSegue, sender: self)
+        
+        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
+        actionSheet.showInView(self.view)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -171,6 +176,43 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         let transition = CustomModalTransition()
         transition.presenting = false
         return transition
+    }
+    
+    //MARK: UIActionSheetDelegate
+    
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        
+        if buttonIndex == kLoadOnWatchButtonIndex {
+            
+            for var i=0; i<sequenceArray.count; i++ {
+                
+                let aSequence = sequenceArray[i] as! HWSequence
+                if aSequence.loadedOnWatch == 1 {
+                    aSequence.loadedOnWatch = 0
+                    break
+                }
+            }
+            
+            let selectedSequence = managedObjectContext.existingObjectWithID(self.selectedSequenceID, error: nil) as! HWSequence
+            selectedSequence.loadedOnWatch = 1
+            
+            var error: NSError?
+            managedObjectContext.save(&error)
+            
+            if error != nil {
+                println(error?.localizedDescription)
+            }
+            else {
+                theTableView.reloadData()
+                DarwinHelper.postSequenceLoadNotification()
+            }
+        }
+        else if buttonIndex == kLoadOnPhoneButtonIndex {
+            performSegueWithIdentifier(kTimerSegue, sender: self)
+        }
+        else {
+            managedObjectContext.rollback()
+        }
     }
     
     //MARK: Private methods

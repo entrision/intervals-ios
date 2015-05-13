@@ -49,6 +49,33 @@ class SequenceCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        var alpha: CGFloat = 0.25
+        if !highlighted {
+            
+            alpha = 1.0
+            
+            UIView.animateWithDuration(0.2, animations: ({
+                
+                self.titleLabel.alpha = alpha
+                self.detailLabel.alpha = alpha
+                self.infoButton.alpha = alpha
+                self.watchView.alpha = alpha
+                
+            }), completion: { finished in
+                
+            });
+        }
+        else {
+            self.titleLabel.alpha = alpha
+            self.detailLabel.alpha = alpha
+            self.infoButton.alpha = alpha
+            self.watchView.alpha = alpha
+        }
+    }
+    
     @IBAction func infoButtonTapped(sender: AnyObject) {
         
         self.delegate.sequenceCellDidTapInfoButton(self)
