@@ -11,7 +11,22 @@
 		04316D611AE6C6CF00767C51 /* Callback.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D601AE6C6CF00767C51 /* Callback.m */; };
 		04316D651AE6C7CB00767C51 /* DarwinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04316D641AE6C7CB00767C51 /* DarwinHelper.m */; };
 		0431CEE01AF94197007A1058 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0431CEDF1AF94197007A1058 /* Colors.swift */; };
+		0439927C1B051C5F00C7C7B5 /* BaseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */; };
+		0439927E1B051E1D00C7C7B5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4761ADD9816001659B3 /* BaseViewController.swift */; };
+		043992801B05229700C7C7B5 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */; };
+		043992821B0523A800C7C7B5 /* ReorderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034E781AE159B800CFDE50 /* ReorderTableView.swift */; };
+		043992831B0523B900C7C7B5 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D47A1ADDA0A0001659B3 /* InputViewController.swift */; };
+		043992841B0523BC00C7C7B5 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFE1A41AF161E60053EA48 /* TimerViewController.swift */; };
+		043992851B0523C000C7C7B5 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
+		043992861B05248900C7C7B5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0431CEDF1AF94197007A1058 /* Colors.swift */; };
+		043992871B0524B100C7C7B5 /* CustomModalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4781ADD9BCE001659B3 /* CustomModalTransition.swift */; };
+		043992891B0524C500C7C7B5 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
+		0439928A1B0524D500C7C7B5 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D47C1ADDAF37001659B3 /* InputCell.swift */; };
 		047206B51AFC04300067DDC1 /* interval_effect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 047206B41AFC04300067DDC1 /* interval_effect.m4a */; };
+		04A861BD1B0529ED00451240 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
+		04A861BE1B052C4B00451240 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E0D45A1ADD9744001659B3 /* Main.storyboard */; };
+		04A861C01B052EC500451240 /* InputViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A861BF1B052EC500451240 /* InputViewControllerTests.swift */; };
+		04A861C21B052F7B00451240 /* TimerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */; };
 		04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F311AE81A0D00939B26 /* SequenceCell.swift */; };
 		04AE8F341AE81A0D00939B26 /* SequenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AE8F321AE81A0D00939B26 /* SequenceCell.xib */; };
 		04AE8F361AE828A700939B26 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
@@ -125,7 +140,12 @@
 		04316D631AE6C7CB00767C51 /* DarwinHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarwinHelper.h; sourceTree = "<group>"; };
 		04316D641AE6C7CB00767C51 /* DarwinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarwinHelper.m; sourceTree = "<group>"; };
 		0431CEDF1AF94197007A1058 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerTests.swift; sourceTree = "<group>"; };
+		0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		047206B41AFC04300067DDC1 /* interval_effect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = interval_effect.m4a; sourceTree = "<group>"; };
+		04A861BA1B0528E300451240 /* IntervalsTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IntervalsTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		04A861BF1B052EC500451240 /* InputViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewControllerTests.swift; sourceTree = "<group>"; };
+		04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewControllerTests.swift; sourceTree = "<group>"; };
 		04AE8F311AE81A0D00939B26 /* SequenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceCell.swift; sourceTree = "<group>"; };
 		04AE8F321AE81A0D00939B26 /* SequenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequenceCell.xib; sourceTree = "<group>"; };
 		04AE8F351AE828A700939B26 /* GlareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlareView.swift; sourceTree = "<group>"; };
@@ -273,7 +293,12 @@
 			isa = PBXGroup;
 			children = (
 				04E0D46C1ADD9744001659B3 /* IntervalsTests.swift */,
+				0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */,
+				0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */,
+				04A861BF1B052EC500451240 /* InputViewControllerTests.swift */,
+				04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */,
 				04E0D46A1ADD9744001659B3 /* Supporting Files */,
+				04A861BA1B0528E300451240 /* IntervalsTests-Bridging-Header.h */,
 			);
 			path = IntervalsTests;
 			sourceTree = "<group>";
@@ -597,6 +622,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A861BE1B052C4B00451240 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,7 +684,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043992861B05248900C7C7B5 /* Colors.swift in Sources */,
+				04A861C21B052F7B00451240 /* TimerViewControllerTests.swift in Sources */,
+				043992891B0524C500C7C7B5 /* GlareView.swift in Sources */,
 				04E0D46D1ADD9744001659B3 /* IntervalsTests.swift in Sources */,
+				0439927C1B051C5F00C7C7B5 /* BaseViewControllerTests.swift in Sources */,
+				0439928A1B0524D500C7C7B5 /* InputCell.swift in Sources */,
+				043992831B0523B900C7C7B5 /* InputViewController.swift in Sources */,
+				043992841B0523BC00C7C7B5 /* TimerViewController.swift in Sources */,
+				043992821B0523A800C7C7B5 /* ReorderTableView.swift in Sources */,
+				04A861BD1B0529ED00451240 /* ViewController.swift in Sources */,
+				04A861C01B052EC500451240 /* InputViewControllerTests.swift in Sources */,
+				043992801B05229700C7C7B5 /* ViewControllerTests.swift in Sources */,
+				0439927E1B051E1D00C7C7B5 /* BaseViewController.swift in Sources */,
+				043992851B0523C000C7C7B5 /* SequenceCell.swift in Sources */,
+				043992871B0524B100C7C7B5 /* CustomModalTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,6 +909,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -880,6 +921,8 @@
 				INFOPLIST_FILE = IntervalsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IntervalsTests/IntervalsTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Intervals.app/Intervals";
 			};
 			name = Debug;
@@ -888,6 +931,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -895,6 +939,7 @@
 				INFOPLIST_FILE = IntervalsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IntervalsTests/IntervalsTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Intervals.app/Intervals";
 			};
 			name = Release;

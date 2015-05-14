@@ -46,7 +46,7 @@
         <!--Timer View Controller-->
         <scene sceneID="NDN-PJ-LoV">
             <objects>
-                <viewController id="Q7U-Df-P4H" customClass="TimerViewController" customModule="Intervals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TimerViewController" id="Q7U-Df-P4H" customClass="TimerViewController" customModule="Intervals" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AzF-af-EFv"/>
                         <viewControllerLayoutGuide type="bottom" id="d3L-2D-Ibs"/>
@@ -217,7 +217,7 @@
         <!--Navigation Controller-->
         <scene sceneID="sat-Nc-Bxw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TMi-lG-nje" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainViewController" automaticallyAdjustsScrollViewInsets="NO" id="TMi-lG-nje" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="236-EP-YQG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -235,7 +235,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ilk-at-O6j">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9ct-yo-5qR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="InputNavController" automaticallyAdjustsScrollViewInsets="NO" id="9ct-yo-5qR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="U20-Nw-DeJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -252,6 +252,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g8R-FY-Kq6"/>
+        <segue reference="cxG-oL-bk9"/>
     </inferredMetricsTieBreakers>
 </document>

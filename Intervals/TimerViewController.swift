@@ -52,7 +52,6 @@ class TimerViewController: BaseViewController {
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: Selector("applicationDidEnterBackground:"), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-//        notificationCenter.addObserver(self, selector: Selector("applicationWillEnterForeground:"), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -205,43 +204,6 @@ class TimerViewController: BaseViewController {
             pauseTimer()
         }
     }
-    
-    //The following is code to update timer after returning from the background. Simply pausing the timer for now.
-    
-//    func applicationWillEnterForeground(notification: NSNotification) {
-//    
-//        timeElapsedInBackground = Int(NSDate().timeIntervalSinceDate(toBackgroundDate))
-//        
-//        var duration = 0
-//        var totalDuration = 0
-//        var newIntervalIndex = currentIntervalIndex
-//        var newSecondsLeft = secondsLeft - timeElapsedInBackground
-//        for var i=currentIntervalIndex; i<intervalArray.count; i++ {
-//            
-//            let theInterval = intervalArray[i] as! HWInterval
-//            totalDuration += theInterval.duration.integerValue
-//            
-//            if i == currentIntervalIndex {
-//                duration = secondsLeft
-//            } else {
-//                duration += theInterval.duration.integerValue
-//            }
-//        
-//            if timeElapsedInBackground > duration {
-//                newIntervalIndex++
-//                if newIntervalIndex < intervalArray.count {
-//                    let newInterval = intervalArray[newIntervalIndex] as! HWInterval
-//                    newSecondsLeft = newInterval.duration.integerValue - (timeElapsedInBackground - totalDuration)
-//                } else {
-//                    //Sequence completed
-//                }
-//            }
-//        }
-//        
-//        currentIntervalIndex = newIntervalIndex
-//        secondsLeft = newSecondsLeft
-//        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateCountdown"), userInfo: nil, repeats: true)
-//    }
     
     func loadIntervals() {
         

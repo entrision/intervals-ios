@@ -43,7 +43,7 @@ class CustomModalTransition: NSObject, UIViewControllerAnimatedTransitioning {
             
         }), completion: { finished in
             transitionContext.completeTransition(true)
-        });
+        })
     }
     
     func dismiss(transitionContext: UIViewControllerContextTransitioning) {
@@ -62,6 +62,6 @@ class CustomModalTransition: NSObject, UIViewControllerAnimatedTransitioning {
         }), completion: { finished in
             fromViewController?.view.removeFromSuperview()
             transitionContext.completeTransition(true)
-        });
+        })
     }
 }
