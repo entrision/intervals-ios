@@ -45,5 +45,9 @@ class ViewControllerTests: XCTestCase {
         XCTAssertTrue(controller.theTableView.isKindOfClass(ReorderTableView.classForCoder()), "TableView is not of class ReorderTableView")
     }
     
-    
+    func testBarButtonItems() {
+        
+        let count = controller.navigationItem.rightBarButtonItems?.count
+        XCTAssertTrue(count > 0, "ViewController should have 1 right bar button item (plus)")
+    }
 }
