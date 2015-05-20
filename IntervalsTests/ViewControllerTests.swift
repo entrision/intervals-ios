@@ -22,6 +22,7 @@ class ViewControllerTests: XCTestCase {
         controller = navController.viewControllers[0] as! ViewController
         controller.loadView()
         controller.viewDidLoad()
+        controller.viewDidAppear(false)
     }
     
     override func tearDown() {
@@ -33,6 +34,11 @@ class ViewControllerTests: XCTestCase {
         
         XCTAssertTrue(controller.isKindOfClass(BaseViewController.classForCoder()), "ViewController is not subclass of BaseViewController")
     }
+    
+    func testCustomTransitionDelegate() {
+        
+        XCTAssertTrue(controller.conformsToProtocol(UIViewControllerTransitioningDelegate), "ViewController does not conform to UIViewControllerTransitioningDelegate")
+    }
 
     func testTableViewDelegateAndDataSource() {
         
@@ -43,6 +49,18 @@ class ViewControllerTests: XCTestCase {
     func testReorderTableView() {
         
         XCTAssertTrue(controller.theTableView.isKindOfClass(ReorderTableView.classForCoder()), "TableView is not of class ReorderTableView")
+        XCTAssertTrue(controller.theTableView.reorderEnabled, "Reordering should be enabled on ViewController TableView")
+    }
+    
+    func testFetchSequences() {
+        
+        controller.fetchSequences()
+        XCTAssertTrue(controller.sequenceArray.count > 0, "No sequences")
+    }
+    
+    func testReorderTableViewSourceArray() {
+        
+        XCTAssertTrue(controller.theTableView.sourceArray == controller.sequenceArray, "ReorderTableView Source Array not equal to sequence array")
     }
     
     func testBarButtonItems() {
