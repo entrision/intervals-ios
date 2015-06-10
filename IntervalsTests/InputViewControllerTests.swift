@@ -43,5 +43,20 @@ class InputViewControllerTests: XCTestCase {
         
         XCTAssertTrue(controller.theTableView.isKindOfClass(ReorderTableView.classForCoder()), "TableView is not of class ReorderTableView")
     }
+    
+    func testForAddCell() {
+        
+        var result = controller.theTableView.numberOfRowsInSection(0)
+        
+        if controller.readOnly {
+            
+            if controller.editMode {
+                XCTAssertTrue(result == controller.intervalArray.count+1, "Add cell not present in InputViewController")
+            }
+        }
+        else {
+            XCTAssertTrue(result == controller.intervalArray.count+1, "Add cell not present in InputViewController")
+        }
+    }
 
 }

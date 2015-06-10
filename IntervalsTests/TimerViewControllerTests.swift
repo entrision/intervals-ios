@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import CoreData
 
 class TimerViewControllerTests: XCTestCase {
     
@@ -19,11 +20,15 @@ class TimerViewControllerTests: XCTestCase {
         
         timerController = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType)).instantiateViewControllerWithIdentifier("TimerViewController") as! TimerViewController
         timerController.loadView()
-        timerController.viewDidLoad()
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+    }
+    
+    func testSuperclass() {
+        
+        XCTAssertTrue(timerController.isKindOfClass(BaseViewController.classForCoder()), "ViewController is not subclass of BaseViewController")
     }
 }

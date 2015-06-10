@@ -23,6 +23,9 @@
 		043992891B0524C500C7C7B5 /* GlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE8F351AE828A700939B26 /* GlareView.swift */; };
 		0439928A1B0524D500C7C7B5 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D47C1ADDAF37001659B3 /* InputCell.swift */; };
 		047206B51AFC04300067DDC1 /* interval_effect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 047206B41AFC04300067DDC1 /* interval_effect.m4a */; };
+		047369171B0A243000D74670 /* ReorderTableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047369161B0A243000D74670 /* ReorderTableViewTests.swift */; };
+		047369191B0A2A8400D74670 /* HWIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047369181B0A2A8400D74670 /* HWIntervalTests.swift */; };
+		0473691B1B0A363C00D74670 /* HWSequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0473691A1B0A363C00D74670 /* HWSequenceTests.swift */; };
 		04A861BD1B0529ED00451240 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0D4581ADD9744001659B3 /* ViewController.swift */; };
 		04A861BE1B052C4B00451240 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E0D45A1ADD9744001659B3 /* Main.storyboard */; };
 		04A861C01B052EC500451240 /* InputViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A861BF1B052EC500451240 /* InputViewControllerTests.swift */; };
@@ -143,6 +146,9 @@
 		0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerTests.swift; sourceTree = "<group>"; };
 		0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		047206B41AFC04300067DDC1 /* interval_effect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = interval_effect.m4a; sourceTree = "<group>"; };
+		047369161B0A243000D74670 /* ReorderTableViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReorderTableViewTests.swift; sourceTree = "<group>"; };
+		047369181B0A2A8400D74670 /* HWIntervalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWIntervalTests.swift; sourceTree = "<group>"; };
+		0473691A1B0A363C00D74670 /* HWSequenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWSequenceTests.swift; sourceTree = "<group>"; };
 		04A861BA1B0528E300451240 /* IntervalsTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IntervalsTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		04A861BF1B052EC500451240 /* InputViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewControllerTests.swift; sourceTree = "<group>"; };
 		04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewControllerTests.swift; sourceTree = "<group>"; };
@@ -297,6 +303,9 @@
 				0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */,
 				04A861BF1B052EC500451240 /* InputViewControllerTests.swift */,
 				04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */,
+				047369161B0A243000D74670 /* ReorderTableViewTests.swift */,
+				047369181B0A2A8400D74670 /* HWIntervalTests.swift */,
+				0473691A1B0A363C00D74670 /* HWSequenceTests.swift */,
 				04E0D46A1ADD9744001659B3 /* Supporting Files */,
 				04A861BA1B0528E300451240 /* IntervalsTests-Bridging-Header.h */,
 			);
@@ -693,12 +702,15 @@
 				043992831B0523B900C7C7B5 /* InputViewController.swift in Sources */,
 				043992841B0523BC00C7C7B5 /* TimerViewController.swift in Sources */,
 				043992821B0523A800C7C7B5 /* ReorderTableView.swift in Sources */,
+				0473691B1B0A363C00D74670 /* HWSequenceTests.swift in Sources */,
 				04A861BD1B0529ED00451240 /* ViewController.swift in Sources */,
 				04A861C01B052EC500451240 /* InputViewControllerTests.swift in Sources */,
 				043992801B05229700C7C7B5 /* ViewControllerTests.swift in Sources */,
 				0439927E1B051E1D00C7C7B5 /* BaseViewController.swift in Sources */,
 				043992851B0523C000C7C7B5 /* SequenceCell.swift in Sources */,
 				043992871B0524B100C7C7B5 /* CustomModalTransition.swift in Sources */,
+				047369191B0A2A8400D74670 /* HWIntervalTests.swift in Sources */,
+				047369171B0A243000D74670 /* ReorderTableViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
