@@ -72,8 +72,8 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: Selector("cancelButtonTapped"))
             self.navigationItem.leftBarButtonItem = self.cancelBarButton
             
-            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
-            var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
+            let interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
+            let interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             interval.title = ""
             interval2.title = ""
             interval.duration = 0
@@ -197,7 +197,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         if indexPath.row == intervalArray.count {
             
             if !readOnly || editMode {
-                var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell!
+                var addCell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell!
                 
                 if addCell == nil {
                     addCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
@@ -210,7 +210,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             }
         }
             
-        var cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! InputCell
+        let cell: InputCell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! InputCell
         
         let interval: HWInterval = self.intervalArray[indexPath.row] as! HWInterval
         if !interval.objectID.temporaryID {
@@ -247,7 +247,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
         if indexPath.row == self.intervalArray.count {
             
-            var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
+            let interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             interval.title = ""
             self.intervalArray.addObject(interval)
             
@@ -284,16 +284,16 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         return result
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
-        var duplicateRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Duplicate", handler:{action, indexpath in
+        let duplicateRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Duplicate", handler:{action, indexpath in
             
             let existingInterval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
-            var newInterval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
+            let newInterval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: self.managedObjectContext) as! HWInterval
             
             if existingInterval.objectID.temporaryID {
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! InputCell
-                newInterval.title = cell.nameTextField.text
+                newInterval.title = cell.nameTextField.text!
                 newInterval.duration = cell.duration
                 newInterval.minutes = cell.minutes
                 newInterval.seconds = cell.seconds
@@ -307,8 +307,11 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             
             self.getSequence().addIntervalObject(newInterval)
             
-            var error: NSError?
-            self.managedObjectContext.save(&error)
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                print(error)
+            }
 
             self.intervalArray.insertObject(newInterval, atIndex: indexPath.row+1)
             
@@ -319,12 +322,16 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         });
         duplicateRowAction.backgroundColor = Colors.intervalsGreen
         
-        var deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
             
             let interval = self.intervalArray.objectAtIndex(indexPath.row) as! HWInterval
             self.managedObjectContext.deleteObject(interval)
-            var error: NSError?
-            self.managedObjectContext.save(&error)
+            
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                print(error)
+            }
             
             self.intervalArray.removeObjectAtIndex(indexPath.row)
             
@@ -353,13 +360,13 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
         self.repositionExistingSequences()
         
-        var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as! HWSequence
+        let sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: self.managedObjectContext) as! HWSequence
         sequence.position = 0
         if self.nameTextField.text == nil || self.nameTextField.text == "" {
             sequence.name = "My sequence"
         }
         else {
-            sequence.name = self.nameTextField.text
+            sequence.name = self.nameTextField.text!
         }
         
         if delaySegControl.selectedSegmentIndex == kZeroDelayIndex {
@@ -378,7 +385,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             let interval = self.intervalArray[i] as! HWInterval
             let cell: InputCell = self.theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
             
-            interval.title = cell.nameTextField.text
+            interval.title = cell.nameTextField.text!
             interval.duration = cell.duration
             interval.minutes = cell.minutes
             interval.seconds = cell.seconds
@@ -396,8 +403,12 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         }
         
         if isValid {
-            var error: NSError?
-            self.managedObjectContext.save(&error)
+            
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                print(error)
+            }
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
@@ -424,7 +435,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         let validEntries: Bool = self.editIntervals()
         if validEntries {
             
-            getSequence().name = self.nameTextField.text
+            getSequence().name = self.nameTextField.text!
             
             if delaySegControl.selectedSegmentIndex == kZeroDelayIndex {
                 getSequence().delay = 0
@@ -436,8 +447,11 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 getSequence().delay = 10
             }
             
-            var error: NSError?
-            self.managedObjectContext.save(&error)
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                print(error)
+            }
             
             if self.getSequence().loadedOnWatch == 1 {
                 DarwinHelper.postSequenceLoadNotification()
@@ -456,19 +470,28 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
         let sort = NSSortDescriptor(key: "position", ascending: true)
         request.sortDescriptors = [sort]
         
-        var anError: NSError?
-        let sequenceArray = self.managedObjectContext.executeFetchRequest(request, error: &anError)! as NSArray
-        
-        for var i=0; i<sequenceArray.count; i++ {
-            let storedSequence = sequenceArray[i] as! HWSequence
-            storedSequence.position = storedSequence.position.integerValue + 1
+        do {
+            
+            let sequenceArray = try self.managedObjectContext.executeFetchRequest(request) as NSArray
+            
+            for var i=0; i<sequenceArray.count; i++ {
+                let storedSequence = sequenceArray[i] as! HWSequence
+                storedSequence.position = storedSequence.position.integerValue + 1
+            }
+            
+        } catch {
+            print(error)
         }
     }
     
     func getSequence() -> HWSequence {
-        var error: NSError?
-        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! HWSequence
-        return sequence
+        
+        do {
+            let sequence = try self.managedObjectContext.existingObjectWithID(self.sequenceID) as! HWSequence
+            return sequence
+        } catch {
+            return HWSequence()
+        }
     }
     
     func editIntervals() -> Bool {
@@ -478,7 +501,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             let interval = intervalArray[i] as! HWInterval
             let cell: InputCell = theTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! InputCell
             
-            interval.title = cell.nameTextField.text
+            interval.title = cell.nameTextField.text!
             interval.duration = cell.duration
             interval.minutes = cell.minutes
             interval.seconds = cell.seconds
@@ -506,7 +529,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     
     func keyboardWillShow(notification: NSNotification) {
         
-        let cellArray = self.theTableView.visibleCells() as NSArray
+        let cellArray = self.theTableView.visibleCells as NSArray
         
         for var i=0; i<cellArray.count; i++ {
             

@@ -59,8 +59,11 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 let sequence = sequenceArray[i] as! HWSequence
                 sequence.position = i
                 
-                var error: NSError?
-                managedObjectContext.save(&error)
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(error)
+                }
             }
         }
     }
@@ -98,13 +101,13 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SequenceCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SequenceCell
         
         let sequence = sequenceArray[indexPath.row] as! HWSequence
         
         cell.titleLabel?.text = sequence.name
         
-        var detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
+        let detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
         cell.detailLabel?.text = "\(sequence.intervals.count) \(detailText)"
         cell.loadedOnWatch(sequence.loadedOnWatch)
         cell.delegate = self
@@ -143,8 +146,11 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             managedObjectContext.deleteObject(sequence)
             sequenceArray.removeObjectAtIndex(indexPath.row)
             
-            var error: NSError?
-            managedObjectContext.save(&error)
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
             
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
@@ -193,18 +199,15 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 }
             }
             
-            let selectedSequence = managedObjectContext.existingObjectWithID(self.selectedSequenceID, error: nil) as! HWSequence
-            selectedSequence.loadedOnWatch = 1
-            
-            var error: NSError?
-            managedObjectContext.save(&error)
-            
-            if error != nil {
-                println(error?.localizedDescription)
-            }
-            else {
+            do {
+                let selectedSequence = try managedObjectContext.existingObjectWithID(self.selectedSequenceID) as! HWSequence
+                selectedSequence.loadedOnWatch = 1
+                try managedObjectContext.save()
+                
                 theTableView.reloadData()
                 DarwinHelper.postSequenceLoadNotification()
+            } catch {
+                print(error)
             }
         }
         else if buttonIndex == kLoadOnPhoneButtonIndex {
@@ -231,8 +234,13 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         let sort = NSSortDescriptor(key: "position", ascending: true)
         request.sortDescriptors = [sort]
 
-        var error: NSError?
-        let array = managedObjectContext.executeFetchRequest(request, error: &error)
+        let array: [AnyObject]?
+        do {
+            array = try managedObjectContext.executeFetchRequest(request)
+        } catch  {
+            print(error)
+            array = nil
+        }
         sequenceArray = NSMutableArray(array: array!)
     }
 }

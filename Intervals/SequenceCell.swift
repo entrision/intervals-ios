@@ -84,11 +84,11 @@ class SequenceCell: UITableViewCell {
     func loadedOnWatch(loaded: NSNumber) {
         
         if loaded == 1 {
-            self.titleLabelLeftSpaceConstraint.constant = 22
+            self.titleLabelLeftSpaceConstraint.constant = 30
             self.watchView.hidden = false
         }
         else {
-            self.titleLabelLeftSpaceConstraint.constant = 0
+            self.titleLabelLeftSpaceConstraint.constant = 8
             self.watchView.hidden = true
         }
     }

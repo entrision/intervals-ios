@@ -42,7 +42,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         toolBar.items = [space, doneBarButton]
         inputView.addSubview(toolBar)
         
-        self.picker = UIPickerView(frame: CGRectMake(0, toolBar.frame.size.height, inputView.frame.size.width, 0))
+        self.picker = UIPickerView(frame: CGRectMake(0, toolBar.frame.size.height, inputView.frame.size.width, inputView.frame.size.height - toolBar.frame.size.height))
         self.picker.dataSource = self
         self.picker.delegate = self
         self.picker.selectRow(kInitalSelectionIndex, inComponent: kSecComponent, animated: false)
@@ -101,7 +101,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
         return result
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         var title = ""
         
@@ -119,7 +119,7 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
 
         let string = self.pickerView(pickerView, titleForRow: row, forComponent: component)
         if component == kMinComponent {
-            self.minutes = string.toInt()!
+            self.minutes = Int(string!)!
             if self.minutes != 0 {
                 self.minString = "\(string) min"
             }
@@ -130,14 +130,14 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
                     
                     let newString = self.pickerView(pickerView, titleForRow: row+1, forComponent: component)
                     self.minString = "\(newString) min"
-                    self.minutes = newString.toInt()!
+                    self.minutes = Int(newString!)!
                 }
             }
         }
         else if component == kSecComponent {
-            self.seconds = string.toInt()!
+            self.seconds = Int(string!)!
             if self.seconds != 0 {
-                self.secString = "\(string) sec"
+                self.secString = "\(string!) sec"
             }
             else {
                 self.secString = ""
@@ -145,8 +145,8 @@ class InputCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate, 
                     self.picker.selectRow(row+1, inComponent: component, animated: true)
                     
                     let newString = self.pickerView(pickerView, titleForRow: row+1, forComponent: component)
-                    self.secString = "\(newString) sec"
-                    self.seconds = newString.toInt()!
+                    self.secString = "\(newString!) sec"
+                    self.seconds = Int(newString!)!
                 }
             }
         }

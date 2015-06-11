@@ -94,13 +94,12 @@ class TimerViewController: BaseViewController {
     
     func updateCountdown() {
         
-        var hours: Int
         var minutes: Int
         var seconds: Int
         
         if self.secondsLeft > 0 {
             
-            if UIApplication.sharedApplication().scheduledLocalNotifications.count < 1 {
+            if UIApplication.sharedApplication().scheduledLocalNotifications!.count < 1 {
                 
                 if self.currentIntervalIndex < self.intervalArray.count - 1 && !delayed {
                     let upcomingInterval = intervalArray[self.currentIntervalIndex + 1] as! HWInterval
@@ -115,7 +114,6 @@ class TimerViewController: BaseViewController {
             progressLabel.text = "\(text) of \(intervalArray.count)"
             
             self.secondsLeft--;
-            hours = self.secondsLeft / 3600;
             minutes = (self.secondsLeft % 3600) / 60;
             seconds = (self.secondsLeft % 3600) % 60;
             
@@ -223,8 +221,12 @@ class TimerViewController: BaseViewController {
     }
     
     func getSequence() -> HWSequence {
-        var error: NSError?
-        let sequence = self.managedObjectContext.existingObjectWithID(self.sequenceID, error: &error) as! HWSequence
-        return sequence
+        
+        do {
+            let sequence = try self.managedObjectContext.existingObjectWithID(self.sequenceID) as! HWSequence
+            return sequence
+        } catch {
+            return HWSequence()
+        }
     }
 }

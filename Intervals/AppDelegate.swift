@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if application.respondsToSelector(Selector("registerUserNotificationSettings:")) {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert|UIUserNotificationType.Sound, categories: nil))
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Sound], categories: nil))
         }
         
         self.window?.tintColor = Colors.intervalsBlue
@@ -38,12 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if let managedObjectContext = WatchCoreDataProxy.sharedInstance.managedObjectContext {
                 
-                var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: managedObjectContext) as! HWSequence
+                let sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: managedObjectContext) as! HWSequence
                 sequence.position = 0
                 sequence.name = "Example Sequence"
                 
-                var interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
-                var interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
+                let interval = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
+                let interval2 = NSEntityDescription.insertNewObjectForEntityForName("Interval", inManagedObjectContext: managedObjectContext) as! HWInterval
                 interval.title = "Interval 1"
                 interval2.title = "Interval 2"
                 interval.minutes = 0
@@ -58,8 +58,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 sequence.addIntervalObject(interval)
                 sequence.addIntervalObject(interval2)
                 
-                var error: NSError?
-                managedObjectContext.save(&error)
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(error)
+                }
             }
         }
         

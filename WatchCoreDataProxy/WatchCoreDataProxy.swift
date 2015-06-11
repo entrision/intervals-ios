@@ -24,7 +24,7 @@ public class WatchCoreDataProxy: NSObject {
     public lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.makeandbuild.ActivityBuilder" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] as NSURL
         }()
     
     public lazy var managedObjectModel: NSManagedObjectModel = {
@@ -45,7 +45,10 @@ public class WatchCoreDataProxy: NSObject {
         if let sharedContainerURL = sharedContainerURL {
             let storeURL = sharedContainerURL.URLByAppendingPathComponent("Model.sqlite")
             var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-            if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil, error: &error) == nil {
+            do {
+                try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+            } catch var error1 as NSError {
+                error = error1
                 
                 var dict = [String: AnyObject]()
                 dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
@@ -57,6 +60,8 @@ public class WatchCoreDataProxy: NSObject {
                 NSLog("Unresolved error \(error), \(error!.userInfo)")
                 abort()
                 
+            } catch {
+                fatalError()
             }
             return coordinator
         }
@@ -79,9 +84,13 @@ public class WatchCoreDataProxy: NSObject {
     public func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            
+            do {
+                try moc.save()
+            } catch let error1 as NSError {
+                
+                error = error1
+                
                 NSLog("Unresolved error \(error), \(error!.userInfo)")
                 abort()
             }

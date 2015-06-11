@@ -19,7 +19,10 @@ class HWSequenceTests: XCTestCase {
         
         let mom = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])
         let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-        psc.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil, error: nil)
+        do {
+            try psc.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+        } catch _ {
+        }
         moc.persistentStoreCoordinator = psc
     }
     

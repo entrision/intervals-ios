@@ -56,8 +56,7 @@ class InterfaceController: WKInterfaceController {
         let seqPredicate = NSPredicate(format: "loadedOnWatch == 1")
         seqRequest.predicate = seqPredicate
 
-        var seqError: NSError?
-        let array = WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(seqRequest, error: &seqError)! as NSArray
+        let array = (try! WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(seqRequest)) as NSArray
 
         let sequence: HWSequence = array[0] as! HWSequence
         self.sequenceID = sequence.objectID
@@ -73,9 +72,8 @@ class InterfaceController: WKInterfaceController {
         
         let sort = NSSortDescriptor(key: "position", ascending: true)
         intervalRequest.sortDescriptors = [sort]
-        
-        var error: NSError?
-        self.intervalArray = WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(intervalRequest, error: &error)! as NSArray
+
+        self.intervalArray = (try! WatchCoreDataProxy.sharedInstance.managedObjectContext!.executeFetchRequest(intervalRequest)) as NSArray
         let firstInterval = self.intervalArray[0] as! HWInterval
         WatchCoreDataProxy.sharedInstance.managedObjectContext?.refreshObject(firstInterval, mergeChanges: true)
         

@@ -46,7 +46,7 @@ class InputViewControllerTests: XCTestCase {
     
     func testForAddCell() {
         
-        var result = controller.theTableView.numberOfRowsInSection(0)
+        let result = controller.theTableView.numberOfRowsInSection(0)
         
         if controller.readOnly {
             

@@ -19,8 +19,11 @@ public class SequenceManager: NSObject {
         let context = WatchCoreDataProxy.sharedInstance.managedObjectContext
         var sequence = NSEntityDescription.insertNewObjectForEntityForName("Sequence", inManagedObjectContext: context!) as! HWSequence
         sequence = theSequence
-        
-        var error: NSError?
-        context?.save(&error)
+
+        do {
+            try context?.save()
+        } catch  {
+            print(error)
+        }
     }
 }

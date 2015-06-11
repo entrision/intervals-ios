@@ -19,12 +19,12 @@ public class HWSequence: NSManagedObject {
 
 extension HWSequence {
     public func addIntervalObject(value:HWInterval) {
-        var items = self.mutableSetValueForKey("intervals");
+        let items = self.mutableSetValueForKey("intervals");
         items.addObject(value)
     }
     
     public func removeIntervalObject(value:HWInterval) {
-        var items = self.mutableSetValueForKey("intervals");
+        let items = self.mutableSetValueForKey("intervals");
         items.removeObject(value)
     }
 }

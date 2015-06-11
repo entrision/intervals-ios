@@ -63,7 +63,7 @@ class ReorderTableView: UITableView {
                 self.addSubview(snapshot)
                 UIView.animateWithDuration(0.2, animations: ({
                     
-                    center?.y = location.y
+                    center = CGPointMake((center?.x)!, location.y)
                     self.snapshot.center = center!
                     self.snapshot.transform = CGAffineTransformMakeScale(1.05, 1.05)
                     self.snapshot.alpha = 0.98
@@ -85,10 +85,10 @@ class ReorderTableView: UITableView {
             
             if let index = indexPath {
                 
-                if indexPath != self.sourceIndexPath && indexPath?.row < self.sourceArray.count {
-                    self.sourceArray.exchangeObjectAtIndex(indexPath!.row, withObjectAtIndex: self.sourceIndexPath!.row)
-                    self.moveRowAtIndexPath(self.sourceIndexPath!, toIndexPath: indexPath!)
-                    self.sourceIndexPath = indexPath!
+                if index != self.sourceIndexPath && index.row < self.sourceArray.count {
+                    self.sourceArray.exchangeObjectAtIndex(index.row, withObjectAtIndex: self.sourceIndexPath!.row)
+                    self.moveRowAtIndexPath(self.sourceIndexPath!, toIndexPath: index)
+                    self.sourceIndexPath = index
                 }
             }
         }
