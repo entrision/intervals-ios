@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+@testable import Intervals
 
 class ReorderTableViewTests: XCTestCase {
     

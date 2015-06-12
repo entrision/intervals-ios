@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import WatchCoreDataProxy
 
 class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate, SequenceCellDelegate {
 
@@ -205,7 +204,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 try managedObjectContext.save()
                 
                 theTableView.reloadData()
-                DarwinHelper.postSequenceLoadNotification()
+//                DarwinHelper.postSequenceLoadNotification()
             } catch {
                 print(error)
             }

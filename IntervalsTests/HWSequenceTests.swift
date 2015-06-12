@@ -8,6 +8,7 @@
 
 import CoreData
 import XCTest
+@testable import Intervals
 
 class HWSequenceTests: XCTestCase {
     

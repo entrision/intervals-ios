@@ -8,7 +8,7 @@
 
 import UIKit
 import XCTest
-import WatchCoreDataProxy
+@testable import Intervals
 
 class BaseViewControllerTests: XCTestCase {
     
@@ -41,6 +41,5 @@ class BaseViewControllerTests: XCTestCase {
     func testManagedObjectContext() {
         
         XCTAssertNotNil(controller.managedObjectContext, "BaseViewController's managedObjectContext not set")
-        XCTAssertTrue(controller.managedObjectContext == WatchCoreDataProxy.sharedInstance.managedObjectContext, "Incorrect context for BaseViewController")
     }
 }

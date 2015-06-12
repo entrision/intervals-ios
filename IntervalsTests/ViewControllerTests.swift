@@ -8,7 +8,7 @@
 
 import UIKit
 import XCTest
-import Intervals
+@testable import Intervals
 
 class ViewControllerTests: XCTestCase {
     

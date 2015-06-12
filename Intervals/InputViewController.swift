@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import WatchCoreDataProxy
 
 class InputViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
@@ -454,7 +453,7 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
             }
             
             if self.getSequence().loadedOnWatch == 1 {
-                DarwinHelper.postSequenceLoadNotification()
+//                DarwinHelper.postSequenceLoadNotification()
             }
             
             self.navigationController?.popViewControllerAnimated(true)

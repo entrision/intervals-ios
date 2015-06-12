@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8118.17" systemVersion="14D136" minimumToolsVersion="Xcode 7.0">
+    <entity name="Interval" representedClassName=".HWInterval" syncable="YES">
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutes" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="seconds" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="sequence" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sequence" inverseName="intervals" inverseEntity="Sequence" syncable="YES"/>
+    </entity>
+    <entity name="Sequence" representedClassName=".HWSequence" syncable="YES">
+        <attribute name="delay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="loadedOnWatch" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="position" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="intervals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Interval" inverseName="sequence" inverseEntity="Interval" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Interval" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Sequence" positionX="-54" positionY="27" width="128" height="120"/>
+    </elements>
+</model>

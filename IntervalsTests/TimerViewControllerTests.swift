@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import CoreData
+@testable import Intervals
 
 class TimerViewControllerTests: XCTestCase {
     

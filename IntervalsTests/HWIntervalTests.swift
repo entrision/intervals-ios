@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import XCTest
+@testable import Intervals
 
 class HWIntervalTests: XCTestCase {
     
