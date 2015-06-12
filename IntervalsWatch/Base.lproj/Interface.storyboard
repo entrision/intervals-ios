@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6724" systemVersion="14A389" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc" defaultGlanceController="0uZ-2p-rRc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3735"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8066.14"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Symbol.ttf">
+            <string>Symbol</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="IntervalsWatch" customModuleProvider="target">
+                    <items>
+                        <label width="1" alignment="left" text="Label" textAlignment="center" id="Hgi-ij-udD">
+                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                        </label>
+                        <label width="1" alignment="left" text="Label" textAlignment="center" id="J8g-az-F68">
+                            <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" name="Symbol" family="Symbol" pointSize="18"/>
+                        </label>
+                        <label width="1" alignment="left" text="Label" textAlignment="center" id="W7U-Kj-BXa">
+                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                        </label>
+                        <timer width="1" alignment="left" textAlignment="center" id="pSh-Fw-c83">
+                            <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" pointSize="29"/>
+                            <calendarUnit key="units" minute="YES" second="YES"/>
+                        </timer>
+                        <button width="1" height="1" heightAdjustment="-93" alignment="left" title="Button" id="tCg-cq-GdA">
+                            <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="actionButton" destination="tCg-cq-GdA" id="JNO-JU-WZB"/>
+                        <outlet property="intervalNameLabel" destination="J8g-az-F68" id="f7T-2C-gEK"/>
+                        <outlet property="progressLabel" destination="W7U-Kj-BXa" id="Ekh-VH-shU"/>
+                        <outlet property="sequenceNameLabel" destination="Hgi-ij-udD" id="ECF-el-wTr"/>
+                        <outlet property="timer" destination="pSh-Fw-c83" id="o4N-jf-kCW"/>
+                    </connections>
+                </controller>
             </objects>
-            <point key="canvasLocation" x="235" y="347"/>
+            <point key="canvasLocation" x="235" y="318"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
             <objects>
-                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModuleProvider="target">
+                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModule="IntervalsWatch" customModuleProvider="target">
                     <items>
                         <group alignment="left" id="t8f-Gd-c4y"/>
                         <group alignment="left" id="uCw-4Q-Ouw"/>
@@ -44,7 +77,7 @@
         <!--Notification Controller-->
         <scene sceneID="KIl-fV-djm">
             <objects>
-                <controller id="gdX-wl-uQE" customClass="NotificationController" customModuleProvider="target"/>
+                <controller id="gdX-wl-uQE" customClass="NotificationController" customModule="IntervalsWatch" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="553" y="1001"/>
         </scene>

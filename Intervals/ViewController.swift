@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
-class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, UIActionSheetDelegate, SequenceCellDelegate {
+class ViewController: BaseViewController {
 
     let kLoadOnWatchButtonIndex: NSInteger = 1
     let kLoadOnPhoneButtonIndex: NSInteger = 2
@@ -19,6 +20,8 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     let kTimerSegue = "timerSegue"
     let cellID = "CellID"
     
+    let wcSession = WCSession.defaultSession()
+    
     var sequenceArray = NSMutableArray()
     var selectedSequenceID = NSManagedObjectID()
     
@@ -27,6 +30,8 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     @IBOutlet weak var noSequencesLabel: UILabel!
     @IBOutlet weak var theTableView: ReorderTableView!
+    
+    //MARK: Overridden methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +44,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         theTableView.registerNib(UINib(nibName: "SequenceCell", bundle: nil), forCellReuseIdentifier: cellID)
         theTableView.tableFooterView = UIView()
+        
+        wcSession.delegate = self
+        wcSession.activateSession()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -87,8 +95,40 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         }
     }
     
-    //MARK: UITableViewDataSource
+    //MARK: Private methods
+    
+    func plusButtonTapped() {
+        
+        performSegueWithIdentifier(kInputSegue, sender: self)
+    }
+    
+    func fetchSequences() {
 
+        let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: self.managedObjectContext)
+        let request = NSFetchRequest()
+        request.entity = entityDesc
+        
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        request.sortDescriptors = [sort]
+
+        let array: [AnyObject]?
+        do {
+            array = try managedObjectContext.executeFetchRequest(request)
+        } catch  {
+            print(error)
+            array = nil
+        }
+        sequenceArray = NSMutableArray(array: array!)
+    }
+    
+    func sendSequenceToWatch(sequence: HWSequence) {
+        //TODO: Implement
+    }
+}
+
+//MARK: UITableViewDataSource
+extension ViewController : UITableViewDataSource {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -115,8 +155,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         
         return cell
     }
-    
-    //MARK: UITableViewDelegate
+}
+
+//MARK: UITableViewDelegate
+extension ViewController : UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -156,8 +198,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             tableView.endUpdates()
         }
     }
-    
-    //MARK: SequenceCellDelegate
+}
+
+//MARK: SequenceCellDelegate
+extension ViewController : SequenceCellDelegate {
     
     func sequenceCellDidTapInfoButton(cell: SequenceCell) {
         
@@ -166,8 +210,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         selectedSequenceID = sequence.objectID
         performSegueWithIdentifier(kDetailSegue, sender: self)
     }
-    
-    //MARK: Transitioning Delegate
+}
+
+//MARK: Transitioning Delegate
+extension ViewController : UIViewControllerTransitioningDelegate {
     
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
@@ -182,8 +228,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         transition.presenting = false
         return transition
     }
-    
-    //MARK: UIActionSheetDelegate
+}
+
+//MARK: UIActionSheetDelegate
+extension ViewController : UIActionSheetDelegate {
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         
@@ -204,7 +252,8 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
                 try managedObjectContext.save()
                 
                 theTableView.reloadData()
-//                DarwinHelper.postSequenceLoadNotification()
+                sendSequenceToWatch(selectedSequence)
+                
             } catch {
                 print(error)
             }
@@ -216,31 +265,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
             managedObjectContext.rollback()
         }
     }
-    
-    //MARK: Private methods
-    
-    func plusButtonTapped() {
-        
-        performSegueWithIdentifier(kInputSegue, sender: self)
-    }
-    
-    func fetchSequences() {
-
-        let entityDesc = NSEntityDescription.entityForName("Sequence", inManagedObjectContext: self.managedObjectContext)
-        let request = NSFetchRequest()
-        request.entity = entityDesc
-        
-        let sort = NSSortDescriptor(key: "position", ascending: true)
-        request.sortDescriptors = [sort]
-
-        let array: [AnyObject]?
-        do {
-            array = try managedObjectContext.executeFetchRequest(request)
-        } catch  {
-            print(error)
-            array = nil
-        }
-        sequenceArray = NSMutableArray(array: array!)
-    }
 }
 
+//MARK: WCSessionDelegate
+extension ViewController : WCSessionDelegate {
+    
+    
+}
