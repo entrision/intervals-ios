@@ -44,7 +44,15 @@ class InterfaceController: WKInterfaceController {
 extension InterfaceController : WCSessionDelegate {
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        var x = 0
-        x++
+        
+        let sequenceDict = message["sequence"] as! NSDictionary
+        sequenceNameLabel.setText(sequenceDict["name"] as? String)
+        
+        let intervalArray = message["intervals"] as! NSArray
+        let firstInterval = intervalArray[0] as! NSDictionary
+        intervalNameLabel.setText(firstInterval["title"] as? String)
+        progressLabel.setText("\(intervalArray.indexOfObject(firstInterval)+1) of \(intervalArray.count)")
+        
+        //TODO: Finish implementation
     }
 }

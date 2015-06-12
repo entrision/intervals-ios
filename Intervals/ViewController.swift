@@ -122,7 +122,23 @@ class ViewController: BaseViewController {
     }
     
     func sendSequenceToWatch(sequence: HWSequence) {
-        //TODO: Implement
+        let attributeDict = sequence.entity.attributesByName as NSDictionary
+        let keys: [String] = attributeDict.allKeys as NSArray as! [String]
+        
+        let sequenceDict = sequence.dictionaryWithValuesForKeys(keys)
+        let intervalArray: NSMutableArray = []
+        
+        for interval in sequence.intervals {
+            let theInterval = interval as! HWInterval
+            let intervalAttDict = theInterval.entity.attributesByName as NSDictionary
+            let intervalAttKeys: [String] = intervalAttDict.allKeys as NSArray as! [String]
+            let intervalDict = theInterval.dictionaryWithValuesForKeys(intervalAttKeys)
+            intervalArray.addObject(intervalDict)
+        }
+        
+        wcSession.sendMessage(["sequence" : sequenceDict, "intervals" : intervalArray], replyHandler: nil) { (error) -> Void in
+            print(error)
+        }
     }
 }
 
