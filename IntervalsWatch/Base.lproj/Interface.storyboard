@@ -15,23 +15,26 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="IntervalsWatch" customModuleProvider="target">
                     <items>
-                        <label width="1" alignment="left" text="Label" textAlignment="center" id="Hgi-ij-udD">
+                        <label width="1" alignment="left" text="No Sequence" textAlignment="center" id="Hgi-ij-udD">
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
-                        <label width="1" alignment="left" text="Label" textAlignment="center" id="J8g-az-F68">
+                        <label width="1" alignment="left" hidden="YES" text="Label" textAlignment="center" id="J8g-az-F68">
                             <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Symbol" family="Symbol" pointSize="18"/>
                         </label>
-                        <label width="1" alignment="left" text="Label" textAlignment="center" id="W7U-Kj-BXa">
+                        <label width="1" alignment="left" hidden="YES" text="Label" textAlignment="center" id="W7U-Kj-BXa">
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
-                        <timer width="1" alignment="left" textAlignment="center" id="pSh-Fw-c83">
+                        <timer width="1" alignment="left" hidden="YES" textAlignment="center" id="pSh-Fw-c83">
                             <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="29"/>
                             <calendarUnit key="units" minute="YES" second="YES"/>
                         </timer>
-                        <button width="1" height="1" heightAdjustment="-93" alignment="left" title="Button" id="tCg-cq-GdA">
+                        <button width="1" height="1" heightAdjustment="-93" alignment="left" hidden="YES" title="Start" id="tCg-cq-GdA">
                             <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="aRV-fe-ebK"/>
+                            </connections>
                         </button>
                     </items>
                     <connections>
