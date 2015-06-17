@@ -16,7 +16,8 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var intervalNameLabel: WKInterfaceLabel!
     @IBOutlet var progressLabel: WKInterfaceLabel!
     @IBOutlet var timer: WKInterfaceTimer!
-    @IBOutlet var actionButton: WKInterfaceButton!
+    @IBOutlet var startButton: WKInterfaceButton!
+    @IBOutlet var pauseButton: WKInterfaceButton!
     
     let wcSession = WCSession.defaultSession()
     
@@ -27,6 +28,7 @@ class InterfaceController: WKInterfaceController {
     
     var finished = false
     var ticking = false
+    var delayed = false
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -71,15 +73,25 @@ class InterfaceController: WKInterfaceController {
             backgroundTimer.invalidate()
             sequenceLoaded()
             
+            pauseButton.setEnabled(false)
+            setTitleForButton(pauseButton, title: "Pause", color: UIColor.lightGrayColor())
         }
         else { // Start
             
             timer.start()
             backgroundTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("nextInterval"), userInfo: nil, repeats: false)
-            setStartButtonTitle("Stop", color: UIColor.redColor())
+            
+            setTitleForButton(startButton, title: "Stop", color: UIColor.redColor())
+            pauseButton.setEnabled(true)
+            setTitleForButton(pauseButton, title: "Pause", color: UIColor(red: 0, green: 0.35, blue: 1.0, alpha: 1.0))
         }
         
         self.ticking = !self.ticking
+    }
+
+    @IBAction func pauseButtonTapped() {
+        
+        //TODO: Implement
     }
     
     //MARK: Private methods
@@ -105,49 +117,71 @@ class InterfaceController: WKInterfaceController {
         timer.setHidden(false)
         intervalNameLabel.setHidden(false)
         progressLabel.setHidden(false)
-        actionButton.setHidden(false)
-        setStartButtonTitle("Start", color: UIColor.greenColor())
+        startButton.setHidden(false)
+        setTitleForButton(startButton, title: "Start", color: UIColor.greenColor())
     }
     
     func nextInterval() {
-        
-        if currentIntervalIndex < intervalArray.count-1 {
             
-            currentIntervalIndex++
+        var duration: NSTimeInterval = 0
+        if delayed {
             
-            let nextInterval = intervalArray[currentIntervalIndex] as! NSDictionary
-            
-            intervalNameLabel.setText(nextInterval["title"] as? String)
-            
-            let text = "\(intervalArray.indexOfObject(nextInterval)+1)"
-            self.progressLabel.setText("\(text) of \(intervalArray.count)")
-            
-            let duration = NSTimeInterval(nextInterval["duration"] as! NSNumber)
+            let currentInterval = intervalArray[currentIntervalIndex] as! NSDictionary
+            duration = NSTimeInterval(currentInterval["duration"] as! NSNumber)
             let date = NSDate(timeIntervalSinceNow: duration)
-            self.timer.setDate(date)
-            self.timer.start()
+            timer.setDate(date)
+            timer.start()
+            delayed = false
             
+            let lightBlue = UIColor(red: 0.0, green: 189.0/255.0, blue: 1.0, alpha: 1.0)
+            intervalNameLabel.setTextColor(lightBlue)
+            timer.setTextColor(lightBlue)
+            
+        } else {
+            
+            if currentIntervalIndex < intervalArray.count-1 {
+                
+                currentIntervalIndex++
+                let nextInterval = intervalArray[currentIntervalIndex] as! NSDictionary
+                
+                intervalNameLabel.setText(nextInterval["title"] as? String)
+                intervalNameLabel.setTextColor(UIColor.greenColor())
+                timer.setTextColor(UIColor.greenColor())
+                
+                let text = "\(intervalArray.indexOfObject(nextInterval)+1)"
+                self.progressLabel.setText("\(text) of \(intervalArray.count)")
+                
+                let sequenceDict = messageDict["sequence"] as! NSDictionary
+                duration = NSTimeInterval(sequenceDict["delay"] as! NSNumber)
+                let date = NSDate(timeIntervalSinceNow: duration)
+                timer.setDate(date)
+                timer.start()
+                delayed = true
+                
+            } else {
+                
+                intervalNameLabel.setText("Completed")
+                timer.stop()
+                setTitleForButton(startButton, title: "Reset", color: UIColor.orangeColor())
+                currentIntervalIndex = 0
+                ticking = false
+                finished = true
+            }
+        }
+        
+        if !finished {
             backgroundTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("nextInterval"), userInfo: nil, repeats: false)
         }
-        else {
-            
-            intervalNameLabel.setText("Completed")
-            timer.stop()
-            setStartButtonTitle("Reset", color: UIColor.orangeColor())
-            currentIntervalIndex = 0
-            ticking = false
-            finished = true
-        }
-        
+
         WKInterfaceDevice.currentDevice().playHaptic(WKHapticType.Start)
     }
     
-    func setStartButtonTitle(title: String, color: UIColor) {
+    func setTitleForButton(button: WKInterfaceButton, title: String, color: UIColor) {
         
         let string: NSMutableAttributedString = NSMutableAttributedString(string: title)
         let attributes = [NSForegroundColorAttributeName: color]
         string.setAttributes(attributes, range:NSMakeRange(0, string.length))
-        actionButton.setAttributedTitle(string)
+        button.setAttributedTitle(string)
     }
 }
 

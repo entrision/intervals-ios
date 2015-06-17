@@ -18,35 +18,46 @@
                         <label width="1" alignment="left" text="No Sequence" textAlignment="center" id="Hgi-ij-udD">
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
-                        <label width="1" alignment="left" hidden="YES" text="Label" textAlignment="center" id="J8g-az-F68">
+                        <label width="1" alignment="left" text="Label" textAlignment="center" id="J8g-az-F68">
                             <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" name="Symbol" family="Symbol" pointSize="18"/>
                         </label>
-                        <label width="1" alignment="left" hidden="YES" text="Label" textAlignment="center" id="W7U-Kj-BXa">
+                        <label width="1" alignment="left" text="Label" textAlignment="center" id="W7U-Kj-BXa">
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                         </label>
-                        <timer width="1" alignment="left" hidden="YES" textAlignment="center" id="pSh-Fw-c83">
+                        <timer width="1" alignment="left" textAlignment="center" id="pSh-Fw-c83">
                             <color key="textColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="29"/>
                             <calendarUnit key="units" minute="YES" second="YES"/>
                         </timer>
-                        <button width="1" height="1" heightAdjustment="-93" alignment="left" hidden="YES" title="Start" id="tCg-cq-GdA">
-                            <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="aRV-fe-ebK"/>
-                            </connections>
-                        </button>
+                        <group alignment="left" id="QRe-CT-Wgm">
+                            <items>
+                                <button width="68" height="43" alignment="left" title="Start" id="tCg-cq-GdA">
+                                    <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="aRV-fe-ebK"/>
+                                    </connections>
+                                </button>
+                                <button width="65" height="43" alignment="left" title="Pause" enabled="NO" id="5DO-ti-yep">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <action selector="pauseButtonTapped" destination="AgC-eL-Hgc" id="anJ-Wm-e6q"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
                     </items>
                     <connections>
-                        <outlet property="actionButton" destination="tCg-cq-GdA" id="JNO-JU-WZB"/>
                         <outlet property="intervalNameLabel" destination="J8g-az-F68" id="f7T-2C-gEK"/>
+                        <outlet property="pauseButton" destination="5DO-ti-yep" id="ymH-lz-tMv"/>
                         <outlet property="progressLabel" destination="W7U-Kj-BXa" id="Ekh-VH-shU"/>
                         <outlet property="sequenceNameLabel" destination="Hgi-ij-udD" id="ECF-el-wTr"/>
+                        <outlet property="startButton" destination="tCg-cq-GdA" id="isi-gi-y7O"/>
                         <outlet property="timer" destination="pSh-Fw-c83" id="o4N-jf-kCW"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="235" y="318"/>
+            <point key="canvasLocation" x="235" y="293"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
