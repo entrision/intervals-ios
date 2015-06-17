@@ -128,7 +128,10 @@ class ViewController: BaseViewController {
         let sequenceDict = sequence.dictionaryWithValuesForKeys(keys)
         let intervalArray: NSMutableArray = []
         
-        for interval in sequence.intervals {
+        let sort = NSSortDescriptor(key: "position", ascending: true)
+        let sortedIntervals = sequence.intervals.sortedArrayUsingDescriptors([sort])
+        
+        for interval in sortedIntervals {
             let theInterval = interval as! HWInterval
             let intervalAttDict = theInterval.entity.attributesByName as NSDictionary
             let intervalAttKeys: [String] = intervalAttDict.allKeys as NSArray as! [String]

@@ -86,11 +86,6 @@ class InterfaceController: WKInterfaceController {
     
     func sequenceLoaded() {
         
-        timer.setHidden(false)
-        intervalNameLabel.setHidden(false)
-        progressLabel.setHidden(false)
-        actionButton.setHidden(false)
-        setStartButtonTitle("Start", color: UIColor.greenColor())
         currentIntervalIndex = 0
         finished = false
         
@@ -103,9 +98,15 @@ class InterfaceController: WKInterfaceController {
         intervalNameLabel.setText(firstInterval["title"] as? String)
         progressLabel.setText("\(intervalArray.indexOfObject(firstInterval)+1) of \(intervalArray.count)")
         
-        let duration = firstInterval["duration"] as! NSNumber
-        let date = NSDate(timeIntervalSinceNow: NSTimeInterval(duration) + 1)
+        let duration = NSTimeInterval(firstInterval["duration"] as! NSNumber) + 1
+        let date = NSDate(timeIntervalSinceNow: duration)
         timer.setDate(date)
+        
+        timer.setHidden(false)
+        intervalNameLabel.setHidden(false)
+        progressLabel.setHidden(false)
+        actionButton.setHidden(false)
+        setStartButtonTitle("Start", color: UIColor.greenColor())
     }
     
     func nextInterval() {
@@ -137,6 +138,8 @@ class InterfaceController: WKInterfaceController {
             ticking = false
             finished = true
         }
+        
+        WKInterfaceDevice.currentDevice().playHaptic(WKHapticType.Start)
     }
     
     func setStartButtonTitle(title: String, color: UIColor) {

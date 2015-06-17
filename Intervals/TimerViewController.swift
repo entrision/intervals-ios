@@ -124,17 +124,17 @@ class TimerViewController: BaseViewController {
             if getSequence().delay.integerValue > 0 {
                 
                 if delayed {
-                    let currentInterval = intervalArray[self.currentIntervalIndex] as! HWInterval
+                    let currentInterval = intervalArray[currentIntervalIndex] as! HWInterval
                     secondsLeft = currentInterval.duration.integerValue
-                    self.intervalNameLabel.textColor = Colors.intervalsLightBlue
+                    intervalNameLabel.textColor = Colors.intervalsLightBlue
                     delayed = false
                 }
                 else {
                     
-                    if self.currentIntervalIndex < self.intervalArray.count - 1 {
+                    if currentIntervalIndex < intervalArray.count - 1 {
                         nextInterval()
                         secondsLeft = getSequence().delay.integerValue
-                        self.intervalNameLabel.textColor = Colors.intervalsGreen
+                        intervalNameLabel.textColor = Colors.intervalsGreen
                         delayed = true
                     }
                     else {
@@ -144,7 +144,7 @@ class TimerViewController: BaseViewController {
             }
             else {
                 
-                if self.currentIntervalIndex < self.intervalArray.count - 1 {
+                if currentIntervalIndex < intervalArray.count - 1 {
                     nextInterval()
                 }
                 else {
