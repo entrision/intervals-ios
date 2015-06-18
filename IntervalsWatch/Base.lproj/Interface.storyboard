@@ -67,7 +67,7 @@
                         <table alignment="left" id="IuG-pi-CMS">
                             <items>
                                 <tableRow identifier="SequenceRowController" id="Tyo-FR-BFn" customClass="SequenceRowController" customModule="IntervalsWatch_Extension">
-                                    <group key="rootItem" width="1" alignment="left" id="u9r-s1-BeQ">
+                                    <group key="rootItem" width="1" alignment="left" layout="vertical" id="u9r-s1-BeQ">
                                         <items>
                                             <label width="1" alignment="left" verticalAlignment="center" text="Label" id="GQ8-fX-MWy">
                                                 <color key="textColor" red="0.0" green="0.74117647060000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>

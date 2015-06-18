@@ -18,24 +18,12 @@ class SequenceCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var watchView: UIView!
-    @IBOutlet weak var watchFaceView: UIView!
-    @IBOutlet weak var watchBandView: UIView!
     
     var delegate: SequenceCellDelegate! = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        let glareView = GlareView(frame: CGRectMake(1.0, 1.0, self.watchFaceView.frame.size.width, self.watchFaceView.frame.size.height))
-        self.watchFaceView.addSubview(glareView)
-        self.watchFaceView.layer.cornerRadius = 3.0
-        
-        self.watchBandView.layer.cornerRadius = 2.0
-        self.watchBandView.layer.borderColor = UIColor(white: 0.5, alpha: 1.0).CGColor
-        self.watchBandView.layer.borderWidth = 0.5
-        self.watchView.hidden = true
         
         self.infoButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
         self.infoButton.layer.cornerRadius = self.infoButton.frame.size.width / 2
@@ -62,7 +50,6 @@ class SequenceCell: UITableViewCell {
                 self.titleLabel.alpha = alpha
                 self.detailLabel.alpha = alpha
                 self.infoButton.alpha = alpha
-                self.watchView.alpha = alpha
                 
             }), completion: { finished in
                 
@@ -72,7 +59,6 @@ class SequenceCell: UITableViewCell {
             self.titleLabel.alpha = alpha
             self.detailLabel.alpha = alpha
             self.infoButton.alpha = alpha
-            self.watchView.alpha = alpha
         }
     }
     
@@ -85,11 +71,9 @@ class SequenceCell: UITableViewCell {
         
         if loaded == 1 {
             self.titleLabelLeftSpaceConstraint.constant = 30
-            self.watchView.hidden = false
         }
         else {
             self.titleLabelLeftSpaceConstraint.constant = 8
-            self.watchView.hidden = true
         }
     }
 }

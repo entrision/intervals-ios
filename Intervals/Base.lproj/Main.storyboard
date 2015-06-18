@@ -206,10 +206,33 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="FTH-bD-bIF" secondAttribute="bottom" id="mPG-L1-ZYc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="OFo-vV-Ahe"/>
+                    <navigationItem key="navigationItem" id="OFo-vV-Ahe">
+                        <barButtonItem key="leftBarButtonItem" id="znt-ia-onK">
+                            <view key="customView" contentMode="scaleToFill" id="fJ3-5C-Qdi" customClass="WatchView" customModule="Intervals" customModuleProvider="target">
+                                <rect key="frame" x="20" y="2" width="14" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2m-IY-vg8">
+                                        <rect key="frame" x="2" y="4" width="10" height="31"/>
+                                        <color key="backgroundColor" red="0.0" green="0.74180506989999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="htx-ok-3TA">
+                                        <rect key="frame" x="0.0" y="10" width="14" height="18"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="bandView" destination="m2m-IY-vg8" id="7rh-dX-tSE"/>
+                                    <outlet property="faceView" destination="htx-ok-3TA" id="656-Xa-cgG"/>
+                                </connections>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="noSequencesLabel" destination="TF2-9j-hiU" id="eKV-iN-j4X"/>
                         <outlet property="theTableView" destination="FTH-bD-bIF" id="xtN-oy-zjQ"/>
+                        <outlet property="watchView" destination="fJ3-5C-Qdi" id="DKq-vm-OBZ"/>
                         <segue destination="9ct-yo-5qR" kind="presentation" identifier="inputSegue" id="AoO-cV-mrH"/>
                         <segue destination="Pr5-zE-Oxv" kind="show" identifier="sequenceDetailSegue" id="g8R-FY-Kq6"/>
                         <segue destination="Q7U-Df-P4H" kind="show" identifier="timerSegue" id="hXG-ck-gb4"/>

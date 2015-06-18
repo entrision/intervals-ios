@@ -32,6 +32,7 @@ class ViewController: BaseViewController {
     
     @IBOutlet weak var noSequencesLabel: UILabel!
     @IBOutlet weak var theTableView: ReorderTableView!
+    @IBOutlet weak var watchView: WatchView!
     
     //MARK: Overridden methods
     
@@ -52,8 +53,12 @@ class ViewController: BaseViewController {
         watchPaired = WCSession.defaultSession().paired
         
         if watchPaired {
-            
+            let gr = UITapGestureRecognizer(target: self, action: Selector("watchViewTapped"))
+            gr.numberOfTapsRequired = 1
+            watchView.addGestureRecognizer(gr)
         }
+        
+        watchView.hidden = !watchPaired
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -111,6 +116,11 @@ class ViewController: BaseViewController {
     func plusButtonTapped() {
         
         performSegueWithIdentifier(kInputSegue, sender: self)
+    }
+    
+    func watchViewTapped() {
+        
+        sendSequencesToWatch()
     }
     
     func fetchSequences() {
@@ -205,9 +215,6 @@ extension ViewController : UITableViewDelegate {
         let sequence = sequenceArray[indexPath.row] as! HWSequence
         selectedSequenceID = sequence.objectID
         performSegueWithIdentifier(kTimerSegue, sender: self)
-        
-//        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
-//        actionSheet.showInView(self.view)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -268,43 +275,6 @@ extension ViewController : UIViewControllerTransitioningDelegate {
         return transition
     }
 }
-
-//MARK: UIActionSheetDelegate
-//extension ViewController : UIActionSheetDelegate {
-//    
-//    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-//        
-//        if buttonIndex == kLoadOnWatchButtonIndex {
-//            
-//            for var i=0; i<sequenceArray.count; i++ {
-//                
-//                let aSequence = sequenceArray[i] as! HWSequence
-//                if aSequence.loadedOnWatch == 1 {
-//                    aSequence.loadedOnWatch = 0
-//                    break
-//                }
-//            }
-//            
-//            do {
-//                let selectedSequence = try managedObjectContext.existingObjectWithID(self.selectedSequenceID) as! HWSequence
-//                selectedSequence.loadedOnWatch = 1
-//                try managedObjectContext.save()
-//                
-//                theTableView.reloadData()
-//                sendSequenceToWatch(selectedSequence)
-//                
-//            } catch {
-//                print(error)
-//            }
-//        }
-//        else if buttonIndex == kLoadOnPhoneButtonIndex {
-//            performSegueWithIdentifier(kTimerSegue, sender: self)
-//        }
-//        else {
-//            managedObjectContext.rollback()
-//        }
-//    }
-//}
 
 //MARK: WCSessionDelegate
 extension ViewController : WCSessionDelegate {
