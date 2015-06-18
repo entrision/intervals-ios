@@ -12,6 +12,8 @@
 		0439927C1B051C5F00C7C7B5 /* BaseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */; };
 		043992801B05229700C7C7B5 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */; };
 		04467B3D1B2A1D3200B42863 /* TimerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */; };
+		045F997D1B331C4700A7285E /* TableInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F997C1B331C4700A7285E /* TableInterfaceController.swift */; };
+		045F997F1B33212F00A7285E /* SequenceRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F997E1B33212F00A7285E /* SequenceRowController.swift */; };
 		047206B51AFC04300067DDC1 /* interval_effect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 047206B41AFC04300067DDC1 /* interval_effect.m4a */; };
 		047369171B0A243000D74670 /* ReorderTableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047369161B0A243000D74670 /* ReorderTableViewTests.swift */; };
 		047369191B0A2A8400D74670 /* HWIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047369181B0A2A8400D74670 /* HWIntervalTests.swift */; };
@@ -122,6 +124,8 @@
 		0431CEDF1AF94197007A1058 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerTests.swift; sourceTree = "<group>"; };
 		0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
+		045F997C1B331C4700A7285E /* TableInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableInterfaceController.swift; sourceTree = "<group>"; };
+		045F997E1B33212F00A7285E /* SequenceRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceRowController.swift; sourceTree = "<group>"; };
 		047206B41AFC04300067DDC1 /* interval_effect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = interval_effect.m4a; sourceTree = "<group>"; };
 		047369161B0A243000D74670 /* ReorderTableViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReorderTableViewTests.swift; sourceTree = "<group>"; };
 		047369181B0A2A8400D74670 /* HWIntervalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWIntervalTests.swift; sourceTree = "<group>"; };
@@ -204,6 +208,8 @@
 		0497F82E1B2A2CA700BD18E5 /* IntervalsWatch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				045F997C1B331C4700A7285E /* TableInterfaceController.swift */,
+				045F997E1B33212F00A7285E /* SequenceRowController.swift */,
 				0497F8311B2A2CA700BD18E5 /* InterfaceController.swift */,
 				0497F8331B2A2CA700BD18E5 /* ExtensionDelegate.swift */,
 				0497F8351B2A2CA700BD18E5 /* NotificationController.swift */,
@@ -498,9 +504,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045F997D1B331C4700A7285E /* TableInterfaceController.swift in Sources */,
 				0497F8361B2A2CA700BD18E5 /* NotificationController.swift in Sources */,
 				0497F8341B2A2CA700BD18E5 /* ExtensionDelegate.swift in Sources */,
 				0497F83A1B2A2CA700BD18E5 /* ComplicationController.swift in Sources */,
+				045F997F1B33212F00A7285E /* SequenceRowController.swift in Sources */,
 				0497F8321B2A2CA700BD18E5 /* InterfaceController.swift in Sources */,
 				0497F8381B2A2CA700BD18E5 /* GlanceController.swift in Sources */,
 			);

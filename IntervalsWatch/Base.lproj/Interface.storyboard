@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc" defaultGlanceController="0uZ-2p-rRc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Xx2-Qx-cub" defaultGlanceController="0uZ-2p-rRc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8066.14"/>
@@ -10,10 +10,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Interface Controller-->
+        <!--TimerController-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="IntervalsWatch" customModuleProvider="target">
+                <controller identifier="TimerController" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="IntervalsWatch" customModuleProvider="target">
                     <items>
                         <label width="1" alignment="left" text="No Sequence" textAlignment="center" id="Hgi-ij-udD">
                             <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
@@ -30,15 +30,15 @@
                             <fontDescription key="font" type="system" pointSize="29"/>
                             <calendarUnit key="units" minute="YES" second="YES"/>
                         </timer>
-                        <group alignment="left" id="QRe-CT-Wgm">
+                        <group alignment="left" verticalAlignment="bottom" id="QRe-CT-Wgm">
                             <items>
-                                <button width="68" height="43" alignment="left" title="Start" id="tCg-cq-GdA">
+                                <button width="68" height="43" alignment="left" verticalAlignment="bottom" title="Start" id="tCg-cq-GdA">
                                     <color key="titleColor" red="0.19915240249999999" green="0.79104662699999995" blue="0.087053707229999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
                                         <action selector="startButtonTapped" destination="AgC-eL-Hgc" id="aRV-fe-ebK"/>
                                     </connections>
                                 </button>
-                                <button width="65" height="43" alignment="left" title="Pause" enabled="NO" id="5DO-ti-yep">
+                                <button width="65" height="43" alignment="left" verticalAlignment="bottom" title="Pause" enabled="NO" id="5DO-ti-yep">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <connections>
                                         <action selector="pauseButtonTapped" destination="AgC-eL-Hgc" id="anJ-Wm-e6q"/>
@@ -57,7 +57,37 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="235" y="293"/>
+            <point key="canvasLocation" x="553" y="304"/>
+        </scene>
+        <!--Table Interface Controller-->
+        <scene sceneID="bpe-7H-pDw">
+            <objects>
+                <controller hidesWhenLoading="NO" id="Xx2-Qx-cub" customClass="TableInterfaceController" customModule="IntervalsWatch_Extension">
+                    <items>
+                        <table alignment="left" id="IuG-pi-CMS">
+                            <items>
+                                <tableRow identifier="SequenceRowController" id="Tyo-FR-BFn" customClass="SequenceRowController" customModule="IntervalsWatch_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="u9r-s1-BeQ">
+                                        <items>
+                                            <label width="1" alignment="left" verticalAlignment="center" text="Label" id="GQ8-fX-MWy">
+                                                <color key="textColor" red="0.0" green="0.74117647060000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="sequenceLabel" destination="GQ8-fX-MWy" id="d4Y-ME-Ncx"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="IuG-pi-CMS" id="JH2-Hh-SUk"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="316" y="304"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">

@@ -19,9 +19,7 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var startButton: WKInterfaceButton!
     @IBOutlet var pauseButton: WKInterfaceButton!
     
-    let wcSession = WCSession.defaultSession()
-    
-    var messageDict = NSDictionary()
+    var sequenceDict = NSDictionary()
     var intervalArray = NSArray()
     var backgroundTimer = NSTimer()
     var currentIntervalIndex: Int = 0
@@ -35,8 +33,8 @@ class InterfaceController: WKInterfaceController {
         
         // Configure interface objects here.
         
-        wcSession.delegate = self
-        wcSession.activateSession()
+        sequenceDict = context as! NSDictionary
+        loadSequence()
     }
 
     override func willActivate() {
@@ -55,7 +53,7 @@ class InterfaceController: WKInterfaceController {
         
         // Reset
         if finished {
-            sequenceLoaded()
+            loadSequence()
             finished = false
             return
         }
@@ -71,10 +69,14 @@ class InterfaceController: WKInterfaceController {
             
             timer.stop()
             backgroundTimer.invalidate()
-            sequenceLoaded()
+            loadSequence()
             
             pauseButton.setEnabled(false)
             setTitleForButton(pauseButton, title: "Pause", color: UIColor.lightGrayColor())
+            
+            let lightBlue = UIColor(red: 0.0, green: 189.0/255.0, blue: 1.0, alpha: 1.0)
+            intervalNameLabel.setTextColor(lightBlue)
+            timer.setTextColor(lightBlue)
         }
         else { // Start
             
@@ -96,15 +98,14 @@ class InterfaceController: WKInterfaceController {
     
     //MARK: Private methods
     
-    func sequenceLoaded() {
+    func loadSequence() {
         
         currentIntervalIndex = 0
         finished = false
         
-        let sequenceDict = messageDict["sequence"] as! NSDictionary
         sequenceNameLabel.setText(sequenceDict["name"] as? String)
         
-        intervalArray = messageDict["intervals"] as! NSArray
+        intervalArray = sequenceDict["intervals"] as! NSArray
         
         let firstInterval = intervalArray[currentIntervalIndex] as! NSDictionary
         intervalNameLabel.setText(firstInterval["title"] as? String)
@@ -151,7 +152,6 @@ class InterfaceController: WKInterfaceController {
                 let text = "\(intervalArray.indexOfObject(nextInterval)+1)"
                 self.progressLabel.setText("\(text) of \(intervalArray.count)")
                 
-                let sequenceDict = messageDict["sequence"] as! NSDictionary
                 duration = NSTimeInterval(sequenceDict["delay"] as! NSNumber)
                 let date = NSDate(timeIntervalSinceNow: duration)
                 timer.setDate(date)
@@ -161,8 +161,10 @@ class InterfaceController: WKInterfaceController {
             } else {
                 
                 intervalNameLabel.setText("Completed")
-                timer.stop()
                 setTitleForButton(startButton, title: "Reset", color: UIColor.orangeColor())
+                progressLabel.setHidden(true)
+                timer.stop()
+                timer.setHidden(true)
                 currentIntervalIndex = 0
                 ticking = false
                 finished = true
@@ -182,15 +184,5 @@ class InterfaceController: WKInterfaceController {
         let attributes = [NSForegroundColorAttributeName: color]
         string.setAttributes(attributes, range:NSMakeRange(0, string.length))
         button.setAttributedTitle(string)
-    }
-}
-
-//MARK: WCSessionDelegate
-extension InterfaceController : WCSessionDelegate {
-    
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        
-        messageDict = message
-        sequenceLoaded()
     }
 }

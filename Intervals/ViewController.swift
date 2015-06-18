@@ -28,6 +28,8 @@ class ViewController: BaseViewController {
     var snapshot: UIView = UIView()
     var sourceIndexPath: NSIndexPath = NSIndexPath()
     
+    var watchPaired = false
+    
     @IBOutlet weak var noSequencesLabel: UILabel!
     @IBOutlet weak var theTableView: ReorderTableView!
     
@@ -47,14 +49,23 @@ class ViewController: BaseViewController {
         
         wcSession.delegate = self
         wcSession.activateSession()
+        watchPaired = WCSession.defaultSession().paired
+        
+        if watchPaired {
+            
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         fetchSequences()
         theTableView.sourceArray = sequenceArray
         theTableView.reloadData()
+        
+        if watchPaired {
+            sendSequencesToWatch()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -121,25 +132,33 @@ class ViewController: BaseViewController {
         sequenceArray = NSMutableArray(array: array!)
     }
     
-    func sendSequenceToWatch(sequence: HWSequence) {
-        let attributeDict = sequence.entity.attributesByName as NSDictionary
-        let keys: [String] = attributeDict.allKeys as NSArray as! [String]
+    func sendSequencesToWatch() {
         
-        let sequenceDict = sequence.dictionaryWithValuesForKeys(keys)
-        let intervalArray: NSMutableArray = []
-        
-        let sort = NSSortDescriptor(key: "position", ascending: true)
-        let sortedIntervals = sequence.intervals.sortedArrayUsingDescriptors([sort])
-        
-        for interval in sortedIntervals {
-            let theInterval = interval as! HWInterval
-            let intervalAttDict = theInterval.entity.attributesByName as NSDictionary
-            let intervalAttKeys: [String] = intervalAttDict.allKeys as NSArray as! [String]
-            let intervalDict = theInterval.dictionaryWithValuesForKeys(intervalAttKeys)
-            intervalArray.addObject(intervalDict)
+        let sequenceDicts = NSMutableArray()
+        for aSequence in sequenceArray {
+            
+            let theSequence = aSequence as! HWSequence
+            let attributeDict = theSequence.entity.attributesByName as NSDictionary
+            let keys: [String] = attributeDict.allKeys as NSArray as! [String]
+            let sequenceDict = theSequence.dictionaryWithValuesForKeys(keys)
+            let mutableSequenceDict = NSMutableDictionary(dictionary: sequenceDict)
+            
+            let sort = NSSortDescriptor(key: "position", ascending: true)
+            let sortedIntervals = theSequence.intervals.sortedArrayUsingDescriptors([sort])
+            let intervals = NSMutableArray()
+            for anInterval in sortedIntervals {
+                let theInterval = anInterval as! HWInterval
+                let attributes = theInterval.entity.attributesByName as NSDictionary
+                let intervalKeys: [String] = attributes.allKeys as NSArray as! [String]
+                let intervalDict = theInterval.dictionaryWithValuesForKeys(intervalKeys)
+                intervals.addObject(intervalDict)
+                mutableSequenceDict.setObject(intervals, forKey: "intervals")
+            }
+
+            sequenceDicts.addObject(mutableSequenceDict)
         }
         
-        wcSession.sendMessage(["sequence" : sequenceDict, "intervals" : intervalArray], replyHandler: nil) { (error) -> Void in
+        wcSession.sendMessage(["sequences" : sequenceDicts], replyHandler: nil) { (error) -> Void in
             print(error)
         }
     }
@@ -167,7 +186,7 @@ extension ViewController : UITableViewDataSource {
         
         let detailText = sequence.intervals.count > 1 ? "intervals" : "interval"
         cell.detailLabel?.text = "\(sequence.intervals.count) \(detailText)"
-        cell.loadedOnWatch(sequence.loadedOnWatch)
+//        cell.loadedOnWatch(sequence.loadedOnWatch)
         cell.delegate = self
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -185,9 +204,10 @@ extension ViewController : UITableViewDelegate {
         
         let sequence = sequenceArray[indexPath.row] as! HWSequence
         selectedSequenceID = sequence.objectID
+        performSegueWithIdentifier(kTimerSegue, sender: self)
         
-        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
-        actionSheet.showInView(self.view)
+//        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Load on Apple Watch", "Load on iPhone")
+//        actionSheet.showInView(self.view)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -250,41 +270,41 @@ extension ViewController : UIViewControllerTransitioningDelegate {
 }
 
 //MARK: UIActionSheetDelegate
-extension ViewController : UIActionSheetDelegate {
-    
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        
-        if buttonIndex == kLoadOnWatchButtonIndex {
-            
-            for var i=0; i<sequenceArray.count; i++ {
-                
-                let aSequence = sequenceArray[i] as! HWSequence
-                if aSequence.loadedOnWatch == 1 {
-                    aSequence.loadedOnWatch = 0
-                    break
-                }
-            }
-            
-            do {
-                let selectedSequence = try managedObjectContext.existingObjectWithID(self.selectedSequenceID) as! HWSequence
-                selectedSequence.loadedOnWatch = 1
-                try managedObjectContext.save()
-                
-                theTableView.reloadData()
-                sendSequenceToWatch(selectedSequence)
-                
-            } catch {
-                print(error)
-            }
-        }
-        else if buttonIndex == kLoadOnPhoneButtonIndex {
-            performSegueWithIdentifier(kTimerSegue, sender: self)
-        }
-        else {
-            managedObjectContext.rollback()
-        }
-    }
-}
+//extension ViewController : UIActionSheetDelegate {
+//    
+//    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+//        
+//        if buttonIndex == kLoadOnWatchButtonIndex {
+//            
+//            for var i=0; i<sequenceArray.count; i++ {
+//                
+//                let aSequence = sequenceArray[i] as! HWSequence
+//                if aSequence.loadedOnWatch == 1 {
+//                    aSequence.loadedOnWatch = 0
+//                    break
+//                }
+//            }
+//            
+//            do {
+//                let selectedSequence = try managedObjectContext.existingObjectWithID(self.selectedSequenceID) as! HWSequence
+//                selectedSequence.loadedOnWatch = 1
+//                try managedObjectContext.save()
+//                
+//                theTableView.reloadData()
+//                sendSequenceToWatch(selectedSequence)
+//                
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        else if buttonIndex == kLoadOnPhoneButtonIndex {
+//            performSegueWithIdentifier(kTimerSegue, sender: self)
+//        }
+//        else {
+//            managedObjectContext.rollback()
+//        }
+//    }
+//}
 
 //MARK: WCSessionDelegate
 extension ViewController : WCSessionDelegate {
