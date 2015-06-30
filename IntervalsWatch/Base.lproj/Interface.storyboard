@@ -83,7 +83,7 @@
                         </table>
                     </items>
                     <connections>
-                        <outlet property="table" destination="IuG-pi-CMS" id="JH2-Hh-SUk"/>
+                        <outlet property="theTable" destination="IuG-pi-CMS" id="y8Q-oV-fzP"/>
                     </connections>
                 </controller>
             </objects>
