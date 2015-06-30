@@ -12,7 +12,7 @@ import WatchConnectivity
 
 class TableInterfaceController: WKInterfaceController {
 
-    @IBOutlet var table: WKInterfaceTable!
+    @IBOutlet var theTable: WKInterfaceTable!
     
     let wcSession = WCSession.defaultSession()
     var sequences = NSArray()
@@ -39,7 +39,6 @@ class TableInterfaceController: WKInterfaceController {
     }
     
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
-        super.table(table, didSelectRowAtIndex: rowIndex)
         
         let selectedSequence = sequences[rowIndex] as! NSDictionary
         pushControllerWithName("TimerController", context: selectedSequence)
@@ -52,13 +51,13 @@ extension TableInterfaceController : WCSessionDelegate {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
         
         sequences = message["sequences"] as! NSArray
-        table.setNumberOfRows(sequences.count, withRowType: "SequenceRowController")
+        theTable.setNumberOfRows(sequences.count, withRowType: "SequenceRowController")
         
         var i = 0
         for sequence in sequences {
             
             let theSequence = sequence as! NSDictionary
-            let row = table.rowControllerAtIndex(i) as! SequenceRowController
+            let row = theTable.rowControllerAtIndex(i) as! SequenceRowController
             row.sequenceLabel.setText(theSequence["name"] as? String)
             i++
         }
