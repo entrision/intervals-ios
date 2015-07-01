@@ -68,9 +68,13 @@ class ViewController: BaseViewController {
         theTableView.sourceArray = sequenceArray
         theTableView.reloadData()
         
-        if watchPaired {
-            sendSequencesToWatch()
-        }
+        sendSequencesToWatch()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didReceiveTableReorderedNotification"), name: Strings.kSequenceTableReorderedNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -89,6 +93,8 @@ class ViewController: BaseViewController {
                 }
             }
         }
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: Strings.kSequenceTableReorderedNotification, object: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -144,33 +150,40 @@ class ViewController: BaseViewController {
     
     func sendSequencesToWatch() {
         
-        let sequenceDicts = NSMutableArray()
-        for aSequence in sequenceArray {
+        if watchPaired {
             
-            let theSequence = aSequence as! HWSequence
-            let attributeDict = theSequence.entity.attributesByName as NSDictionary
-            let keys: [String] = attributeDict.allKeys as NSArray as! [String]
-            let sequenceDict = theSequence.dictionaryWithValuesForKeys(keys)
-            let mutableSequenceDict = NSMutableDictionary(dictionary: sequenceDict)
-            
-            let sort = NSSortDescriptor(key: "position", ascending: true)
-            let sortedIntervals = theSequence.intervals.sortedArrayUsingDescriptors([sort])
-            let intervals = NSMutableArray()
-            for anInterval in sortedIntervals {
-                let theInterval = anInterval as! HWInterval
-                let attributes = theInterval.entity.attributesByName as NSDictionary
-                let intervalKeys: [String] = attributes.allKeys as NSArray as! [String]
-                let intervalDict = theInterval.dictionaryWithValuesForKeys(intervalKeys)
-                intervals.addObject(intervalDict)
-                mutableSequenceDict.setObject(intervals, forKey: "intervals")
+            let sequenceDicts = NSMutableArray()
+            for aSequence in sequenceArray {
+                
+                let theSequence = aSequence as! HWSequence
+                let attributeDict = theSequence.entity.attributesByName as NSDictionary
+                let keys: [String] = attributeDict.allKeys as NSArray as! [String]
+                let sequenceDict = theSequence.dictionaryWithValuesForKeys(keys)
+                let mutableSequenceDict = NSMutableDictionary(dictionary: sequenceDict)
+                
+                let sort = NSSortDescriptor(key: "position", ascending: true)
+                let sortedIntervals = theSequence.intervals.sortedArrayUsingDescriptors([sort])
+                let intervals = NSMutableArray()
+                for anInterval in sortedIntervals {
+                    let theInterval = anInterval as! HWInterval
+                    let attributes = theInterval.entity.attributesByName as NSDictionary
+                    let intervalKeys: [String] = attributes.allKeys as NSArray as! [String]
+                    let intervalDict = theInterval.dictionaryWithValuesForKeys(intervalKeys)
+                    intervals.addObject(intervalDict)
+                    mutableSequenceDict.setObject(intervals, forKey: "intervals")
+                }
+                
+                sequenceDicts.addObject(mutableSequenceDict)
             }
-
-            sequenceDicts.addObject(mutableSequenceDict)
+            
+            wcSession.sendMessage(["sequences" : sequenceDicts], replyHandler: nil) { (error) -> Void in
+                print(error)
+            }
         }
-        
-        wcSession.sendMessage(["sequences" : sequenceDicts], replyHandler: nil) { (error) -> Void in
-            print(error)
-        }
+    }
+    
+    func didReceiveTableReorderedNotification() {
+        sendSequencesToWatch()
     }
 }
 
@@ -242,6 +255,8 @@ extension ViewController : UITableViewDelegate {
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
             tableView.endUpdates()
+            
+            sendSequencesToWatch()
         }
     }
 }

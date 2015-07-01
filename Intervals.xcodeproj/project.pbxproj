@@ -12,6 +12,7 @@
 		0439927C1B051C5F00C7C7B5 /* BaseViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */; };
 		043992801B05229700C7C7B5 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */; };
 		04467B3D1B2A1D3200B42863 /* TimerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A861C11B052F7B00451240 /* TimerViewControllerTests.swift */; };
+		045E50081B443B6600561995 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045E50071B443B6600561995 /* Strings.swift */; };
 		045F997D1B331C4700A7285E /* TableInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F997C1B331C4700A7285E /* TableInterfaceController.swift */; };
 		045F997F1B33212F00A7285E /* SequenceRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F997E1B33212F00A7285E /* SequenceRowController.swift */; };
 		0465EB041B3345B100A2386B /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0465EB031B3345B100A2386B /* WatchView.swift */; };
@@ -125,6 +126,7 @@
 		0431CEDF1AF94197007A1058 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0439927B1B051C5F00C7C7B5 /* BaseViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerTests.swift; sourceTree = "<group>"; };
 		0439927F1B05229700C7C7B5 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
+		045E50071B443B6600561995 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		045F997C1B331C4700A7285E /* TableInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableInterfaceController.swift; sourceTree = "<group>"; };
 		045F997E1B33212F00A7285E /* SequenceRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceRowController.swift; sourceTree = "<group>"; };
 		0465EB031B3345B100A2386B /* WatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			children = (
 				04E0D4521ADD9744001659B3 /* Info.plist */,
 				0431CEDF1AF94197007A1058 /* Colors.swift */,
+				045E50071B443B6600561995 /* Strings.swift */,
 				047206B41AFC04300067DDC1 /* interval_effect.m4a */,
 			);
 			name = "Supporting Files";
@@ -523,6 +526,7 @@
 			files = (
 				04E0D4791ADD9BCE001659B3 /* CustomModalTransition.swift in Sources */,
 				0431CEE01AF94197007A1058 /* Colors.swift in Sources */,
+				045E50081B443B6600561995 /* Strings.swift in Sources */,
 				0465EB041B3345B100A2386B /* WatchView.swift in Sources */,
 				04AE8F331AE81A0D00939B26 /* SequenceCell.swift in Sources */,
 				04034E791AE159B800CFDE50 /* ReorderTableView.swift in Sources */,

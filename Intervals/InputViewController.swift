@@ -304,8 +304,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 newInterval.seconds = existingInterval.seconds
             }
             
-            self.getSequence().addIntervalObject(newInterval)
-            
             do {
                 try self.managedObjectContext.save()
             } catch {
@@ -450,10 +448,6 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
                 try self.managedObjectContext.save()
             } catch {
                 print(error)
-            }
-            
-            if self.getSequence().loadedOnWatch == 1 {
-//                DarwinHelper.postSequenceLoadNotification()
             }
             
             self.navigationController?.popViewControllerAnimated(true)

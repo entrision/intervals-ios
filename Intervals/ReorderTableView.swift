@@ -113,6 +113,10 @@ class ReorderTableView: UITableView {
                     self.snapshot.removeFromSuperview()
                     self.snapshot = UIView()
                     cell?.hidden = false
+                    
+                    if self.reordered {
+                        NSNotificationCenter.defaultCenter().postNotificationName(Strings.kSequenceTableReorderedNotification, object: nil)
+                    }
                 });
             }
         }
