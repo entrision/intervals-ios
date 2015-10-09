@@ -18,9 +18,9 @@ class ReorderTableView: UITableView {
     var reorderEnabled: Bool = true
     var reordered: Bool = false
 
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
     
     override func awakeFromNib() {
         
@@ -123,19 +123,20 @@ class ReorderTableView: UITableView {
     }
     
     func snapshotFromView(view: UIView) -> UIView {
-        
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0)
-        view.layer.renderInContext(UIGraphicsGetCurrentContext())
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        let snapshot = UIImageView(image: image)
-        snapshot.layer.masksToBounds = false
-        snapshot.layer.cornerRadius = 0.0
-        snapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0)
-        snapshot.layer.shadowRadius = 5.0
-        snapshot.layer.shadowOpacity = 0.4
-        
-        return snapshot
+        if let context = UIGraphicsGetCurrentContext() {
+            UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0)
+            view.layer.renderInContext(context)
+            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            let snapshot = UIImageView(image: image)
+            snapshot.layer.masksToBounds = false
+            snapshot.layer.cornerRadius = 0.0
+            snapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0)
+            snapshot.layer.shadowRadius = 5.0
+            snapshot.layer.shadowOpacity = 0.4
+            return snapshot
+        }
+        return UIView()
     }
 }

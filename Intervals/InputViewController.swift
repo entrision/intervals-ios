@@ -514,8 +514,9 @@ class InputViewController: BaseViewController, UITableViewDataSource, UITableVie
     }
     
     func showInvalidEntryAlert() {
-        let alert = UIAlertView(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
+        let alertController = UIAlertController(title: "Missing fields", message: "\nPlease enter a title and duration for each interval", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: Notifications

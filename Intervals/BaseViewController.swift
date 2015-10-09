@@ -11,7 +11,7 @@ import CoreData
 
 class BaseViewController: UIViewController {
     
-    var managedObjectContext: NSManagedObjectContext = NSManagedObjectContext()
+    var managedObjectContext: NSManagedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
     
     override func viewDidLoad() {
         
