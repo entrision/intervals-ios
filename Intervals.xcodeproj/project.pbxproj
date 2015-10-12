@@ -428,6 +428,7 @@
 					};
 					0497F8291B2A2CA700BD18E5 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = HXK9RLY6C2;
 					};
 					04E0D44D1ADD9744001659B3 = {
 						CreatedOnToolsVersion = 6.2;
@@ -610,9 +611,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_TESTABILITY = YES;
@@ -621,6 +622,7 @@
 				INFOPLIST_FILE = IntervalsWatch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.entrision.Intervals.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -632,9 +634,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -642,6 +644,7 @@
 				INFOPLIST_FILE = IntervalsWatch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.entrision.Intervals.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -653,7 +656,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -661,6 +666,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.entrision.Intervals.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -672,13 +678,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "IntervalsWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.entrision.Intervals.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -768,8 +777,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hunter Whittle (8G4F839ME8)";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Intervals/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -786,8 +795,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Entrision LLC (HXK9RLY6C2)";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Intervals/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
